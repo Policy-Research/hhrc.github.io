@@ -1,0 +1,43 @@
+{
+  "name": "unnamed",
+  "version": "1.0.0",
+  "description": "none",
+  "scripts": {
+    "serve": "gulp serve",
+    "build": "gulp build"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 0.5%",
+    "ie >= 11"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "ally.js": "^1.4.1",
+    "babel-loader": "^8.0.6",
+    "browser-sync": "^2.26.7",
+    "chalk": "^4.1.0",
+    "common-tags": "^1.8.0",
+    "core-js": "^3.6.5",
+    "deepmerge": "^4.2.2",
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.2.0",
+    "gulp-debug": "^4.0.0",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-iconfont": "^10.0.3",
+    "gulp-if": "^3.0.0",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-less": "^4.0.1",
+    "gulp-plumber": "^1.2.1",
+    "gulp-pretty-html": "^2.0.10",
+    "gulp-rename": "^2.0.0",
+    "import-fresh": "^3.2.1",
+    "less-plugin-lists": "^1.1.2",
+    "webpack": "^4.41.6"
+  }
+}

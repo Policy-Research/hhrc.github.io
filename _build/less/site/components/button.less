@@ -1,0 +1,21 @@
+@button-bg: tint(@color-yellow, 30%);
+@button-color: darken(@color-type, 10%);
+
+.button {
+  display: inline-block;
+  background-color: @button-bg;
+  padding: 0.8em 2.5em;
+  border-radius: 20px;
+  color: @button-color;
+  border: none;
+  text-decoration: none;;
+  line-height: 1;
+  &:visited {
+    color: @button-color;
+  }
+  &:hover {
+    background-color: darken(@button-bg, 5%);
+    box-shadow: @box-shadow;
+    color: darken(@button-color, 10%);
+  }
+}

@@ -1,0 +1,49 @@
+// /*
+// ================================================================================
+// Module: Data Grid - Styles
+// ================================================================================
+
+// Version:         1.0.0
+
+// */
+
+& {
+  #DG.create(
+    @columns: 12,
+    @gutter: 14px,
+    @breakpoint: @break-primary-up,
+    @optional: {
+
+      // #DG.breakpoint(
+      //   @suffix:                "medium", 
+      //   @gutter:                20px,
+      //   @breakpoint:            @break-secondary-up
+      // );
+      // #DG.breakpoint(
+      //   @suffix:                "large", 
+      //   @gutter:                20px,
+      //   @breakpoint:            @break-tertiary-up
+      // );
+    }
+  );
+}
+& {
+  // Denser grid for small layouts
+  #DG.create(
+    @attr: 'data-grid-dense',
+    @gutter: 6px,
+    @breakpoint: @break-primary-up,
+    @optional: {
+      #DG.breakpoint(
+        @suffix:                "medium", 
+        @gutter:                6px,
+        @breakpoint:            @break-secondary-up
+      );
+      #DG.breakpoint(
+        @suffix:                "large", 
+        @gutter:                6px,
+        @breakpoint:            @break-tertiary-up
+      );
+    }
+  );
+}

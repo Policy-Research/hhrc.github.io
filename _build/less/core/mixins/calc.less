@@ -1,0 +1,31 @@
+// =============================================================================
+// Mixins - Calculations
+// =============================================================================
+
+// Description:     Mixins that return a value
+
+// Version:         2.0.1
+
+// Changes:         2.0.1 | changed last condition of em function to return whatever
+//                          it was given (which could be an em). Since this is only
+//                          used to convert pixels
+
+#CALC() {
+  .em(@font-size, @size-to-compare) {
+    & when (ispixel(@size-to-compare) = true) {
+      return: unit((@size-to-compare / @font-size), em);
+    }
+    return: unit(@size-to-compare, em);
+  }
+  .rem(@font-size) when (ispixel(@font-size) = true) {
+    return: unit((@font-size / @t-base), rem);
+  }
+}
+
+
+
+
+
+
+
+

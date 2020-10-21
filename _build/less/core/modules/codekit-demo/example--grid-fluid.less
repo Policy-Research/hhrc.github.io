@@ -1,0 +1,24 @@
+.loop-grid(
+  @col: @site-grid-columns, 
+  @gut: 3%, 
+  @offsets: on, 
+  @prefix: none,
+  @break: off, 
+  @gs-breakpoint: @break-primary
+);
+.loop-grid(
+  @col: 10, 
+  @gut: 3%, 
+  @offsets: on, 
+  @prefix: l, 
+  @break: @laptop, 
+  @gs-breakpoint: @break-primary
+);
+.loop-grid(
+  @col: 6, 
+  @gut: 4%, 
+  @offsets: on, 
+  @prefix: t, 
+  @break: @tablet, 
+  @gs-breakpoint: @break-primary
+);

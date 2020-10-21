@@ -1,0 +1,28 @@
+// Section modifiers added to .section {}
+.hook--section() {
+  @media @break-secondary {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    &--full,
+    &--fit {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  }
+  &--gray-light {
+    background-color: @background-light;
+  }
+  &--gray-lighter {
+    background-color: @background-lighter;
+  }
+  &--image {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    &-orange {
+      background-color: @color-orange;
+      color: white;
+      #IMAGE.url('transparent-tree-graphic.png');
+    }
+  }
+}

@@ -1,0 +1,44 @@
+.mix-bullet-color(
+  @bullet-color: green, 
+  @classname: list-bullet-green,
+  @alpha: .5,
+  @fallback-offset: 0
+);
+
+.mix-list-line-mod(
+  @class: list-lines-custom, 
+  @line-color: @color-blue, 
+  @width: 1px, 
+  @padding: 0.2em,
+  @style: dotted,
+  @top: on,
+  @btm: on
+);
+
+
+.mix-list-icon(
+  @icon-name: 'caret-right', 
+  @color: orange,
+  @size: 1.5em,
+  @top: 0.3em,
+  @left: -0.3em,
+  @indent: 1.5em,
+  @center-icon: on
+);
+
+// // Optionally, hook into mixin
+// .hook--mix-list-icon(@icon-name) {
+//   & when (@icon-name = 'caret-right') { 
+//     // styles here
+//   }
+// }
+
+
+.mix-list-icon(
+  @icon-name: 'circle', 
+  @color: coral,
+  @size: 1em,
+  @top: 0.36em,
+  @left: -0.2em,
+  @indent: 1.5em,
+);

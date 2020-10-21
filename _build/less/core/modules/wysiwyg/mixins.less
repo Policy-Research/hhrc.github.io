@@ -1,0 +1,30 @@
+// =============================================================================
+// Mixins - WYSIWYG
+// =============================================================================
+
+// Version:         1.0.0
+
+// Note:            Mixins for creating not selector, decided not to use these
+//                  but the do work so I am leaving them here for reference.
+
+// Declare library constant
+#WYG {
+
+  // Print ruleset within not(class) selector
+  .noClass(@rules) {
+    &:not([class]) {
+      @rules();
+    }
+  }
+
+  // Print ruleset while exclude the selectors in the passed list
+  // - Arguments need to be escaped! Use e(".my-selector")
+  .exclude(@selectors, @rules) {
+    @joiner: '):not(';
+    @selectorsMerged: join(@selectors, @joiner);
+
+    &:not(@{selectorsMerged}) {
+      @rules();
+    }
+  }
+}

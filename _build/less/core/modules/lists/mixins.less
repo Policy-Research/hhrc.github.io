@@ -1,0 +1,129 @@
+
+// Mix Modifier Classes
+// =====================================
+
+.mix-bullet-color(
+  @bullet-color, 
+  @classname, 
+  @alpha: null, 
+  @fallback-offset: 0
+  ) {
+  .list-bullet {
+    &.@{classname} {
+      >li:before when (@alpha = null) {
+        color: @bullet-color;
+      }
+      >li:before when not (@alpha = null) {
+        .mix-color-rgba(@bullet-color, @alpha, @fallback-offset);
+      }
+    }
+  }
+}
+
+
+// Mix Modifier Classes
+// =====================================
+
+.mix-list-line-mod(
+  @class, 
+  @line-color, 
+  @width: 1px, 
+  @padding: @list-margin,
+  @style: solid, 
+  @top: off, 
+  @btm: off
+  ) {
+  .@{class} {
+    >li {
+      padding-top: @padding;
+      padding-bottom: @padding;
+      border-style: @style;
+      border-bottom-width: @width;
+      border-color: @line-color;
+    }
+    & when (@top = on) {
+      >li:first-child {
+        border-top-width: @width;
+        border-style: @style;
+      }
+    }
+    & when (@top = off) {
+      >li:first-child {
+        border-top-width: 0;
+        border-style: @style;
+      }
+    }
+    & when (@btm = on) {
+      >li:last-child {
+        border-style: @style;
+        border-bottom-width: @width;
+      }
+    }
+    & when (@btm = off) {
+      >li:last-child {
+        border-bottom-width: 0;
+        border-style: @style;
+      }
+    }
+  }
+}
+
+
+
+// =============================================================================
+// List Icons
+// =============================================================================
+
+.mix-list-icon(
+  @icon-name, 
+  @color, 
+  @size: 1.5em, 
+  @margin-top: @list-margin, 
+  @margin-btm: @list-margin, 
+  @indent: 1em, 
+  @top: 0, 
+  @left: 0, 
+  @class: @icon-name, 
+  @center-icon: off
+  ) {
+  
+  // Set classname if passed
+  @class-name: e(@class);
+
+  .list-i-@{class-name} {
+    >li {
+      position: relative;
+      padding-left: @indent;
+      margin-top: @margin-top;
+      margin-bottom: @margin-btm;
+      &:after { content: none; }
+      &:before {
+        #ICON.createWithStyles(@icon-name, @color, @size);
+        display: block;
+        position: absolute;
+        height: @size;
+        line-height: @size;
+        left: @left;
+      }
+      &:before when (@center-icon = on) {
+        top: 50%; 
+        margin-top: -(@size / 2) + @top;
+      }
+      &:before when (@center-icon = off) {
+        top: @top; 
+      }
+    }
+    &.list-lines when (@toggle-list-lines = on) {
+      >li:before when (@center-icon = on) {
+        top: 50%; 
+        margin-top: -(@size / 2); 
+      }
+      >li:before when (@center-icon = off) {
+        top: @list-lines-pad; 
+        margin-top: @top;
+      }
+    }
+    .hook--mix-list-icon(@icon-name);
+  }
+}
+

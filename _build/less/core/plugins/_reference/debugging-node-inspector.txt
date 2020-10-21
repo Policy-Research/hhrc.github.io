@@ -1,0 +1,6 @@
+Debugging:
+- Navigate to the site's folder (where node_modules live and gulp task is run from)
+- Run the following command
+- node --inspect-brk ./node_modules/.bin/gulp srv
+- Open the chrome browser to
+- chrome://inspect

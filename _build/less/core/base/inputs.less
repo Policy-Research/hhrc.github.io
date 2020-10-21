@@ -1,0 +1,29 @@
+/*
+
+===========================================================================
+Base: Inputs
+===========================================================================
+
+Version:            3.0.1
+
+*/
+
+// These styles were reset and commented out in normalize so that 
+// they can be optionally not set to look like buttons.
+// This way we don't have to reset styles down the road 
+// when we want to use custom classes or wrapper in the case 
+// of inputs [submit] for say a button with an icon. -[JS]
+
+input[type="button"], 
+input[type="submit"], 
+input[type="reset"], 
+button, select  {
+  #ELEMENT.buttonResetStyles();
+}
+
+// Note:            Had trouble with the selector bellow. That's why it's  
+//                  excluded from the list of button selectors above.
+
+input[type="file"]:-webkit-file-upload-button {
+  #ELEMENT.buttonResetStyles();
+} 

@@ -1,0 +1,68 @@
+// =============================================================================
+// Mixins - Javascript
+// =============================================================================
+
+// Version:         2.0.1
+// 
+// Changes:         2.0.1 | Got rid of flag for init
+
+
+#JAVASCRIPT() {
+  // Used to pass values to a javascript for breakpoints in css
+  // Note direction is for upward or downward media queries, 
+  // up = before, down = after
+  .breakpoint(
+    @breakpoint, 
+    @content, 
+    @alternate: false, 
+    @element: false,
+    @init: false
+  ) {
+
+    @selectorEscaped: e(@element);
+
+    // Default (body)
+    body when (@element = false) {
+      & when (@init) {
+        &:before, 
+        &:after { 
+          display: none; 
+        }
+      }
+      @media @breakpoint {
+        & when (@alternate = false) {
+          &:before { 
+            content: @content; 
+          }
+        }
+        & when (@alternate = true) {
+          &:after { 
+            content: @content; 
+          }
+        }
+      }
+    }
+
+    // Custom Element
+    @{selectorEscaped} when not (@element = false) {
+      & when (@init) {
+        &:before, 
+        &:after { 
+          display: none; 
+        }
+      }
+      @media @breakpoint {
+        & when (@alternate = false) {
+          &:before { 
+            content: @content; 
+          }
+        }
+        & when (@alternate = true) {
+          &:after { 
+            content: @content; 
+          }
+        }
+      }
+    }
+  }
+}

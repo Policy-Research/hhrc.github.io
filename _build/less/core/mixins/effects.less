@@ -1,0 +1,22 @@
+// =============================================================================
+// Mixins - Effects
+// =============================================================================
+
+// Version:         2.0.0
+
+#EFFECT() {
+  .transition(@property, @time: 0.5s, @timing: ease, @delay: 0s) {
+    transition+: @property @time @timing @delay;
+  }
+  .transitionPreset(@type, @property) {
+    & when (@type = "slow") {
+      .transition(@property, 1s);
+    }
+    & when (@type = "fast") {
+      .transition(@property, 0.2s);
+    }
+  }
+  .transform(@property, @value) {
+    transform+_: ~"@{prop}(@{unit})";
+  }
+}

@@ -1,0 +1,167 @@
+/* ================================================================
+MIXINS - IMAGES
+================================================================ */
+
+// Version:         1.1.0
+
+// Description:     Mixins for quick background or overlay images
+
+// Changelog:       1.0.3 | Added Responsive Sprites function.
+//                  1.1.0 | Breaking Change (!)
+//                          - All background image mixins now just 
+//                            accept path instead of name and folder
+//                            b/c so it's what we're used to
+
+// Contents:        - Background Images
+//                  - Pattern Overlay
+//                  - Image w/ Gradient
+//                  - Responsive Sprites
+                   
+                   
+// Background Images
+// =============================================================================
+
+.mix-bg-img(
+  @path, 
+  @repeat: no-repeat, 
+  @pos-x: left, 
+  @pos-y: top, 
+  @size-w: auto, 
+  @size-h: auto
+  ) {
+	background-image: url("@{url-images}/@{path}?v=@{url-images-suffix}");
+	background-repeat: @repeat;
+	background-position: @pos-x @pos-y;
+	background-size: @size-w @size-h;
+}
+.mix-bg-img-url(@path) { 
+	background-image: url("@{url-images}/@{path}?v=@{url-images-suffix}"); 
+}
+.mix-bg-img-overlay(@path, @size-w, @size-h) {
+	background-image: url("@{url-images}/@{path}?v=@{url-images-suffix}");
+	background-repeat: no-repeat;
+	background-position: left top;
+	width: @size-w;
+	height: @size-h;
+	background-size: @size-w @size-h;
+}
+
+// Pattern Overlay
+// =============================================================================
+
+
+.mix-overlay-pat(
+  @path, 
+  @bg-tile-size-w: auto, 
+  @bg-tile-size-h: auto
+  ) {
+  position: relative;
+  &:after {
+    position: absolute;
+    content: " ";
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    .mix-bg-img(@path, repeat, @bg-tile-size-w, @bg-tile-size-h);
+  }
+}
+
+.mix-create-img-overlay(
+  @path, 
+  @image-overlay-width, 
+  @image-overlay-height, 
+  @class:default
+  ) {
+  .img-overlay-@{class} when not (@class = default) {
+    .mix-overlay-pat(@path, @image-overlay-width, @image-overlay-height);
+    >div {
+      position: relative;
+      z-index: 1; // Bump above for content inside image overlays
+    }
+  }
+  .img-overlay when (@class = default) {
+    .mix-overlay-pat(@path, @image-overlay-width, @image-overlay-height);
+    >div {
+      position: relative;
+      z-index: 1; // Bump above for content inside image overlays
+    }
+  }
+}
+
+// Image w/ Gradient
+// =============================================================================
+
+
+.mix-v-gradient-and-image(
+  @start, 
+  @stop, 
+  @image-path, 
+  @alt-path, 
+  @repeat: repeat, 
+  @size-w: auto, 
+  @size-h: auto
+  ) {
+  @full-path: ~"@{url-images}/@{image-path}?v=@{url-images-suffix}";
+  background-color: mix(@start, @stop, 60%);
+  background-image: url(@full-path);
+  background-position: left top;
+  background-repeat: @repeat;
+  background-position: left top;
+  background-size: @size-w @size-h;
+  background: url(@full-path), -moz-linear-gradient(top, @start, @stop); // FF 3.6+
+  background: url(@full-path), -webkit-gradient(linear, 0 0, 0 100%, from(@start), to(@stop)); // Safari 4+, Chrome 2+
+  background: url(@full-path), -webkit-linear-gradient(top, @start, @stop); // Safari 5.1+, Chrome 10+
+  background: url(@full-path), -o-linear-gradient(top, @start, @stop); // Opera 11.10
+  background: url(@full-path), linear-gradient(to bottom, @start, @stop); // Standard, IE10
+}
+
+
+// Responsive Sprites
+// =============================================================================
+
+.fn-sprites(
+  @sprite-num,
+  @class-name,
+  @elem-ratio,
+  @loop-increment: 0
+ ) when (@loop-increment <= (@sprite-num - 1)) {
+  // Variables
+  @class-num: @loop-increment + 1;
+  // Escaping
+  @class-escaped: e(@class-name);
+  // Callculations
+  @calc-result: (100% / (@sprite-num - 1)) * @loop-increment;
+  @bg-size: 100% * @sprite-num;
+   // Building classes
+  & when (@loop-increment = 0) {
+    .@{class-escaped} {
+      padding-bottom: @elem-ratio;
+      background-size: @bg-size;
+      height: 0;
+      width: 100%;
+      background-repeat: no-repeat;
+    }
+   }
+  .@{class-escaped}-@{class-num} {
+    background-position: @calc-result 0;
+  }
+ // Looping by calling the function again
+ .fn-sprites(
+    @sprite-num: @sprite-num, 
+    @class-name: @class-name,
+    @loop-increment: @loop-increment + 1,
+    @elem-ratio
+  );
+}
+
+// Params:          @sprite-num - Number of images in the sprite (One Row only)
+//                  @class-name - Sprite class name 
+//                  @elem-ratio - Sprite Element width to height ratio. 
+//                                100% creates make an element to be a square
+
+// .fn-sprites(
+//   @sprite-num: 6, 
+//   @class-name: 'sprite-img',
+//   @elem-ratio: 64.6%
+// );

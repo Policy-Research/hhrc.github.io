@@ -1,0 +1,118 @@
+/*
+
+===========================================================================
+Base: Tables
+===========================================================================
+
+Version:            3.0.0
+
+*/
+
+table {
+  border: 1px solid @table-border-color;
+  border-collapse: collapse;
+  background-color: @table-bg;
+  width: 100%;
+  text-align: left;
+  font-weight: normal;
+  .hook--table();
+  caption {
+    .hook--table--caption();
+  }
+}
+tr { 
+  border-bottom: 1px solid @table-border-color; 
+  .hook--table--tr();
+}
+td {
+  padding: @table-pad;
+  border-left: 1px solid @table-border-color;
+  .hook--table--td();
+}
+thead {
+  th {
+    text-align: left;
+    padding: @table-pad;
+    background-color: @table-bg-header;
+    border-left: 1px solid @table-border-color;
+    &:first-child { 
+      border-left: none; 
+    }
+    img { 
+      display: inline; 
+      margin-left: 4px; 
+    } // Sortable Tables Icon (Drupal)
+    h3, h4, h5, h6 { 
+      margin-bottom: 0; 
+    } // In case headlines are used in tables (ie. WYSIWYG)
+
+  }
+  .hook--table--thead();
+}
+tfoot {
+  background-color: @table-bg-footer;
+  .hook--table--tfoot();
+}
+tbody {
+  tr {
+    &:last-of-type { 
+      border-bottom: none; 
+    }
+  }
+  .hook--table--tbody();
+}
+// Headers used in the tbody and tfoot
+td, tbody th, tfoot th {
+  padding: @table-pad;
+  border-left: 1px solid @table-border-color;
+} 
+
+
+
+
+.table-plain {
+  border: none;
+  border-collapse: collapse;
+  background-color: transparent;
+  text-align: left;
+  // font-size: @t-base;  [CHECK] - Remove
+  // font-weight: normal;
+  th {
+    background-color: transparent;
+    padding: @table-plain-pad;
+    border: none;
+  }
+  tr { border: none; }
+  td {
+    padding: @table-plain-pad;
+    border: none;
+  }
+  tfoot {
+    background-color: transparent;
+  }
+  tbody {
+    tr {
+      &:nth-child(odd) { background-color: transparent; }  // Remove Striping
+      &:last-of-type { border-bottom: none; }
+    }
+  }
+}
+
+// Tables
+// =============================================================================
+
+.table-striped when (@toggle-table-striped = on) {
+  tbody {
+    tr {
+      &:nth-child(@{table-striped-start}) { background-color: @table-striped-bg; }  // Add striping
+      &:last-of-type { border-bottom: none; }
+    }
+  }
+}
+.table-shade-first when (@toggle-shade-first = on) {
+  tr {
+    td:first-child {
+      background-color: @table-shade-first-bg;
+    }
+  }
+}

@@ -1,0 +1,26 @@
+/*
+
+===========================================================================
+Base: Lists
+===========================================================================
+
+Version:            3.0.0
+
+*/
+
+ul { 
+  list-style: none; 
+}
+ol {
+  margin-bottom: @base-medium;
+  list-style: decimal outside;
+  li {
+    margin-bottom: @base-small;
+    margin-left: @t-base + 1px;
+  }
+  ol {
+    margin: @base-small 0 0 @base-small;
+    list-style-type: lower-alpha;
+    ol { list-style-type: lower-roman;}
+  }
+}

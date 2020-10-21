@@ -1,0 +1,25 @@
+.hook--table() {}
+.hook--table--td() {}
+.hook--table--tr() {}
+.hook--table--thead() {
+  color: white;
+  th {
+    font-weight: normal;
+    border: none;
+    text-align: left;
+  }
+  a, button {
+    color: white;
+    width: 100%;
+    text-align: left;
+    &:hover {
+      color: white;
+    }
+  }
+}
+.hook--table--tbody() {}
+.hook--table--tfoot() {}
+.hook--table--caption() {
+  background-color: @table-bg-caption;
+  padding: @table-pad;
+}

@@ -1,0 +1,43 @@
+// Version:         1.0.1
+
+// Changes:         1.0.1 | Moved hooks into this file
+
+
+@btn-border-radius:           4px; // Set to 0 for none
+@btn-proportion:              2.2; // Padding Proportions (w vs. h)
+@btn-brd-width:               1px; // Set to 0 for none
+@btn-hover-bg-amount:         6%; // Amount to darken background (use negative value for lighten)
+@btn-hover-brd-amount:        6%; // Amount to darken border (use negative value for lighten)
+@btn-lh:                      1.3em; // Line height
+@btn-letter-spacing:          0.02em; // For on-the-go use to fix letterspacing, Used in buttons
+@btn-gradient:                off; // On or Off (adds gradient)
+@btn-gradient-amount:         6%; // Percentage for gradient
+
+
+// Primary Button
+@btn-bg:                      @color-blue;
+@btn-brd-color:               darken(@btn-bg, 5%);
+@btn-txt-color:               white;
+
+// Secondary Button
+@btn-alt-bg:                  white;
+@btn-alt-brd-color:           @color-blue;
+@btn-alt-txt-color:           darken(@color-blue, 50%);
+
+// Button Sizes
+@btn-small-height:            @base-small-x - 2px;
+@btn-small-txt-size:          @type-small;
+@btn-height:                  @base-small-x;
+@btn-txt-size:                @t-base;
+@btn-large-height:            @base-medium;
+@btn-large-txt-size:          @t-base;
+
+// Icon Buttons
+@btn-icon-only-small-height:  33px;
+@btn-icon-only-height:        43px;
+@btn-icon-only-large-height:  53px;
+
+
+.hook--mix-btn() {}
+.hook--btn-disabled() {}
+.hook--btn-inside() {}

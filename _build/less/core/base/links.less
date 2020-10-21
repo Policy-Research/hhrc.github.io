@@ -1,0 +1,27 @@
+/*
+
+===========================================================================
+Base: Layout
+===========================================================================
+
+Version:            3.0.1
+
+*/
+
+a {
+  background-color: transparent;
+  text-decoration: none;
+  color: @a-color;
+  &:active,
+  &:hover {
+    outline-width: 0;
+  }
+  & when (@a-hover-visted--class-only = true) {
+    #ELEMENT.links();  // Includes hover and visited
+  } 
+}
+.links {
+  a {
+    #ELEMENT.links();
+  }
+}

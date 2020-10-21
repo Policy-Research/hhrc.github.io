@@ -1,0 +1,83 @@
+// =============================================================================
+// Config Forms
+// =============================================================================
+
+// Description:     Add description
+
+// Version:         2.0.0
+
+
+// Variables
+// =============================================================================
+
+@toggle-forms-general:                  on; // Should be always on, unless you want to disable all form styles
+@toggle-forms-drupal-8:                 on;
+@toggle-forms-drupal-7:                 on;
+
+@toggle-boolean-fancy:                  on;
+@toggle-select-fancy:                   on;
+@toggle-input-file-fancy:               off;
+
+// @select-list-icon: 
+@form-element-radius:                   4px;
+@form-element-brd-width:                1px;
+@form-element-icon-color:               @color-black-70;
+@form-element-font-size:                @t-base;
+
+@form-brd-color:                        @color-black-20;
+@form-brd-color--focus:                 @color-blue;
+
+// Spacing
+@form-element-height:                   45px;
+@form-element-line-height:              45px;
+@form-element-padding-horizontal:       5px;
+@form-element-padding-vertical:         5px;
+@form-item-margin-vertical:             @element-margin;
+
+@form-item--size-small-x:               100px;
+@form-item--size-small:                 200px;
+@form-item--size-med:                   200px;
+@form-item--size-large:                 300px;
+
+@form-label-margin:                     @element-margin-small;
+@form-description-width:                40%;
+@form-description-margin:               @element-margin-small;
+
+@form-element-bg-color:                 white;
+@form-element-color:                    @type-color;
+
+@form-label-size:                       @t-base;
+@form-label-lh:                         @type-line-height;
+@form-label-color:                      @type-color;
+  
+@form-radio-checkbox-bg-type:           "icon"; // Options: icon, border
+@form-radio-checkbox-size:              20px; // Currently doesn't work with Em's
+@form-radio-checkbox-label-spacing:     10px; // Space between toggle icon and label
+@form-radio-checkbox-icon-color:        @color-blue;
+@form-radio-checkbox-bg-color:          black;
+
+// @form-focus-bg-color:                   white;
+// @form-focus-color:                      black;
+
+// @form-disabled-bg-color:                lightgray;
+// @form-disabled-color:                   darkgray;
+
+
+// Hooks
+// =============================================================================
+
+.hook--form() { }
+.hook--form-item() {} // Class that wraps input, label & description
+.hook--form-item__toggle() {}
+.hook--input--fieldset() {}
+.hook--input--legend() {}
+.hook--label() {}
+.hook--input--text-fields() {}
+.hook--input--text-field() {} // Reduce with &[type="number"] {}
+.hook--input--textarea {}
+.hook--input--range {}
+.hook--input--buttons() {} // Input Types: submit, button, reset
+.hook--input--color() {}
+.hook--form-wrap() {}
+.hook--description() {}
+.hook--form-submit {}

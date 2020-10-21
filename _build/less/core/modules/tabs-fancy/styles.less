@@ -1,0 +1,57 @@
+// Horizontal
+// =============================================================================  
+
+.tabs--fancy-h {
+  .tabs__list { 
+    @tabfancy--h--list();
+    &.tabs__list--center {    // Centering, could be userful for tabs at the bottom
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .tabs__list-item {
+    @tabfancy--h--list-item();
+  }
+
+  .tabs__toggle {
+    @tabfancy--h--toggle();
+  }
+
+  .tabs__content {
+    @tabfancy--h--content();
+  }
+
+  .tabs__content-wrap {
+    @tabfancy--h--content-wrap();
+  }
+}
+
+
+// Vertical
+// =============================================================================  
+
+.tabs--fancy-v {
+  @tabfancy--v();
+
+  .tabs__list {
+    @tabfancy--v--list();
+  }
+
+  .tabs__list-item {
+    @tabfancy--v--list();
+  }
+
+  .tabs__toggle {
+    @tabfancy--v--toggle(); 
+  }
+
+  .tabs__content-wrap {
+    @tabfancy--v--content-wrap();
+  }
+  
+  .tabs__content {
+    @tabfancy--v--content();
+  }
+}

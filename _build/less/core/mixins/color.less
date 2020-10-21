@@ -1,0 +1,13 @@
+// =============================================================================
+// Mixins - Color
+// =============================================================================
+
+// Version:         2.0.0
+
+#COLOR() {
+  .rgbaFallback(@property, @color, @alpha, @offset-fallback: 0) {
+    @{property}: tint(@color,  ((@alpha * 100) * @offset-fallback));            // fallback (find closest value of black)
+    @{property}: rgba(red(@color), green(@color), blue(@color), @alpha);
+  }
+}
+

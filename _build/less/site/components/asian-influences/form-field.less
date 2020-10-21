@@ -1,0 +1,90 @@
+.form-field {
+  margin-bottom: @base-small;
+  &--inline {
+    margin-right: 0.5em;
+    display: inline-block;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  &--flex {
+    display: flex;
+    > * {
+      margin-right: 0.5em;
+    }
+  }
+  &__label {
+    display: block;
+    margin-bottom: 0.25em;
+    #TYPE.rem(@type-small);
+    text-transform: uppercase;
+  }
+  &__text-input {
+    appearance: none;
+    border-radius: @border-radius;
+    padding: 0.5em 0.75em;
+    width: 100%;
+    text-overflow: ellipsis;
+    outline: none;
+    border: 1px solid @rule--color;
+    background-color: white;
+    font-size: inherit;
+    flex-shrink: 1;
+    &:focus {
+      background-color: white;
+      border-color: @focus-color;
+      box-shadow: @box-shadow;
+    }
+  }
+  &__select {
+    padding: 0.5em 0.75em;
+    width: 100%;
+    text-overflow: ellipsis;
+    outline: none;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: inherit;
+    padding-right: 40px;
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    background-size: 18px 18px;
+    background-color: white;
+    border: @rule-dark;
+    border-radius: @border-radius;
+    #IMAGE.url('forms/select-caret.png');
+  }
+  [type="radio"],
+  [type="checkbox"] {
+    .hide-v;
+    & + label {
+      padding-left: 25px;
+      background-repeat: no-repeat;
+      background-position: left center;
+      background-size: 15px 15px;
+      #IMAGE.url('forms/checkbox.png');
+    }
+    &:checked + label {
+      #IMAGE.url('forms/checkbox-checked.png');
+    }
+    &:focus + label {
+      #IMAGE.url('forms/checkbox-focus.png');
+    }
+    &:focus:checked + label {
+      #IMAGE.url('forms/checkbox-focus-checked.png');
+    }
+  }
+  [type="radio"] {
+    & + label { 
+      #IMAGE.url('forms/radio.png'); 
+    }
+    &:checked + label { 
+      #IMAGE.url('forms/radio-checked.png');
+    }
+    &:focus + label {
+      #IMAGE.url('forms/radio-focus.png');
+    }
+    &:focus:checked + label {
+      #IMAGE.url('forms/radio-focus-checked.png');
+    }
+  }
+}

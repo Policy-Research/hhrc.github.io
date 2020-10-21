@@ -1,0 +1,20 @@
+ul {
+  list-style: outside disc;
+  padding-left: 1em;
+  margin-bottom: @element-margin;
+  >li {
+    margin-bottom: 1em;
+  }
+}
+a {
+  
+  &:not([class]) {
+    text-decoration: underline;
+    &:hover {
+      color: @a-color-hover;
+    }
+  }
+}
+p {
+  margin-bottom: 1.3em;
+}

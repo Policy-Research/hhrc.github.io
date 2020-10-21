@@ -1,0 +1,18 @@
+// =============================================================================
+// Mixins - String
+// =============================================================================
+
+// Version:         2.0.0
+
+// Description:     Mixins that return modified strings
+
+#STRING() {
+  // Note this can only be used to return the variable once per scope, for multiple see workflow below
+  .mediaMinToMax(@mediaQuery) {
+    return: e(replace(@mediaQuery, "([^0-9.]+)", "screen and (max-width: "));
+  }
+  // Doing it yourself
+  // @pass--media-to-conv: ~"screen and (min-width: 481px)"; // This is just so we don't have any errors (default value)
+  // @conv-media--min-to-max: e(replace(@pass--media-to-conv, "([^0-9.]+)", "screen and (max-width: "));
+
+}

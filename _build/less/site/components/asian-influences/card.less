@@ -1,0 +1,95 @@
+@card--padding: 1.25rem;
+.card {
+  // border: 2px solid white;
+  background-color: white;
+  box-shadow: @box-shadow;
+  padding: @card--padding;
+  overflow: hidden;
+  border-radius: @border-radius;
+  position: relative; // For tags
+  display: flex;
+  flex-direction: column;
+  transition-property: box-shadow border-color;
+  transition-duration: @transition-hover--duration;
+  &:hover,
+  &:focus {
+    box-shadow: @box-shadow--raised;
+    background-color: darken(white, 4%);
+    // border-color: tint(@color-orange, 50%);
+    // outline: none;
+  }
+  
+  // When in grid fit
+  [data-grid-dense-item] > &,
+  [data-grid-item] > & {
+    height: 100%;
+  }
+  &--centered {
+    text-align: center;
+  }
+  // Layout
+  &__body {
+    flex-grow: 1;
+  }
+  &__footer {
+    margin: 0 -(@card--padding) -(@card--padding) -(@card--padding);
+    padding: @card--padding; 
+  }
+  // Elements
+  &__title {
+    display: block;
+    color: @color-orange;
+    margin: @element-margin 0;
+    &:first-child {
+      margin-top: 0;
+    }
+    // Add rule
+    .card--centered & {
+      position: relative;
+      padding-bottom: @card--padding;
+      margin-top: 0;
+      text-align: center;
+      &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 2px;
+        width: 1.65em;
+        background-color: @color-black-10;
+      }
+    }
+  }
+  &__label {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 300;
+    margin: @card--padding 0 (@card--padding / 2) 0;
+    padding-top: @card--padding;
+    letter-spacing: @letter-spacing;
+    color: @color-type--secondary;
+    border-top: @rule;
+    #TYPE.rem(@type-small);
+    & + .card__title {
+      margin-top: 0;
+    }
+  }
+  &__tag {
+    position: absolute;
+    bottom: 0;
+    right: @card--padding;
+    border-top-left-radius: @border-radius;
+    border-top-right-radius: @border-radius;
+    background-color: @color-yellow;
+    color: white;
+    padding: 0.25em 1em;
+    text-transform: uppercase;
+    font-weight: bold;
+    #TYPE.rem(@type-small);
+  }
+  &__image {
+    margin-bottom: @card--padding;
+    width: 100%;
+  }
+}

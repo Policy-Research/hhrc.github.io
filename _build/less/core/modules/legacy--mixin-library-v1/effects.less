@@ -1,0 +1,544 @@
+/* ================================================================
+MIXINS - Effects
+================================================================ */
+
+// Description:     Transitions, Transforms, Tigers, Oh my!
+// Version:         1.0.4
+
+// Changelog:       v1.0.2 - Add merge to properties [CHECK] This needs to be 
+//                           update trans with other properties (delay etc)
+//                  v1.0.3 - Updated mix-gradient-h mixin to new syntax.
+//                         - Removed background color fallback. Reason: if 
+//                           transparent colors were used (rgba), fallback color  
+//                           was always shown behind transparent rgba color.
+//                  1.0.4     Added mix-animation()
+
+// Contents:        - Transitions
+//                  - Transforms
+//                  - Shadows
+//                  - Buttons
+//                  - Text Selection
+//                  - Gradients
+//                  - Keyframes
+//                  - Animation
+
+
+// TRANSITIONS
+// =============================================================================
+
+.mix-trans-slow(@css-property) {
+  -webkit-transition+: @css-property 1s; /* For Safari 3.1 to 6.0 */
+  -moz-transition+: @css-property 1s;
+  -ms-transition+: @css-property 1s;
+  -o-transition+: @css-property 1s;
+  transition+: @css-property 1s;
+}
+.mix-trans(
+  @css-property, 
+  @time: .5s, 
+  @timing: ease, 
+  @delay: 0s,
+  @prefixes: false
+  ) {
+
+  // Use to add prefixes
+  & when (@prefixes = false) {
+    -webkit-transition+: @css-property @time @timing @delay; /* For Safari 3.1 to 6.0 */
+    -moz-transition+: @css-property @time @timing @delay;
+    -ms-transition+: @css-property @time @timing @delay;
+    -o-transition+: @css-property @time @timing @delay;
+  }
+
+  // Use to add prefixs with prefixed property to transisition
+  & when (@prefixes = true) {
+    -webkit-transition+: e(%("-webkit-%a %d %A %D", @css-property, @time, @timing, @delay));; /* For Safari 3.1 to 6.0 */
+    -moz-transition+: e(%("-moz-%a %d %A %D", @css-property, @time, @timing, @delay));
+    -ms-transition+: e(%("-ms-%a %d %A %D", @css-property, @time, @timing, @delay));
+    -o-transition+: e(%("-o-%a %d %A %D", @css-property, @time, @timing, @delay));
+  }
+
+  transition+: @css-property @time @timing @delay;
+  
+}
+.mix-trans-fast(@css-property) {
+  -webkit-transition+: @css-property .2s; /* For Safari 3.1 to 6.0 */
+  -moz-transition+: @css-property .2s;
+  -ms-transition+: @css-property .2s;
+  -o-transition+: @css-property .2s;
+  transition+: @css-property .2s;
+}
+
+// NOTE: Requires value as escaped string ie. ".mix-trans-multi(~"color .5s, opacity .1s");
+// USE: incase you aren't setting transition on a property
+
+.mix-trans-multi(@escaped-string-value) {
+  -webkit-transition: @escaped-string-value;
+  -moz-transition: @escaped-string-value;
+  -ms-transition: @escaped-string-value;
+  -o-transition: @escaped-string-value;
+  transition: @escaped-string-value;
+}
+
+// TRANSFORMS
+// =============================================================================
+
+.mix-transform(@prop, @unit) {
+  @full-prop: ~"@{prop}(@{unit})";
+  -ms-transform+_: @full-prop;
+  -webkit-transform+_: @full-prop;
+  transform+_: @full-prop;
+}
+// DEPRACATED -- Above mixins will merge into comma seprated list
+.mix-transform-multi(@full-prop) {
+  -ms-transform: @full-prop;
+  -webkit-transform: @full-prop;
+  transform: @full-prop;
+}
+
+// SHADOWS
+// =============================================================================
+
+.mix-shadow(
+  @hor: 0px, 
+  @ver: 0px, 
+  @blur: 4px, 
+  @spread: 0px, 
+  @shadow-color: rgba(0,0,0,0.35)
+  ) {
+  -webkit-box-shadow+: @hor @ver @blur @spread @shadow-color;
+  -moz-box-shadow+: @hor @ver @blur @spread @shadow-color;
+  box-shadow+: @hor @ver @blur @spread @shadow-color;
+}
+.mix-shadow-light(
+  @hor: 0px, 
+  @ver: 0px, 
+  @blur: 3px
+  ) {
+  -webkit-box-shadow: @hor @ver @blur 0px rgba(0,0,0,0.25);
+  -moz-box-shadow: @hor @ver @blur 0px rgba(0,0,0,0.25);
+  box-shadow: @hor @ver @blur 0px rgba(0,0,0,0.25);
+}
+
+// Inset Shadow 
+.mix-inset-shadow(
+  @hor: 0px, 
+  @ver: 0px, 
+  @blur: 3px, 
+  @spread: 0px, 
+  @shadow-color: rgba(0,0,0,0.35)
+  ) {
+  -webkit-box-shadow: inset @hor @ver @blur @spread @shadow-color;
+  -moz-box-shadow: inset @hor @ver @blur @spread @shadow-color;
+  box-shadow: inset @hor @ver @blur @spread @shadow-color;
+}
+
+// INSET SHADOW (clickable) 
+.mix-shadow-inset-overlay(
+  @hor: 0px, 
+  @ver: 0px, 
+  @blur: 3px, 
+  @spread: 0px, 
+  @shadow-color: rgba(0,0,0,0.35)
+  ) {
+  position: relative;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  pointer-events:none;  
+  &:before {
+    // This is used when the contents of the element with the shadow applied need to be clickable still (ie. Links).
+    // There are ways to make it clickable on the element itself but none work across all browsers. This seems to the most cross-browser and backwards compatable. -JS
+    .mix-inset-shadow(
+      @hor, 
+      @ver, 
+      @blur, 
+      @spread, 
+      @shadow-color
+      );
+    position: absolute;
+    z-index: 102; // [CHECK] - THis is set really high it may not need to be set to this but "2", need to test this.
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    pointer-events:none;  // So you can click through
+  }
+  img {
+    display: block;
+    width: 100% !important;   // For CMS images with inline styling
+    height: auto !important;
+  }
+  a { pointer-events: all; }
+}
+
+// REMOVE SHADOW
+.mix-shadow-none() {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+// BUTTONS
+// =============================================================================
+
+.mix-filter(@filter: grayscale(100%)) {
+  -webkit-filter: @filter;
+  -moz-filter: @filter;
+  -ms-filter: @filter;
+  -o-filter: @filter;
+  filter: @filter;
+}
+
+// Text Selection
+// =============================================================================
+
+.mix-selection(@color, @background-color
+  ) {
+  ::selection {color: @color; background: @background-color;}
+  ::-moz-selection {color: @color; background: @background-color;}
+}
+
+// GRADIENTS
+// =============================================================================
+
+// Image w/ Gradient
+// =====================================
+
+
+// See Mix-Images.Less
+
+// Gradient Horizontal
+// -------------------------------------
+
+.mix-gradient-h(@start-color, @end-color
+  ) {
+  background-image: -khtml-gradient(linear, left top, right top, from(@start-color), to(@end-color)); /* Konqueror */
+  background-image: -moz-linear-gradient(left, @start-color, @end-color); /* FF 3.6+ */
+  background-image: -ms-linear-gradient(left, @start-color, @end-color); /* IE10 */
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+  background-image: -webkit-linear-gradient(left, @start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+  background-image: -o-linear-gradient(left, @start-color, @end-color); /* Opera 11.10 */
+  background-image: -ms-linear-gradient(left, @start-color 0%, @end-color 100%);  /* IE10+ */
+  background-image: linear-gradient(to right, @start-color, @end-color); /* the standard */
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color)); /* IE6 & IE7 */
+  -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=1)",@start-color,@end-color); /* IE8+ */
+}
+// Gradient Verticle
+// -------------------------------------
+
+.mix-gradient-v(@start-color, @end-color
+  ) { 
+  background-image: -khtml-gradient(linear, left top, left bottom, from(@start-color), to(@end-color)); /* Konqueror */
+  background-image: -moz-linear-gradient(@start-color, @end-color); /* FF 3.6+ */
+  background-image: -ms-linear-gradient(@start-color, @end-color); /* IE10 */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, @start-color), color-stop(100%, @end-color)); /* Safari 4+, Chrome 2+ */
+  background-image: -webkit-linear-gradient(@start-color, @end-color); /* Safari 5.1+, Chrome 10+ */
+  background-image: -o-linear-gradient(@start-color, @end-color); /* Opera 11.10 */
+  background-image: -ms-linear-gradient(top, @start-color 0%, @end-color 100%);  /* IE10+ */
+  background-image: linear-gradient(@start-color, @end-color); /* the standard */
+  filter: e(%("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color)); /* IE6 & IE7 */
+  -ms-filter: %("progid:DXImageTransform.Microsoft.gradient(startColorstr='%d', endColorstr='%d', GradientType=0)",@start-color,@end-color); /* IE8+ */
+}
+
+// KEYFRAMES
+// =============================================================================
+
+// .animation(@arguments) {
+//   -webkit-animation: @arguments;
+//   -moz-animation: @arguments;
+//   -o-animation: @arguments;
+//   animation: @arguments;
+// }
+
+// EXAMPLE KEYFRAME SIMPLIFYING
+// @-webkit-keyframes @name { .create-a-mixin(); }
+// @-moz-keyframes @name { .create-a-mixin(); }
+// @-o-keyframes @name { .create-a-mixin(); }
+// @keyframes @name { .create-a-mixin(); }
+
+
+// Sequential Class Loop (Creates sequent)
+// =============================================================================
+
+// Note:            Creates classes with sequential names "class-1, class-2". 
+//                  Increments a css property per class created. Works with any
+//                  number unit css property. It can also do linear steps of 
+//                  properties and curved (exponential) multiplier. If multiply is 
+//                  set to false then it will add by suplied increment.
+
+.mix-classes-scale(
+
+    @class, 
+    @num-intervals, 
+    @math-start,
+    @math-multiply: false, 
+    @math-modifier, 
+    @css-property,
+    @css-property-value-prefix: false,
+    @math-negative: false,
+    @css-property-unit: px,
+    @loop-increment: 0,
+    @inner-class: 'unset'
+
+  ) when not (@loop-increment > (@num-intervals - 1)) and (@inner-class = 'unset') {
+
+
+  // Calculations & Excaping
+  // ===================================
+
+  // Variables used for printout
+  @class-escaped: e(@class);
+  @css-property-escaped: e(@css-property);
+  @class-num: @loop-increment + 1;
+
+  // Value Calculations
+  @calc-prop-addition: unit(@math-start + (@loop-increment * @math-modifier), @css-property-unit);
+  @calc-prop-multiplication: unit(@math-start * pow(@math-modifier, @loop-increment), @css-property-unit); // Geometric Sequence, POW = Exponetial Multipier
+
+  // Concatanted Property Values 
+  @calc-prop-addition-w-prefix: ~"@{css-property-value-prefix}(@{calc-prop-addition})";
+  @calc-prop-addition-w-prefix-negative: ~"@{css-property-value-prefix}(-@{calc-prop-addition})";
+  @calc-prop-multiplication-w-prefix: ~"@{css-property-value-prefix}(@{calc-prop-multiplication})";
+  @calc-prop-multiplication-w-prefix-negative: ~"@{css-property-value-prefix}(-@{calc-prop-multiplication})";
+
+  // Print Out Class
+  // ===================================
+
+  .@{class-escaped}-@{class-num} {
+
+    // Set the property value
+    // ---------------------------------
+
+    // Multiplication On, Negative Off, Prefix Off
+    & when (@math-multiply = true) and not (@math-negative = true) and (@css-property-value-prefix = false) {
+      @{css-property-escaped}: @calc-prop-multiplication;
+    }
+    // Multiplication On, Negative On
+    & when (@math-multiply = true) and (@math-negative = true) and (@css-property-value-prefix = false) {
+      @{css-property-escaped}: -(@calc-prop-multiplication);
+    }
+    // Addition On, Negative Off
+    & when not (@math-multiply = true) and not (@math-negative = true) and (@css-property-value-prefix = false) {
+      @{css-property-escaped}: @calc-prop-addition;
+    }
+    // Addition On, Negative On
+    & when not (@math-multiply = true) and (@math-negative = true) and (@css-property-value-prefix = false) {
+      @{css-property-escaped}: -(@calc-prop-addition);
+    }
+
+    // Multiplication On, Negative Off, Prefix On
+    & when (@math-multiply = true) and not (@math-negative = true) and not (@css-property-value-prefix = false) {
+      @{css-property-escaped}: @calc-prop-multiplication-w-prefix;
+    }
+    // Multiplication On, Negative On, Prefix On
+    & when (@math-multiply = true) and (@math-negative = true) and not (@css-property-value-prefix = false) {
+      @{css-property-escaped}: @calc-prop-multiplication-w-prefix-negative;
+    }
+    // Addition On, Negative Off, Prefix On
+    & when not (@math-multiply = true) and not (@math-negative = true) and not (@css-property-value-prefix = false) {
+      @{css-property-escaped}: @calc-prop-addition-w-prefix;
+    }
+    // Addition On, Negative On, Prefix On
+    & when not (@math-multiply = true) and (@math-negative = true) and not (@css-property-value-prefix = false) {
+      @{css-property-escaped}: @calc-prop-addition-w-prefix-negative;
+    }
+
+  }
+
+  // Loop - Call the function again
+  // ===================================
+
+  .mix-classes-scale(
+    @class: @class, 
+    @math-start,
+    @num-intervals: @num-intervals, 
+    @math-multiply: @math-multiply, 
+    @math-modifier: @math-modifier, 
+    @css-property: @css-property,
+    @css-property-value-prefix: @css-property-value-prefix,
+    @math-negative: @math-negative,
+    @css-property-unit: @css-property-unit,
+    @loop-increment: @loop-increment + 1,
+    @inner-class
+  );
+
+}
+
+// Optional inner class
+// =====================================
+
+.mix-classes-scale(
+
+    @class, 
+    @num-intervals, 
+    @math-start,
+    @math-multiply: false, 
+    @math-modifier, 
+    @css-property,
+    @css-property-value-prefix: false,
+    @math-negative: false,
+    @css-property-unit: px,
+    @loop-increment: 0,
+    @inner-class: 'unset'
+
+  ) when not (@loop-increment > (@num-intervals - 1)) and not (@inner-class = 'unset') {
+
+
+  // Calculations & Excaping
+  // ===================================
+
+  // Variables used for printout
+  @class-escaped: e(@class);
+  @inner-class-escaped: e(@inner-class);
+  @css-property-escaped: e(@css-property);
+  @class-num: @loop-increment + 1;
+
+  // Value Calculations
+  @calc-prop-addition: unit(@math-start + (@loop-increment * @math-modifier), @css-property-unit);
+  @calc-prop-multiplication: unit(@math-start * pow(@math-modifier, @loop-increment), @css-property-unit); // Geometric Sequence, POW = Exponetial Multipier
+
+  // Concatanted Property Values 
+  @calc-prop-addition-w-prefix: ~"@{css-property-value-prefix}(@{calc-prop-addition})";
+  @calc-prop-addition-w-prefix-negative: ~"@{css-property-value-prefix}(-@{calc-prop-addition})";
+  @calc-prop-multiplication-w-prefix: ~"@{css-property-value-prefix}(@{calc-prop-multiplication})";
+  @calc-prop-multiplication-w-prefix-negative: ~"@{css-property-value-prefix}(-@{calc-prop-multiplication})";
+
+  // Print Out Class
+  // ===================================
+
+  .@{class-escaped}-@{class-num} {
+
+    .@{inner-class-escaped} {
+
+      // Set the property value
+      // ---------------------------------
+
+      // Multiplication On, Negative Off, Prefix Off
+      & when (@math-multiply = true) and not (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-multiplication;
+      }
+      // Multiplication On, Negative On
+      & when (@math-multiply = true) and (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: -(@calc-prop-multiplication);
+      }
+      // Addition On, Negative Off
+      & when not (@math-multiply = true) and not (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-addition;
+      }
+      // Addition On, Negative On
+      & when not (@math-multiply = true) and (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: -(@calc-prop-addition);
+      }
+
+      // Multiplication On, Negative Off, Prefix On
+      & when (@math-multiply = true) and not (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-multiplication-w-prefix;
+      }
+      // Multiplication On, Negative On, Prefix On
+      & when (@math-multiply = true) and (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-multiplication-w-prefix-negative;
+      }
+      // Addition On, Negative Off, Prefix On
+      & when not (@math-multiply = true) and not (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-addition-w-prefix;
+      }
+      // Addition On, Negative On, Prefix On
+      & when not (@math-multiply = true) and (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-addition-w-prefix-negative;
+      }
+    }
+  }
+
+  // Loop - Call the function again
+  // ===================================
+
+  .mix-classes-scale(
+    @class: @class, 
+    @math-start,
+    @num-intervals: @num-intervals, 
+    @math-multiply: @math-multiply, 
+    @math-modifier: @math-modifier, 
+    @css-property: @css-property,
+    @css-property-value-prefix: @css-property-value-prefix,
+    @math-negative: @math-negative,
+    @css-property-unit: @css-property-unit,
+    @loop-increment: @loop-increment + 1,
+    @inner-class
+  );
+
+}
+
+
+
+
+// Usage Example
+// -------------------------------------
+
+// .mix-classes-scale(
+//   @class: 'translate-this', 
+//   @num-intervals: 5, 
+//   @math-start: 0,
+//   @math-multiply: false, 
+//   @math-modifier: 100, 
+//   @math-negative: false,
+//   @css-property: 'transform',
+//   @css-property-value-prefix: 'translateY',
+//   @css-property-unit: px
+// );
+
+
+
+// Animation
+// =============================================================================
+
+
+// Params:          1. Animation Name
+//
+//                  2. Animation Values
+//                     animation-duration
+//                     animation-timing-function
+//                     animation-delay
+//                     animation-iteration-count
+//                     animation-direction
+//                     animation-fill-mode
+//                     animation-play-state
+//
+//                  3. Animation Keyframes object
+//
+// Usage: 
+//
+// .your-class-fade-in() {
+//   .mix-animation(fade-in, 200ms ease 0ms 1 both, {
+//     0% {
+//       opacity: 0
+//     }
+//     1% {
+//       display: block !important;
+//       opacity: 0;
+//     }
+//     100% { 
+//       opacity: 1;
+//     }
+//   });
+// }
+
+
+.mix-animation(@name; @animation; @timeline) {
+  @-moz-keyframes @name { @timeline(); }
+  @-webkit-keyframes @name { @timeline(); }
+  @keyframes @name { @timeline(); }
+    
+  @animConcat: e("@{name} @{animation}");
+  -webkit-animation: @animConcat;
+  -moz-animation: @animConcat;
+  animation: @animConcat;
+}
+
+// If you want to reuse or write keyframe's separate from animation
+.mix-keyframes(@name; @timeline) {
+  @-moz-keyframes @name { @timeline(); }
+  @-webkit-keyframes @name { @timeline(); }
+  @keyframes @name { @timeline(); }
+}

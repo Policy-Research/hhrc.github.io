@@ -1,0 +1,34 @@
+@accordion-toggle-icon-box-width:       2.4em;
+
+@accordion--toggle: {
+  background: @color-black-10;
+  margin-top: 0.5em;
+  padding: 0.85em 1em;
+  padding-right: @accordion-toggle-icon-box-width; // space for for the icon
+  font-weight: bold;
+  position: relative;
+  line-height: 1.2;
+  &:after {
+    #ICON.create("caret-up");
+    order: 5;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    width: @accordion-toggle-icon-box-width;
+    line-height: 2.5em;
+    text-align: center;
+  }
+  &.open {
+    background-color: @color-black-20;
+    &:after {
+      #ICON.create("caret-down");
+      line-height: 2.5em;
+    }
+  }
+};
+
+@accordion--content: {
+  border: 1px solid @color-black-20;
+  padding: 1em;
+};

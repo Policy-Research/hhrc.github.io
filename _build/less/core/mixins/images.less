@@ -1,0 +1,49 @@
+// =============================================================================
+// Mixins - Images
+// =============================================================================
+
+// Version:         2.0.0
+
+// Description:     Mixins for background images, purpose is to for path generation
+
+#IMAGE() {
+  .background(
+    @path, 
+    @repeat: no-repeat, 
+    @pos-x: left, 
+    @pos-y: top, 
+    @size-w: auto, 
+    @size-h: auto
+  ) {
+    background-image: url("@{url-images}/@{path}?v=@{url-images-suffix}");
+    background-repeat: @repeat;
+    background-position: @pos-x @pos-y;
+    background-size: @size-w @size-h;
+  }
+  .url(@path) {
+    background-image: url("@{url-images}/@{path}?v=@{url-images-suffix}"); 
+  }
+  .overlay(
+    @path, 
+    @size-w: auto, 
+    @size-h: auto,
+    @repeat: no-repeat
+  ) {
+    position: relative;
+    &:after {
+      position: absolute;
+      content: " ";
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+      #IMAGE.background(
+        @path: @path, 
+        @repeat: @repeat, 
+        @size-w: @size-w,
+        @size-h: @size-h
+      );
+    }
+  }
+}                   
+

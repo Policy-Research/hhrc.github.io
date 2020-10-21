@@ -1,0 +1,78 @@
+/* ================================================================
+MIXINS - TYPE
+================================================================ */
+
+// Version:         1.0.1
+
+// Changes:         1.0.1 | change "t-" to "type-" 
+
+.mix-bottom-stylesheet() {
+
+  // Defualt
+  // -----------------------------------
+
+  .type-base { 
+    #TYPE.create(
+      @size: @type-base, 
+      @lh: @type-line-height, 
+      @family: inherit, 
+      @with-p: yes
+    ); 
+  }
+
+  // Sizes
+  // -----------------------------------
+
+  .type-large-xx { 
+    #TYPE.create(
+      @size: @type-large-xx, 
+      @lh: @type-large-xx-lh, 
+      @family: inherit, 
+      @with-p: yes
+    ); 
+  }
+  .type-large-x { 
+    #TYPE.create(
+      @size: @type-large-x, 
+      @lh: @type-large-x-lh, 
+      @family: inherit, 
+      @with-p: yes
+    ); 
+  }
+  .type-large { 
+    #TYPE.create(
+      @size: @type-large, 
+      @lh: @type-large-lh, 
+      @family: inherit, 
+      @with-p: yes
+    ); 
+  }
+  .type-small { 
+    #TYPE.create(
+      @size: @type-small, 
+      @lh: @type-small-lh, 
+      @family: inherit, 
+      @with-p: yes
+    ); 
+  }
+  .type-small-x { 
+    #TYPE.create(
+      @size: @type-small-x, 
+      @lh: @type-small-x-lh, 
+      @family: inherit, 
+      @with-p: yes
+    ); 
+  }
+
+  // Line Height Modifiers
+  // -----------------------------------
+
+  .type-dense { 
+    line-height: @type-line-height-dense; 
+    p {  
+      line-height: @type-line-height-dense;  
+    }
+  }
+  .type-no-lh { line-height: @type-line-height-no;  } 
+
+}

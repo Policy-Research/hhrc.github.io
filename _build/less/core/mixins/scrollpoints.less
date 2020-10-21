@@ -1,0 +1,106 @@
+// =============================================================================
+// Mixins - Scrollpoints
+// =============================================================================
+
+
+// #SCROLLPOINTS.createMicropoints(
+//   @class: 'translate-this', 
+//   @num-intervals: 5, 
+//   @math-start: 0,
+//   @math-multiply: false, 
+//   @math-modifier: 100, 
+//   @math-negative: false,
+//   @css-property: 'transform',
+//   @css-property-value-prefix: 'translateY',
+//   @css-property-unit: px
+// );
+
+#SCROLLPOINTS() {
+  .createMicropoints(
+    @class, 
+    @num-intervals, 
+    @math-start,
+    @math-multiply: false, 
+    @math-modifier, 
+    @css-property,
+    @css-property-value-prefix: false,
+    @math-negative: false,
+    @css-property-unit: px,
+    @loop-increment: 0
+  ) when not (@loop-increment > (@num-intervals - 1)) {
+
+
+    // Calculations & Excaping
+    // ===================================
+
+    // Variables used for printout
+    @class-escaped: e(@class);
+    @css-property-escaped: e(@css-property);
+    @class-num: @loop-increment + 1;
+
+    // Value Calculations
+    @calc-prop-addition: unit(@math-start + (@loop-increment * @math-modifier), @css-property-unit);
+    @calc-prop-multiplication: unit(@math-start * pow(@math-modifier, @loop-increment), @css-property-unit); // Geometric Sequence, POW = Exponetial Multipier
+
+    // Concatanted Property Values 
+    @calc-prop-addition-w-prefix: ~"@{css-property-value-prefix}(@{calc-prop-addition})";
+    @calc-prop-addition-w-prefix-negative: ~"@{css-property-value-prefix}(-@{calc-prop-addition})";
+    @calc-prop-multiplication-w-prefix: ~"@{css-property-value-prefix}(@{calc-prop-multiplication})";
+    @calc-prop-multiplication-w-prefix-negative: ~"@{css-property-value-prefix}(-@{calc-prop-multiplication})";
+
+    // Print Out Class
+    // ===================================
+
+    .@{class-escaped}-@{class-num} {
+
+       // Set the property value
+       // ---------------------------------
+
+      // Multiplication On, Negative Off, Prefix Off
+      & when (@math-multiply = true) and not (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-multiplication;
+      }
+      // Multiplication On, Negative On
+      & when (@math-multiply = true) and (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: -(@calc-prop-multiplication);
+      }
+      // Addition On, Negative Off
+      & when not (@math-multiply = true) and not (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-addition;
+      }
+      // Addition On, Negative On
+      & when not (@math-multiply = true) and (@math-negative = true) and (@css-property-value-prefix = false) {
+        @{css-property-escaped}: -(@calc-prop-addition);
+      }
+      // Multiplication On, Negative Off, Prefix On
+      & when (@math-multiply = true) and not (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-multiplication-w-prefix;
+      }
+      // Multiplication On, Negative On, Prefix On
+      & when (@math-multiply = true) and (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-multiplication-w-prefix-negative;
+      }
+      // Addition On, Negative Off, Prefix On
+      & when not (@math-multiply = true) and not (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-addition-w-prefix;
+      }
+      // Addition On, Negative On, Prefix On
+      & when not (@math-multiply = true) and (@math-negative = true) and not (@css-property-value-prefix = false) {
+        @{css-property-escaped}: @calc-prop-addition-w-prefix-negative;
+      }
+    }
+    // Loop - Call the function again
+    #SCROLLPOINTS.createMicropoints(
+      @class: @class, 
+      @math-start,
+      @num-intervals: @num-intervals, 
+      @math-multiply: @math-multiply, 
+      @math-modifier: @math-modifier, 
+      @css-property: @css-property,
+      @css-property-value-prefix: @css-property-value-prefix,
+      @math-negative: @math-negative,
+      @css-property-unit: @css-property-unit,
+      @loop-increment: @loop-increment + 1
+    );
+  }
+}

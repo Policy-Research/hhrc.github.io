@@ -1,0 +1,126 @@
+// Plain Bullets
+// =============================================================================
+
+.list-bullet-plain {
+  margin-left: @list-indent;
+  > li, 
+  ul > li {
+    list-style: @list-plain-type-level1 outside;
+    margin-bottom: @list-margin;
+    margin-top: @list-margin;
+  }
+  ul { 
+    margin-left: @list-indent; 
+    > li {
+      list-style-type: @list-plain-type-level2;
+    }
+  }
+}
+ 
+ 
+// Custom Bullets
+// =============================================================================
+
+.list-bullet {
+  list-style: none outside;
+  >li {
+    margin-top: @list-margin;
+    margin-bottom: @list-margin;
+    padding-left: 1em + @bullet-li-horizontal-nudge;
+    position: relative; 
+    &:before {
+      display: block;
+      position: absolute;
+      background-color: transparent;
+      top: 0 + @bullet-vertical-nudge;
+      left: 0 + @bullet-horizontal-nudge;
+      font-size: @bullet-size;
+      color: @bullet-color;
+      font-family: "Arial"; // For bullet character
+    }
+  }
+  >li:before when not (@bullet-circle = on) {
+    content: '\25A0';
+  }
+  >li:before when (@bullet-circle = on) {
+    content: "\2022"; // bullet character
+  }
+  ul {
+    margin-left: @list-indent;
+    margin-top: @list-margin;
+    margin-bottom: @list-margin;
+    .list-bullet-plain; 
+    >li {
+      padding-left: 0;
+      &:before {
+        content: none;
+      }
+    }
+  }
+}
+
+
+// List Lines
+// =============================================================================
+
+.list-lines when (@toggle-list-lines = on) {
+  border-color: @list-lines-color;
+  border-style: solid;
+  border-left-width: 0;
+  border-right-width: 0;
+  &.dotted { &:extend(.dotted); }
+  &.dashed { &:extend(.dashed); }
+  >li {
+    padding-top: @list-lines-pad;
+    padding-bottom: @list-lines-pad;
+    margin-bottom: 0; //  Incase used with other list
+    margin-top: 0; //  Incase used with other list 
+    border-bottom-width: @list-line-width;
+    border-color: inherit;
+    border-style: inherit;
+  }
+  ul {
+    margin-left: @list-indent;
+    margin-top: @list-margin;
+    margin-bottom: @list-margin;
+    &:extend(.list-bullet-plain all);
+  }
+}
+.list-lines when (@list-lines-top = on) and (@toggle-list-lines = on) {
+  >li:first-child {
+    border-top-width: @list-line-width;
+    border-style: inherit;
+  }
+  
+}
+.list-lines when not (@list-lines-btm = on) and (@toggle-list-lines = on) {
+  >li:last-child {
+    border-bottom-width: 0;
+    border-style: inherit;
+  }
+}
+
+
+// Remove List Styling
+// =============================================================================
+
+.list-plain {
+  list-style: none outside;
+  background-image: none;
+  li {
+    background-image: none;
+    padding: 0;
+    margin-top: @list-margin;
+    margin-bottom: @list-margin;
+  }
+  ul {
+    margin-left: 0;
+    list-style: none outside;
+    li{
+      padding-left: 0;
+      background-image: none;
+      list-style-type: none;
+    }
+    ul li { list-style-type: none; }
+  }
+}

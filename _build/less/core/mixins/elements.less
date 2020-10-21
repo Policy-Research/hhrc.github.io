@@ -1,0 +1,299 @@
+// =============================================================================
+// Mixins - Elements
+// =============================================================================
+
+// Version:         2.0.1
+
+// Changes:         2.0.1 | Update the icon mixins used in details
+
+#ELEMENT() {
+  .buttonResetStyles() {
+    text-transform: none;
+    text-align: inherit;
+    background-color: transparent;
+    border: transparent;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;   
+    appearance: none; 
+    color: inherit; 
+  }
+  .circle(@size: 24px) {
+    text-align: center;
+    display: block;
+    height: @size;
+    width: @size;
+    border-radius: @size;
+  }
+  .cssGlyph(@name) {
+    & when (@name = "arrow left") {
+      content: "\2190"; // ←   
+    }
+    & when (@name = "arrow up") {
+      content: "\2191"; // ↑   
+    }
+    & when (@name = "arrow right") {
+      content: "\2192"; // →   
+    }
+    & when (@name = "arrow down") {
+      content: "\2193"; // ↓  
+    }
+    & when (@name = "left right") {
+      content: "\2194"; // ↔   
+    }
+    & when (@name = "chevron left") {
+      content: "\2039"; // ‹  
+    }
+    & when (@name = "chevron right") {
+      content: "\203A"; // ›  
+    }
+  }
+  .circleResponsive(@size: 100%) {
+    display: inline-block;
+    width: @size;
+    height: 0;
+    padding-bottom: @size;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .hideScrollbars() {
+    -ms-overflow-style: none; // IE 10+
+    overflow: -moz-scrollbars-none; // Firefox
+    &::-webkit-scrollbar { 
+      width: 0 !important; // Chrome
+    }
+  }
+  .focusDefaultStyle() {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: Highlight;
+
+    // WebKit gets its native focus styles.
+    @media (-webkit-min-device-pixel-ratio: 0) {
+      outline-color: -webkit-focus-ring-color;
+      outline-style: auto;
+    }
+  }
+  .focusMatchNative(@color) {
+    &:focus {
+      border-color: rgba(red(@color), green(@color), blue(@color), 0.8);
+      outline: 0;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(red(@color), green(@color), blue(@color), 0.6);
+    }
+  }
+  .links(
+    @color: @a-color, 
+    @hover: @a-color-hover, 
+    @visited: @a-color-visited
+  ) {
+    color: @color;
+    &:visited when not (@visited = off) and not (@visited = false)  { 
+      color: @visited; 
+    }
+    &:hover { 
+      color: @hover; 
+    }
+  }
+  .listStyleNone() {
+    list-style-type: none;
+    list-style: none;
+    list-style-image: none;
+    background-image: none;
+  }
+  .responsiveEmbed(
+    @el-width: 1,
+    @el-height: 1,
+    @width: 100%,
+    @parent-width: @width
+    ) {
+      height: 0;
+      width: @parent-width;
+      padding-top: (@el-height / @el-width) * @width;
+      position: relative;
+      overflow: hidden;
+    > svg,
+    > iframe
+    > object {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+  .triangle(
+    @direction, 
+    @color, 
+    @border-width, 
+    @border-height, 
+    @position: none, 
+    @inset: none, 
+    @container-pos: relative
+  ) {
+
+    // Usage:
+    // .mix-triangle(left, white, 20px, 20px);
+    // .mix-triangle(left, white, 20px, 20px, left, in);
+    // .mix-triangle(left, white, 20px, 20px, left, out);
+
+    position: @container-pos;
+
+    &:after {
+      display: block;
+      content: " ";
+      position: absolute;
+      width: 0; 
+      height: 0; 
+    }
+    &:after when (@direction = up) {
+      border-left: @border-width solid transparent;
+      border-right: @border-width solid transparent;
+      border-bottom: @border-height solid @color;
+    } 
+    &:after when (@direction = down) {
+      border-left: @border-width solid transparent;
+      border-right: @border-width solid transparent;
+      border-top: @border-height solid @color;
+    } 
+    &:after when (@direction = left) {
+      border-top: @border-width solid transparent;
+      border-bottom: @border-width solid transparent;
+      border-right: @border-height solid @color;
+    } 
+    &:after when (@direction = right) {
+      border-top: @border-height solid transparent;
+      border-bottom: @border-height solid transparent;
+      border-left: @border-width solid @color;
+    } 
+
+    // INSET 
+    &:after when (@position = top) and (@inset = in) {
+      top: 0;
+      left: 50%;
+      margin-left: -(@border-width);
+    }
+    &:after when (@position = btm) and (@inset = in) {
+      bottom: 0;
+      left: 50%;
+      margin-left: -(@border-width);
+    }
+    &:after when (@position = left) and (@inset = in) {
+      left: 0;
+      top: 50%;
+      margin-top: -(@border-height);
+    }
+    &:after when (@position = right) and (@inset = in) {
+      right: 0;
+      top: 50%;
+      margin-top: -(@border-height);
+    }
+
+    // Outset
+    &:after when (@position = top) and (@inset = out) {
+      top: -(@border-height);
+      left: 50%;
+      margin-left: -(@border-width);
+    }
+    &:after when (@position = btm) and (@inset = out) {
+      bottom: -(@border-height);
+      left: 50%;
+      margin-left: -(@border-width);
+    }
+    &:after when (@position = left) and (@inset = out) {
+      left: -(@border-width);
+      top: 50%;
+      margin-top: -(@border-height);
+    }
+    &:after when (@position = right) and (@inset = out) {
+      right: -(@border-width);
+      top: 50%;
+      margin-top: -(@border-height);
+    }
+  }
+  .mix-details-plain(
+    @icon:                                   off,
+    @border-radius:                          4px,
+    @summary--background-color:              @color-black-10,
+    @summary--background-color--open:        @color-black-20,
+    @summary--color:                         inherit,
+    @summary--color--open:                   inherit,
+    @border-width:                           1px,
+    @padding:                                1em
+  ) when not (@icon = on) {
+    border-radius: @border-radius;
+    padding-left: @padding;
+    padding-right: @padding;
+    summary {
+      margin-left: -@padding;
+      margin-right: -@padding;
+      background: @summary--background-color;
+      color: @summary--color;
+      border-radius: @border-radius;
+      padding: @padding;
+      outline: none;
+    }
+    &[open] {
+      background: white;
+      border: @border-width solid @color-black-10;
+      padding-bottom: @padding;
+      summary {
+        margin-bottom: @padding;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0; 
+        color: @summary--color--open;
+        background-color: @summary--background-color--open;
+      }
+    }
+  }
+  // Details Custom Icon (@icon = on)
+  .plainDetails(
+    @icon:                                   false,
+    @icon-v-align:                           -0.2em,
+    @border-radius:                          4px,
+    @summary--background-color:              @color-black-10,
+    @summary--background-color--open:        @color-black-20,
+    @summary--color:                         inherit,
+    @summary--color--open:                   inherit,
+    @border-width:                           1px,
+    @padding:                                1em
+  ) when (@icon = on) {
+    border-radius: @border-radius;
+    padding-left: @padding;
+    padding-right: @padding;
+    
+    summary {
+      margin-left: -@padding;
+      margin-right: -@padding;
+      background: @summary--background-color;
+      color: @summary--color;
+      border-radius: @border-radius;
+      padding: @padding/1.61 @padding;
+      outline: none;
+      vertical-align: top;
+      &::-webkit-details-marker {
+        display: none;
+      }
+      &:before {
+        #ICON.create("chevron-up");
+        margin-right: 0.5em;
+      }
+    }
+    &[open] {
+      background: white;
+      border: @border-width solid @color-black-10;
+      padding-bottom: @padding;
+
+      summary {
+        margin-bottom: @padding;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0; 
+        color: @summary--color--open;
+        background-color: @summary--background-color--open;
+        &:before {
+          #ICON.create("chevron-down");
+        }
+      }
+    }
+  }
+}

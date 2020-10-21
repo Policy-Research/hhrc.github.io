@@ -1,0 +1,60 @@
+.is-modal__panel--fancy {
+
+  .is-modal__close {
+    &:after {
+      #ICON.createWithStyles(
+        @name: @modal-close-icon-name, 
+        @color: inherit
+      );
+    }
+
+    @media @modal-breakpoint {
+      .is-scroll-header__header; // Getting height and other props from header (in core)
+      left: auto;
+      width: @modal-close-icon-wrap-width--mobile;
+      text-align: center;
+      &:after {
+        color: @modal-close-icon-color--mobile;
+        font-size: @modal-close-icon-font-size--mobile;
+        vertical-align: @modal-close-icon-v-nudge--mobile;
+      }
+    }
+    @media @modal-breakpoint-up {
+      .circle-text-center(@modal-close-icon-size--desktop, @modal-close-icon-bg-color--desktop, @modal-close-icon-color--desktop);
+      top: -@modal-close-icon-size--desktop/2;
+      right: -@modal-close-icon-size--desktop/2;
+      transition: background-color 200ms;
+      &:after {
+        color: @modal-close-icon-color--desktop;
+        font-size: @modal-close-icon-font-size--desktop;
+        vertical-align: @modal-close-icon-v-nudge--desktop;
+      }
+      &:hover {
+        background-color: darken(@modal-close-icon-bg-color--desktop, 4%);
+      }
+    }
+    span {
+      .hide-v;
+    }
+  }
+
+  .is-modal__header {
+    background-color: @modal-header-background-color;
+    color: @modal-header-color;
+  }
+  .is-modal__title {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: @modal-padding-inner;
+    right: @modal-padding-inner;
+    line-height: 1.2em;
+    @media @modal-breakpoint {
+      right: @modal-close-icon-wrap-width--mobile;
+    }
+  }
+
+  .is-modal__body {
+    padding: @modal-padding-inner;
+  }
+}

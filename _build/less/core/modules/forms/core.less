@@ -1,0 +1,394 @@
+/* =============================================================================
+Core Forms: General
+============================================================================= */
+
+// Description:     Add description
+
+// Version:         1.0.1
+
+// Contents:        - Core Styles
+//                    - General
+//                      - Reset
+//                      - Elements
+//                    - Classes
+//
+
+
+
+// =============================================================================
+// Core Styles
+// =============================================================================
+
+
+// General Elements
+// =============================================================================
+
+// Form Reset
+// =====================================
+
+fieldset, form, label, legend, input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+}
+
+// Form Elements
+// =====================================
+
+// Form
+form {
+  margin: 0;
+  padding: 0;
+  
+  // Hook
+  .hook--form();
+}
+
+form,
+fieldset {
+  .form-item {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+// 1. Needed for inputs to be on a new line
+
+label {
+  #TYPE.create(
+    @size: @type-small, 
+    @lh: 0.9em
+  );
+  color: @form-label-color;
+  display: block; // 1
+  margin-bottom: @form-label-margin;
+  
+  // Hook
+  .hook--label();
+}
+
+// Text Fields
+input[type="text"], 
+input[type="password"], 
+input[type="number"], 
+input[type="url"], 
+input[type="search"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+input[type="email"],
+input[type="month"],
+input[type="week"], 
+input[type="color"] {
+  #TYPE.create-input(
+    @height: @form-element-height, 
+    @bg-color: @form-element-bg-color, 
+    @font-color: @type-color, 
+    @font-size: @t-base, 
+    @border-width: 1px, 
+    @border-color: @form-brd-color, 
+    @border-radius: @form-element-radius, 
+    @width: 100%
+  );
+  
+  // Hook
+  .hook--input--text-fields();
+}
+
+// Checkbox Field
+
+// Note:            Checkbox label should come right after checkbox input
+
+input[type="checkbox"] when (@toggle-boolean-fancy = on) {
+  .mix-input-boolean--fancy(
+    @size: @form-radio-checkbox-size, 
+    @icon-color: @form-radio-checkbox-icon-color,
+    @brd-color: @form-brd-color,
+    @brd-radius: @form-element-radius,
+    @icon-name: "check",
+    @icon-name-bg: "square-outline",
+    @icon-nudge-h: 1,
+    @icon-nudge-v: 0
+  );
+}
+
+input[type="checkbox"] when not (@toggle-boolean-fancy = on) {
+  .mix-input-boolean--plain();
+}
+
+input[type="radio"] when (@toggle-boolean-fancy = on) {
+  .mix-input-boolean--fancy(
+    @size: @form-radio-checkbox-size, 
+    @icon-color: @form-radio-checkbox-icon-color,
+    @brd-color: @form-brd-color,
+    @brd-radius: 50%,
+    @icon-name: "circle",
+    @icon-name-bg: "circle-outline",
+    @icon-nudge-h: 0,
+    @icon-nudge-v: 0
+  );
+}
+
+input[type="radio"] when not (@toggle-boolean-fancy = on) {
+  .mix-input-boolean--plain();
+}
+
+input[type="file"] {
+  #TYPE.create-input(
+    @height: @form-element-height,
+    @line-height: 0,
+    @bg-color: transparent, 
+    @font-color: @type-color, 
+    @font-size: @t-base, 
+    @border-width: 0, 
+    @border-color: transparent, 
+    @border-radius: @form-element-radius,
+    @indent: -5px,
+    @width: 100%,
+    @pad-h: @form-element-padding-horizontal
+  );
+}
+
+input[type="submit"],
+input[type="button"],
+input[type="reset"] {
+  
+  // Hook
+  .hook--input--buttons();
+}
+
+
+input[type="color"] {
+  
+  // Hook
+  .hook--input--color();
+}
+
+
+input[type="range"] {
+  
+  // Hook
+  .hook--input--range();
+}
+
+
+
+
+
+
+// Hook to create modifiers of any type
+// Note:            Should come after Text Fileds to be overwritable
+input {
+  .hook--input--text-field();
+}
+
+// Text Fields
+textarea {
+  #TYPE.create-input(
+    @height: 200px, 
+    @bg-color: @form-element-bg-color, 
+    @font-color: @type-color, 
+    @font-size: @t-base, 
+    @border-width: 1px, 
+    @border-color: @form-brd-color, 
+    @border-radius: @form-element-radius, 
+    @width: 100%
+  );
+  
+  // Hook
+  .hook--input--textarea();
+}
+
+fieldset {
+  & + & {
+    margin-top: @form-item-margin-vertical;
+  }
+  // Hook
+  .hook--input--fieldset();
+}
+
+legend {
+   // Hook
+  .hook--input--legend();
+}
+
+select {
+  .mix-select-simple();
+}
+
+
+// Classes
+// =============================================================================
+
+// BLOCK: Form Item
+// =====================================
+
+.form-item {
+  margin-bottom: @form-item-margin-vertical;
+  // & + &,
+  // legend + &,
+  // p + & 
+  * + & {
+    margin-top: @form-item-margin-vertical;
+  }
+  
+  // MOD: Sizes
+  // -------------------------------------
+  
+  &--large {
+    max-width: @form-item--size-large;
+  }
+  &--med {
+    max-width: @form-item--size-med;
+  }
+  &--small {
+    max-width: @form-item--size-small;
+  }
+  &--small-x {
+    max-width: @form-item--size-small-x;
+  }
+  
+  
+  // MOD: Types
+  // -------------------------------------
+  
+  &--file when (@toggle-input-file-fancy = on) {
+    > input[type="file"] {
+      .hide-v;
+    }
+    // Make label to look like input
+    > label {
+      .btn;
+      cursor: pointer;
+    }
+  }
+  
+  
+  // ELEMENT: Radio or Checkbox Type (Toggle)
+  // -------------------------------------
+  
+  // Note:            Theese are inputs of toggle types. You can use a hook to 
+  //                  display them inline
+  
+  &__toggle {
+    .hook--form-item__toggle();
+  }
+  
+  // Hook
+  .hook--form-item();
+}
+
+
+
+
+.select-list--icon when (@toggle-select-fancy = on) {
+  .mix-select(
+    @icon-size: 140%
+  )
+}
+
+.form-wrap {
+  // Hook
+  .hook--form-wrap();
+}
+
+.description {
+  margin-top: @form-description-margin;
+  width: @form-description-width;
+  // Hook
+  .hook--description();
+}
+
+
+/* =============================================================================
+Core Forms: Drupal 8
+============================================================================= */
+
+// Description:     Add description
+
+// Version:         1.0.0
+
+// Contents:        - Resetting Core General Styling
+//                  - Drupal 8 Specific Mixins
+//                  - Drupal 8 Specific Core Styles
+
+
+.form-drupal-8 when (@toggle-forms-drupal-8 = on) {
+  
+  // =============================================================================
+  // Resetting Core General Styling
+  // =============================================================================
+ 
+  .form-radios,
+  .form-checkboxes {
+    label {
+      margin-bottom: 0;
+    }
+  }
+    
+    
+  // =============================================================================
+  // Drupal 8 Specific Mixins
+  // =============================================================================
+
+
+  // =============================================================================
+  // Drupal 8 Specific Core Styles
+  // =============================================================================
+  
+  // General Elements
+  // =============================================================================
+
+  
+  // General Classes
+  // =============================================================================
+ 
+  .form-item,
+  details {
+    margin-top: @form-item-margin-vertical;
+    margin-bottom: @form-item-margin-vertical;
+  }
+  
+  .form-item-checkbox {
+    label {
+      margin-bottom: 0;
+    }
+  }
+  
+  .form-item-files-file {
+    
+  }
+  
+  .form-item-select {
+    
+  }
+  
+  .form-submit {
+    .hook--form-submit();
+  }
+  
+  // Messages
+  // =============================================================================
+  
+  .messages {
+    padding: @base-medium;
+    margin-bottom: @element-margin;
+  }
+  
+  .messages--error {
+    background-color: pink;
+  }
+  
+}
+
+
+
+.form-drupal-7 when (@toggle-forms-drupal-7 = on) {
+    * {color: red;}
+}

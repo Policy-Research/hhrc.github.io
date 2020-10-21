@@ -1,0 +1,560 @@
+/* =============================================================================
+MIXINS - ELEMENTS 
+================================================================================ */
+
+// Description:     Mixins for elements such as buttons, lists, boxes, etc...
+// Version:         1.4.3
+
+// Changelog:       1.2.0 Added Triangle Mixin
+//                  1.3.0 Removed old button mixin
+//                  1.4.0 Added overlays
+//                  1.4.1 Renamed varibles to property names
+//                  1.4.2 Added button reset mixin
+//                  1.4.3 Added .mix-no-scrollbar
+
+// Contents:        - Lists
+//                  - Border Radius
+//                  - Circles
+//                  - Triangle
+//                  - Overlays
+//                  - Responsive Ratio
+//                  - Details
+
+// Links
+// =============================================================================
+
+
+.links(
+  @color: @a-color, 
+  @color-hover: @a-color-hover, 
+  @color-visited: @a-color-visited
+  ) {
+  color: @color;
+  &:visited when not (@color-visited = off) { 
+    color: @color-visited; 
+  }
+  &:hover { 
+    color: @color-hover; 
+  }
+  .hook--links();
+}
+
+// Default value
+.hook--links() {} 
+
+// LISTS
+// =============================================================================
+
+
+.mix-list-style-none() {
+  list-style-type: none;
+  list-style: none;
+  list-style-image: none;
+  background-image: none;
+}
+
+// Focus
+// =============================================================================
+
+.mix-focus-fake() {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: Highlight;
+
+  // WebKit gets its native focus styles.
+  @media (-webkit-min-device-pixel-ratio:0) {
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
+  }
+}
+
+// BORDER RADIUS
+// =============================================================================
+
+.mix-border-radius(@radius: 0px) {
+  -webkit-border-radius: @radius;
+  -moz-border-radius:    @radius;
+  border-radius:         @radius;
+
+  -moz-background-clip:    padding;
+  -webkit-background-clip: padding-box;
+  background-clip:         padding-box;
+}
+.mix-border-radiuses(
+  @border-top-right-radius: 0, 
+  @border-bottom-right-radius: 0, 
+  @border-radius-bottomleft: 0, 
+  @border-top-left-radius: 0
+  ) {
+  -webkit-border-top-right-radius:    @border-top-right-radius;
+  -webkit-border-bottom-right-radius: @border-bottom-right-radius;
+  -webkit-border-bottom-left-radius:  @border-radius-bottomleft;
+  -webkit-border-top-left-radius:     @border-top-left-radius;
+
+  -moz-border-radius-topright:        @border-top-right-radius;
+  -moz-border-radius-bottomright:     @border-bottom-right-radius;
+  -moz-border-radius-bottomleft:      @border-radius-bottomleft;
+  -moz-border-radius-topleft:         @border-top-left-radius;
+
+  border-top-right-radius:            @border-top-right-radius;
+  border-bottom-right-radius:         @border-bottom-right-radius;
+  border-bottom-left-radius:          @border-radius-bottomleft;
+  border-top-left-radius:             @border-top-left-radius;
+
+  -moz-background-clip:    padding;
+  -webkit-background-clip: padding-box;
+  background-clip:         padding-box;
+}
+
+// CIRCLES
+// =============================================================================
+
+.mix-circle(@radius: 24px, @background-color: black, @color: inherit) {
+  text-align: center;
+  display: block;
+  height: @radius;
+  width: @radius;
+  .mix-border-radius(@radius);
+  background-color: @background-color;
+  color: @color;
+}
+.circle-text-center(@circle-size, @background-color, @color) {
+  .mix-circle(@circle-size);
+  background-color: @background-color;
+  color: @color;
+  line-height: @circle-size;
+  vertical-align: middle;
+}
+.mix-responsive-circle(@size, @radius) {
+  display: inline-block;
+  width: @size;
+  height: 0;
+  padding-bottom: @size;
+  .mix-border-radius(@radius);
+  overflow: hidden;
+}
+.mix-circle-img-insetshadow(@radius, @shadow-color: rgba(97, 97, 97, .45)) {
+  .mix-shadow-inset-overlay(@shadow-color);
+  .mix-circle(@radius, transparent, inherit);
+  &:before {
+    .mix-border-radius(@radius);
+  }
+  img { 
+    .mix-circle(@radius, transparent, inherit);
+  }
+}
+
+// TRIANGLES
+// =============================================================================
+
+// .mix-triangle(left, white, 20px, 20px);
+// .mix-triangle(left, white, 20px, 20px, left, in);
+// .mix-triangle(left, white, 20px, 20px, left, out);
+
+.mix-triangle(
+  @direction, 
+  @color, 
+  @border-width, 
+  @border-height, 
+  @position: none, 
+  @inset: none, 
+  @container-pos: relative
+  ) {
+  position: @container-pos;
+  &:after {
+    display: block;
+    content: " ";
+    position: absolute;
+    width: 0; 
+    height: 0; 
+  }
+  &:after when (@direction = up) {
+    border-left: @border-width solid transparent;
+    border-right: @border-width solid transparent;
+    border-bottom: @border-height solid @color;
+  } 
+  &:after when (@direction = down) {
+    border-left: @border-width solid transparent;
+    border-right: @border-width solid transparent;
+    border-top: @border-height solid @color;
+  } 
+  &:after when (@direction = left) {
+    border-top: @border-width solid transparent;
+    border-bottom: @border-width solid transparent;
+    border-right: @border-height solid @color;
+  } 
+  &:after when (@direction = right) {
+    border-top: @border-height solid transparent;
+    border-bottom: @border-height solid transparent;
+    border-left: @border-width solid @color;
+  } 
+
+  // INSET 
+  &:after when (@position = top) and (@inset = in) {
+    top: 0;
+    left: 50%;
+    margin-left: -(@border-width);
+  }
+  &:after when (@position = btm) and (@inset = in) {
+    bottom: 0;
+    left: 50%;
+    margin-left: -(@border-width);
+  }
+  &:after when (@position = left) and (@inset = in) {
+    left: 0;
+    top: 50%;
+    margin-top: -(@border-height);
+  }
+  &:after when (@position = right) and (@inset = in) {
+    right: 0;
+    top: 50%;
+    margin-top: -(@border-height);
+  }
+
+  // Outset
+  &:after when (@position = top) and (@inset = out) {
+    top: -(@border-height);
+    left: 50%;
+    margin-left: -(@border-width);
+  }
+  &:after when (@position = btm) and (@inset = out) {
+    bottom: -(@border-height);
+    left: 50%;
+    margin-left: -(@border-width);
+  }
+  &:after when (@position = left) and (@inset = out) {
+    left: -(@border-width);
+    top: 50%;
+    margin-top: -(@border-height);
+  }
+  &:after when (@position = right) and (@inset = out) {
+    right: -(@border-width);
+    top: 50%;
+    margin-top: -(@border-height);
+  }
+}
+
+
+// Focus
+// =====================================
+
+.mix-focus(@color) {
+  &:focus {
+    border-color: rgba(red(@color), green(@color), blue(@color), 0.8);
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(red(@color), green(@color), blue(@color), 0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(red(@color), green(@color), blue(@color), 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(red(@color), green(@color), blue(@color), 0.6);
+  }
+}
+
+
+
+// Characters (glyphs)
+// =============================================================================
+
+
+// Arrows
+// =====================================
+
+ @css-char-arrow-left: "\2190"; // ← 
+ @css-char-arrow-up: "\2191"; // ↑ 
+ @css-char-arrow-right: "\2192"; // → 
+ @css-char-arrow-down: "\2193"; // ↓
+ @css-char-arrow-left-right: "\2194"; // ↔ 
+
+ @css-char-chevron-left: "\2039"; // ‹
+ @css-char-chevron-right: "\203A"; // ›
+
+// Overlays
+// =============================================================================
+
+.mix-overlay(  
+    @class-container,
+    @class-panel,
+    @position: 'all',
+    @color,
+    @padding,
+    @background-color,
+    @alpha,
+    @alpha-offset: 0
+  ) {
+
+  // Escaping variables
+  @class-container-escaped: e(@class-container);
+  @class-panel-escaped: e(@class-panel);
+
+  .@{class-container-escaped} {
+    .overlay();
+
+    .@{class-panel-escaped} {
+
+      .overlay--panel();
+      .mix-bg-rgba(@background-color, @alpha, @alpha-offset);
+
+      color: @color;
+      padding: @padding;
+
+      & when (@position = 'top') {
+        .overlay-top();
+      }
+      & when (@position = 'bottom'), (@position = 'btm') {
+        .overlay-btm();
+      }
+      & when (@position = 'left'), (@position = 'l') {
+        .overlay-left();
+      }
+      & when (@position = 'right'), (@position = 'r') {
+        .overlay-right();
+      }
+    }
+  }
+}
+
+
+
+// Responsive Elements
+// =============================================================================
+
+
+// Note:            If no parameters provided, your elements will have 1x1 ratio
+
+// Params:          @el-width - element's original width
+//                  @el-height - element's original height
+//                  @width - specify any width you want a percentage value,
+
+// Usage:           .your-container {
+//                    .mix-responsive(
+//                      @el-width: 400,
+//                      @el-height: 300,
+//                      @width: 100%,
+//                    );
+//                  }
+
+
+.mix-resp-ratio(
+  @el-width: 1,
+  @el-height: 1,
+  @width: 100%,
+  @parent-width: @width
+  ) {
+    height: 0;
+    width: @parent-width;
+    padding-top: (@el-height / @el-width) * @width;
+    position: relative;
+    overflow: hidden;
+  >svg,
+  >iframe
+  >object {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+
+// Details
+// =============================================================================
+
+// Details Plain (@icon = off)
+.mix-details-plain(
+  @icon:                                   off,
+  @border-radius:                          4px,
+  @summary--background-color:                       @color-black-10,
+  @summary--background-color--open:                 @color-black-20,
+  @summary--color:                          inherit,
+  @summary--color--open:                    inherit,
+  @border-width:                           1px,
+  @padding:                                1em
+  ) when not (@icon = on) {
+  border-radius: @border-radius;
+  padding-left: @padding;
+  padding-right: @padding;
+  summary {
+    margin-left: -@padding;
+    margin-right: -@padding;
+    background: @summary--background-color;
+    color: @summary--color;
+    border-radius: @border-radius;
+    padding: @padding;
+    outline: none;
+  }
+  &[open] {
+    background: white;
+    border: @border-width solid @color-black-10;
+    padding-bottom: @padding;
+    summary {
+      margin-bottom: @padding;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0; 
+      color: @summary--color--open;
+      background-color: @summary--background-color--open;
+    }
+  }
+}
+
+// Details Custom Icon (@icon = on)
+.mix-details-plain(
+  @icon:                                   false,
+  @icon-v-align:                           -0.2em,
+  @border-radius:                          4px,
+  @summary--background-color:                       @color-black-10,
+  @summary--background-color--open:                 @color-black-20,
+  @summary--color:                          inherit,
+  @summary--color--open:                    inherit,
+  @border-width:                           1px,
+  @padding:                                1em
+  ) when (@icon = on) {
+  border-radius: @border-radius;
+  padding-left: @padding;
+  padding-right: @padding;
+  summary {
+    margin-left: -@padding;
+    margin-right: -@padding;
+    background: @summary--background-color;
+    color: @summary--color;
+    border-radius: @border-radius;
+    padding: @padding/1.61 @padding;
+    outline: none;
+    vertical-align: top;
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &:before {
+      .mix-icon(
+        @name: "chevron-up", 
+        @color: inherit, 
+        @size: 130%, 
+        @v-align: @icon-v-align
+      );
+      margin-right: 0.5em;
+    }
+  }
+  &[open] {
+    background: white;
+    border: @border-width solid @color-black-10;
+    padding-bottom: @padding;
+    summary {
+      margin-bottom: @padding;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0; 
+      color: @summary--color--open;
+      background-color: @summary--background-color--open;
+      &:before {
+        .mix-icon(
+          @name: "chevron-down", 
+          @color: inherit, 
+          @size: 130%, 
+          @v-align: @icon-v-align
+        );
+      }
+    }
+  }
+}
+
+
+
+
+
+// Scroll
+// =============================================================================
+
+.is-scroll {
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.component--scroll(
+  @class: 'is-scroll',
+  @body,
+  @header,
+  @footer,
+  @header-height,
+  @footer-height
+) {
+
+  @class-base: e(@class);
+
+  .@{class-base}__body {
+    -webkit-overflow-scrolling: touch; // iOS
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    @body();
+  }
+  .@{class-base}__body--header {
+    top: @header-height;
+  }
+  .@{class-base}__body--header-footer {
+    top: @header-height;
+    bottom: @footer-height;
+  }
+  .@{class-base}__body--footer {
+    bottom: @footer-height;
+  }
+
+  .@{class-base}__footer, 
+  .@{class-base}__header { 
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    right: 0;
+    left: 0;
+  }
+
+  .@{class-base}__header {
+    height: @header-height;
+     @header();
+  }
+
+  .@{class-base}__footer {
+    height: @footer-height;
+    bottom: 0;
+    @footer();
+  }
+}
+
+
+
+// Buttons
+// =============================================================================
+
+.mix-reset-button() {
+  text-transform: none;
+  text-align: inherit;
+  background-color: transparent;
+  border: transparent;
+  border-radius: 0;
+  margin: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;   
+  appearance: none; 
+  color: inherit; 
+}
+
+
+// No Scrollbar
+// =============================================================================
+
+// Note:            This will only work for modern browsers and doesn't support
+//                  any non-major browsers.
+
+.mix-no-scrollbar() {
+  -ms-overflow-style: none; // IE 10+
+  overflow: -moz-scrollbars-none; // Firefox
+  &::-webkit-scrollbar { 
+    width: 0 !important; // Chrome
+  }
+}
+
+

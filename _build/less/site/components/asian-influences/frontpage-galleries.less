@@ -1,0 +1,18 @@
+.frontpage-galleries {
+  @media @break-secondary-up {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  &__content {
+    @media @break-secondary-up {
+      margin-top: -(@front-page--galleries-offset);
+      margin-bottom: @nav-padding;
+      background-color: @color-black-7;
+      border-radius: @border-radius--large;
+      overflow: hidden;
+      box-shadow: @box-shadow;
+      padding: 50px;
+    }
+  }
+}

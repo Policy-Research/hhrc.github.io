@@ -1,0 +1,4 @@
+# Working on gitigrnoe generated defualt files
+default.*.less
+/core/init/icons.less
+!/core/node_modules/

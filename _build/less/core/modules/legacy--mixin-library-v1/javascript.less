@@ -1,0 +1,54 @@
+// Media Queries Breaks for JS
+// =============================================================================
+
+// Defined in layout-config
+// Used to pass values to a javscript for breakpoints in css
+// Note direction is for upward or downward media queries, 
+// up = before, down = after
+
+
+@flag--js-breakpoint--init: false;
+
+.mix-pass-break-to-js(@breakpoint, @content, @alternate: false, @element: false) {
+  @selectorEscaped: e(@element);
+
+  // Default (body)
+  // =====================================
+  
+  body when (@element = false) {
+    & when (@flag--js-breakpoint--init = false) {
+      @flag--js-breakpoint--init: true;
+      &:before, &:after { 
+        display: none; 
+      }
+    }
+    @media @breakpoint {
+      & when (@alternate = false) {
+        &:before { content: @content; }
+      }
+      & when (@alternate = true) {
+        &:after { content: @content; }
+      }
+    }
+  }
+
+  // Custom Element
+  // =====================================
+  
+  @{selectorEscaped} when not (@element = false) {
+    & when (@flag--js-breakpoint--init = false)  {
+      @flag--js-breakpoint--init: true;
+      &:before, &:after { 
+        display: none; 
+      }
+    }
+    @media @breakpoint {
+      & when (@alternate = false) {
+        &:before { content: @content; }
+      }
+      & when (@alternate = true) {
+        &:after { content: @content; }
+      }
+    }
+  }
+}

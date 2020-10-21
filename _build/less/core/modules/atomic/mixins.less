@@ -1,0 +1,162 @@
+// Mixins
+// =============================================================================
+
+// Padding Classes
+// =====================================
+
+.mix-padding-class(
+  @size: 0, 
+  @class: unset
+  ) when not (@class = unset) {
+  .p-@{class} { padding: @size; }
+  .p-right-@{class} { padding-right: @size; }
+  .p-left-@{class} { padding-left: @size; }
+  .p-top-@{class} { padding-top: @size; }
+  .p-btm-@{class} { padding-bottom: @size; }
+  .p-sides-@{class} {
+    padding-left: @size;
+    padding-right: @size;
+  }
+  .p-ends-@{class} {
+    padding-top: @size;
+    padding-bottom: @size;
+  }
+}
+.mix-padding-class(
+  @size: 0, 
+  @class: unset
+  ) when (@class = unset) {
+  .p-all { padding: @size; }
+  .p-right { padding-right: @size; }
+  .p-left { padding-left: @size; }
+  .p-top { padding-top: @size; }
+  .p-btm { padding-bottom: @size; }
+  .p-sides {
+    padding-left: @size;
+    padding-right: @size;
+  }
+  .p-ends {
+    padding-top: @size;
+    padding-bottom: @size;
+  }
+}
+
+
+// Margins
+// =====================================
+
+.mix-margin-class(@size, @class: unset) when not (@class = unset) {
+  .m-@{class} { margin: @size; }
+  .m-right-@{class} { margin-right: @size; }
+  .m-left-@{class} { margin-left: @size; }
+  .m-top-@{class} { margin-top: @size; }
+  .m-btm-@{class} { margin-bottom: @size; }
+  .m-sides-@{class} {
+    margin-left: @size;
+    margin-right: @size;
+  }
+  .m-ends-@{class} {
+    margin-top: @size;
+    margin-bottom: @size;
+  }
+}
+.mix-margin-class(@size, @class: unset) when (@class = unset) {
+  .m-all { margin: @size; }
+  .m-right { margin-right: @size; }
+  .m-left { margin-left: @size; }
+  .m-top { margin-top: @size; }
+  .m-btm { margin-bottom: @size; }
+  .m-sides {
+    margin-left: @size;
+    margin-right: @size;
+  }
+  .m-ends {
+    margin-top: @size;
+    margin-bottom: @size;
+  }
+}
+
+// =============================================================================
+// Borders
+// =============================================================================
+
+
+// Mixin to Create Custom Clases
+// =============================================================================
+
+.mix-border-class(
+  @border-width, 
+  @class: unset
+  ) when not (@class = unset) {
+  .b-top-@{class} { 
+    border-top-width: @border-width;
+    border-top-style: solid;
+    border-top-color: @border-color;
+    &.dotted { &:extend(.dotted); }
+    &.dashed { &:extend(.dashed); }
+  }
+  .b-btm-@{class} {
+    border-bottom-width: @border-width;
+    border-bottom-style: solid;
+    border-bottom-color: @border-color;
+    &.dotted { &:extend(.dotted); }
+    &.dashed { &:extend(.dashed); }
+  }
+  .b-left-@{class} {
+    border-left-width: @border-width;
+    border-left-style: solid;
+    border-left-color: @border-color;
+    &.dotted { &:extend(.dotted); }
+    &.dashed { &:extend(.dashed); }
+  }
+  .b-right-@{class} {
+    border-right-width: @border-width;
+    border-right-style: solid;
+    border-right-color: @border-color;
+    &.dotted { &:extend(.dotted); }
+    &.dashed { &:extend(.dashed); }
+  }
+  .b-@{class} {
+    border-width: @border-width;
+    border-style: solid;
+    border-color: @border-color;
+    &.dotted { &:extend(.dotted); }
+    &.dashed { &:extend(.dashed); }
+  }
+}
+
+// Mixin to Create Default Clases
+// =============================================================================
+
+.mix-border-class(
+  @border-color: @border-color,
+  @border-width, 
+  @class: unset
+  ) when (@class = unset) {
+  .b-top {
+    border-top-width: @border-width;
+    border-top-style: solid;
+    border-top-color: @border-color;
+  }
+  .b-btm {
+    border-bottom-width: @border-width;
+    border-bottom-style: solid;
+    border-bottom-color: @border-color;
+  }
+  .b-left {
+    border-left-width: @border-width;
+    border-left-style: solid;
+    border-left-color: @border-color;
+  }
+  .b-right {
+    border-right-width: @border-width;
+    border-right-style: solid;
+    border-right-color: @border-color;
+  }
+  .b-all {
+    border-width: @border-width;
+    border-style: solid;
+    border-color: @border-color;
+  }
+}
+

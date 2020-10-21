@@ -1,0 +1,48 @@
+// Lists Spacing
+// =============================================================================
+
+@list-margin:                 @type-line-height / 2;  // Used on top and bottom
+@list-indent:                 2em;
+
+
+// Plain Bullets
+// =============================================================================
+
+@list-plain-type-level1:      circle;
+@list-plain-type-level2:      circle;
+
+
+// Custom Bullets
+// =============================================================================
+
+@bullet-size:                 1.1em;
+@bullet-circle:               off; // On for circle
+@bullet-color:                @color-blue;  // Defualt
+@bullet-li-horizontal-nudge:  .4em; // Left or Right (em)      
+@bullet-vertical-nudge:       -.02em; // Move up or down (em)
+@bullet-horizontal-nudge:     0; // Left or Right (em)
+
+
+// List Lines
+// =============================================================================
+
+
+@toggle-list-lines:           on;
+@list-lines-color:            @color-black-20;
+@list-lines-pad:              1em;
+@list-line-width:             1px;
+
+// Enable/Disable list lines on first and last child
+@list-lines-top:              off;
+@list-lines-btm:              off;
+
+
+// List Icon
+// =============================================================================
+
+// Default for hook
+.hook--mix-list-icon(@icon-name) {
+  // & when ("example") {
+  //   // Styles
+  // }
+}

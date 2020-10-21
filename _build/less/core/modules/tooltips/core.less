@@ -1,0 +1,79 @@
+/*==========================================================================
+// Tooltips - Core
+==========================================================================*/
+
+// Version:         1.0.1
+
+// Changelog:       1.0.0 | Migrated from elements.less
+
+// Contents         - Mixins
+//                  - Core Styles
+          
+                 
+// Tooltips
+// =============================================================================
+
+
+
+@calc-shadow-diff:        @tooltip-shadow-blur * 0.33;
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  .hook--tooltip();
+}
+.tooltip-toggle {
+  .hook--tooltip-toggle();
+}
+.tooltip-contents {
+  display: none;
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  width: @tooltip-width;
+  background-color: @tooltip-bg-color;
+  .mix-shadow(@blur: @tooltip-shadow-blur, @shadow-color: @tooltip-shadow);
+  &.open {
+    display: block;
+  }
+  // For Triangle Icon
+  &:before {
+    font-size: @tooltip-icon-size;
+    color: @tooltip-bg-color;
+    position: absolute;
+    display: block;
+    top: 50%;
+    margin-top: -0.5em;
+    z-index: 0;
+  }
+  &.left {
+    right: 100%;
+    margin-right: 1em;
+    .mix-transform(translateY, -50%);
+    &:before {
+      #ICON.create(@tooltip-caret-icon-right);
+      #TYPE.create-shadow(@calc-shadow-diff, 0px, @calc-shadow-diff, @tooltip-shadow-icon);
+      right: -0.95em;
+    }
+  }
+  &.right {
+    left: 100%;
+    margin-left: 1em;
+    .mix-transform(translateY, -50%);
+    &:before {
+      #ICON.create(@tooltip-caret-icon-left);
+      #TYPE.create-shadow(-@calc-shadow-diff, 0px, @calc-shadow-diff, @tooltip-shadow-icon);
+      left: -0.95em;
+    }
+  }
+  &.fixed {
+    position: fixed;
+    &:before {
+      position: absolute;
+      pointer-events: none;
+      #ICON.create(@tooltip-caret-icon-close);
+    }
+  }
+  .hook--tooltip-content();
+}
+

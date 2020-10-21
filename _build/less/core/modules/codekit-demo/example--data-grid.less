@@ -1,0 +1,20 @@
+// =============================================================================
+// Data Grid - Codekit Example
+// =============================================================================
+
+#DG.create(
+  @columns:                   12,
+  @optional: {
+
+    #DG.breakpoint(
+      @suffix:                "medium", 
+      @gutter:                40px,
+      @breakpoint:            @desktop-up
+    );
+    #DG.ruleStyle(
+      @style:                "thick", 
+      @size:                  5px,
+      @color:                 black
+    );
+  }
+);

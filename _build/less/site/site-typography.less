@@ -1,0 +1,127 @@
+// =============================================================================
+// Typography
+// =============================================================================
+
+// #TYPE.create(
+//   @size: @t-base, 
+//   @lh: @type-line-height,
+//   @family: @type-family, 
+//   @with-p: false,
+//   @size-small: false,
+//   @lh-small: false,
+//   @margin: false,
+//   @breakpoint: @type-breakpoint
+// );
+
+
+// Headlines
+// =============================================================================
+
+// .h1, .h2, .h3, .h4, .h5, .h6 {
+//   .dark-background & {
+//     color: white;
+//   }
+// }
+// .h1{ 
+//   #TYPE.create(@size: 45px, @lh: 52px, @size-small: 40px, @lh-small: 45px);
+//   font-weight: bold;
+// }
+
+
+.h2 { 
+  #TYPE.create(@size: @type-large-xx, @size-small: @type-break--large-xx, @lh: @type-line-height-dense);
+  font-weight: bold;
+  font-family: @t-family-serif; 
+  color: inherit;
+  // margin-bottom: 0.5em;
+}
+.h3 { 
+  #TYPE.create(@size: @type-large-x, @size-small: @type-break--large-x, @lh: @type-line-height-dense);
+  font-weight: bold;
+  font-family: @t-family-serif;
+  // margin-bottom: 0.5em;
+  
+  color: inherit;
+  &--colored {
+    color: #1E384B;
+  }
+}
+// .h3 { 
+//   #TYPE.create(@size: 25px, @lh: 29px);
+//   font-weight: bold;
+// }
+// .h4{ 
+//   #TYPE.create(@size: 20px, @lh: 24px);
+//   font-weight: bold;
+// }
+// .h5{ 
+//   #TYPE.create(@size: 18px, @lh: 18px);
+//   font-weight: bold;
+// }
+// .h6{ 
+//   font-weight: bold;
+// }
+
+
+// Type Classes
+// =============================================================================
+
+.type-large-xx {
+  #TYPE.createSize('large-xx', @with-p: false);
+}
+.type-large-x {
+  #TYPE.createSize('large-x', @with-p: false);
+}
+.type-large {
+  #TYPE.createSize('large', @with-p: false);
+}
+.type-base {
+  #TYPE.createSize('base', @with-p: false);
+}
+.type-small {
+  #TYPE.createSize('small', @with-p: false);
+}
+.type-small-x {
+  #TYPE.createSize('small-x', @with-p: false);
+}
+
+.type-max-width {
+  max-width: 50rem;
+  margin-right: auto;
+  margin-left: auto;
+}
+.type-dense {
+  line-height: @type-line-height-dense;
+}
+
+.short-rule {
+  width: 3.5rem;
+  background-color: white;
+  background-color: #79BFCA;
+  height: 3px;
+  margin: 1.25rem 0 1.25rem 0;
+  display: inline-block;
+  @media @break-primary {
+    margin: 1rem 0 1rem 0;
+  }
+}
+
+// Mods
+// .type-shadow {
+//   text-shadow: @text-shadow;
+// }
+// .type-shadow-dark {
+//   text-shadow: @text-shadow--dark;
+// }
+// .type-max-width {
+//   max-width: 40em;
+// }
+// .type-color-accent {
+//   color: @t-accent-color;
+// }
+
+// .type-serif { font-family: @t-family-sans; }
+// .type-shadow { #SITE.textShadow(); }
+
+// .type-yellow { color: @color-yellow; }
+// .type-white { color: white; }

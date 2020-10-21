@@ -1,0 +1,80 @@
+.header {
+  margin-top: @nav-height;
+  background-color: @color-orange-bright;
+  #IMAGE.url('banner.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;
+  text-shadow: @text-shadow;
+  position: relative;
+  z-index: 1;
+  box-shadow: inset 0 0 10px fade(@color-brown, 20%);
+  text-shadow: @text-shadow;
+  @media @break-primary {
+    margin-top: @nav-height--mobile;
+  }
+  // Shadow Overlay
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0) 50%,rgba(0,0,0,0.5) 100%);
+  }
+  &--frontpage {
+    #IMAGE.url('banner--frontpage.jpg');
+    background-position: center bottom;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: @front-page--galleries-offset;
+    @media @break-secondary {
+      padding-bottom: 0;
+      min-height: 300px;
+      padding-top: @base-large;
+      text-transform: uppercase;
+    }
+    &:after {
+      height: auto;
+      top: 0;
+      background-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.9) 100%);
+    }
+    .header__page-info {
+      padding-top: 0;
+      padding-bottom: 1em;
+      text-align: right;
+    }
+    .header__title {
+      #TYPE.create(@size: 70px, @lh: 75px, @size-small: 40px, @lh-small: 45px);
+    }
+  }
+  &__crumbs {
+    position: relative;
+    z-index: 2;
+    padding: 10px @nav-padding;
+    font-weight: 600;
+    white-space: no-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @media @break-secondary {
+      // padding-bottom: 0;
+      #TYPE.rem(@type-small);
+    }
+  }
+  &__page-info {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 2em @site-padding 3em @site-padding;
+    #TYPE.createSize('large');
+    font-weight: normal;
+    text-shadow: @text-shadow--dark;
+    @media @break-secondary {
+      padding-top: @base-small;
+      padding-bottom: @base-medium;
+    }
+  }
+}

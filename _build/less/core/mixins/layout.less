@@ -1,0 +1,114 @@
+// =============================================================================
+// Mixins - Layout
+// =============================================================================
+
+// Version:         2.0.0
+
+#LAYOUT() {
+  .clearfix() {
+    &:before,
+    &:after {
+      content: "";
+      display: table;
+    }
+    &:after {
+      clear: both;
+    }
+    *zoom: 1;
+  }
+  // Em Return in right scale (when child needs to match parent with differnt em's)
+  .calcEmChange(@value-to-calc, @value-em) {
+    @return: ((1 / @value-em) * @value-to-calc);
+  }
+  .columnWidth(@column-width, @columns: 12) {
+    width: (100% * @column-width) / @columns;
+  }
+  .hideAbsolute() {
+    position: absolute;
+    left: -999em;
+  }
+  .hideSimple() {
+    position: absolute;
+    left: -999em;
+  }
+  .layers(@layers, @inc: @layers) when (@inc >= 0) {
+    // Create Relative
+    .layer-@{inc} {
+      position: relative;
+      z-index: @inc;
+    }
+    .layer--@{inc} {
+      position: relative;
+      z-index: -@inc; 
+    }
+    //  Create absolute
+    .layer-a-@{inc} {
+      position: absolute;
+      z-index: @inc;
+    }
+    .layer-a--@{inc} {
+      position: absolute;
+      z-index: -@inc;  
+    }
+    // Call Loop
+    #LAYOUT.layers(@layers, @inc - 1);
+  }
+  .matchSitePadding(@properties...) {
+
+    each(@properties, {
+      @{value}: @site-padding;
+    });
+
+    & when not (@site-padding-large = false) and not (@site-padding-large--break = false) {
+      @media @site-padding-large--break {
+        each(@properties, {
+          @{value}: @site-padding-large;
+        });
+      }
+    }
+    & when not (@site-padding-small = false) and not (@site-padding-small--break = false) {
+      content: 'wowowow';
+      @media @site-padding-small--break {
+        each(@properties, {
+          @{value}: @site-padding-small;
+        });
+      }
+    }
+  }
+  .matchSitePaddingAdvanced(
+    @negative: false, 
+    @multiplyer: 1, 
+    @properties /* List: left, top, etc; */
+  ) {
+
+    @makeNegative: if(@negative, -1, 1);
+
+    each(@properties, {
+      @{value}: @site-padding * @multiplyer * @makeNegative;
+    });
+
+    & when not (@site-padding-large = false) and not (@site-padding-large--break = false) {
+      @media @site-padding-large--break {
+        each(@properties, {
+          @{value}: @site-padding-large * @multiplyer * @makeNegative;
+        });
+      }
+    }
+    & when not (@site-padding-small = false) and not (@site-padding-small--break = false) {
+      @media @site-padding-small--break {
+        each(@properties, {
+          @{value}: @site-padding-small * @multiplyer * @makeNegative;
+        });
+      }
+    }
+  }
+  .splitFloat(@span: container, @columns) {
+    & when (isnumber(@span) = true) {
+      float: left;
+      width: (100% * @span) / @columns;
+    }
+    & when (isnumber(@span) = false) {
+      #LAYOUT.clearfix();
+    }
+  }
+}

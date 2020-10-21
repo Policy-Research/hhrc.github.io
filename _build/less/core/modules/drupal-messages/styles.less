@@ -1,0 +1,114 @@
+/* =============================================================================
+Drupal Messages
+=========================================================================== */
+
+// Version:         1.1.1
+
+// Description:     Messages Styling
+ 
+// Changelog:       1.1.1 | Removed mix-opacity
+
+// Contents:        - Message Area
+//                    - Okay
+//                    - Warning
+//                    - Error
+
+// Note:            - You need to remove the messages css in template-alters.php
+//                  - This file is setup to get variables from the settings page.
+//                  - To Just change colors of messages and icons, don't change 
+//                  this file.
+
+// Message Area
+// =============================================================================
+
+
+div.messages {
+  margin-bottom: @element-margin;
+  padding: @drupal-msg-p-top-btm @drupal-msg-p-sides @drupal-msg-p-top-btm (@drupal-msg-p-sides  + @drupal-msg-icon-size + @drupal-msg-icon-margin);
+  border-width: 1px;
+  border-style: solid;
+  position: relative;
+  &:before {
+    display: block;
+    position: absolute;
+    top: @drupal-msg-p-top-btm + @drupal-msg-icon-top-nudge;
+    left: @drupal-msg-p-sides + @drupal-msg-icon-left-nudge;
+    opacity: 0.95; // Mute Slightly
+  }
+  >ul { .list-plain; }
+  a { text-decoration: underline; }
+}
+div.status {
+  background-color: @drupal-msg-color-status;
+  border-color: darken(@drupal-msg-color-status, @drupal-msg-brd-darken);
+  &:before { #ICON.createWithStyles(@drupal-msg-icon-status, @drupal-msg-icon-color, @drupal-msg-icon-size); }
+}
+
+// Okay
+// =====================================
+
+
+div.status, .ok {
+  font-weight: @drupal-msg-font-weight;
+  color: darken(@drupal-msg-color-status, @drupal-msg-text-darken);
+  a {
+    color: darken(@drupal-msg-color-status, @drupal-msg-text-darken);
+    &:hover {
+      color: multiply(darken(@drupal-msg-color-status, @drupal-msg-text-darken), #999999);
+    }
+  }
+}
+tr.ok { background-color: lighten(@drupal-msg-color-status, 40%); }
+
+// Warning
+// =====================================
+
+
+div.warning {
+  background-color: @drupal-msg-color-warning;
+  border-color: darken(@drupal-msg-color-warning, @drupal-msg-brd-darken);
+  &:before { #ICON.createWithStyles(@drupal-msg-icon-warning, @drupal-msg-icon-color, @drupal-msg-icon-size); }
+}
+div.warning, .warning {
+  font-weight: @drupal-msg-font-weight;
+  color: darken(@drupal-msg-color-warning, @drupal-msg-text-darken);
+  a {
+    color: darken(@drupal-msg-color-warning, @drupal-msg-text-darken);
+    &:hover {
+      color: multiply(darken(@drupal-msg-color-warning, @drupal-msg-text-darken), #999999);
+    }
+  }
+}
+tr.warning {
+  background-color: lighten(@drupal-msg-color-warning, 70%);
+}
+
+// Error
+// =====================================
+
+
+div.error {
+  background-color: @drupal-msg-color-error;
+  border-color: darken(@drupal-msg-color-error, @drupal-msg-brd-darken);
+  &:before { #ICON.createWithStyles(@drupal-msg-icon-error, @drupal-msg-icon-color, @drupal-msg-icon-size); }
+  p.error { color: white; }
+}
+div.error, .error {
+  font-weight: @drupal-msg-font-weight;
+  color: darken(@drupal-msg-color-error, @drupal-msg-text-darken);
+  a {
+    color: darken(@drupal-msg-color-error, @drupal-msg-text-darken);
+    &:hover {
+      color: multiply(darken(@drupal-msg-color-error, @drupal-msg-text-darken), #999999);
+    }
+  }
+}
+tr.error { background-color: lighten(@drupal-msg-color-error, 70%); }
+
+// Krumo
+// =====================================
+
+
+.krumo-nest {
+  padding-left: 10px;
+}

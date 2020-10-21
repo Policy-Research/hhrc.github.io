@@ -1,0 +1,80 @@
+// =============================================================================
+// Mixins - Icons
+// =============================================================================
+
+// Description:     Icon mixins, this file works with the integrated icon system
+
+// Version:         2.0.1
+
+// Changes:         2.0.1 | - Removed class generating mixins
+//                          - Changed class names to .icon
+//                          - Switched to only using :before element
+
+
+#ICON() {
+  .create(@name, @defaults: true) {
+    // Note that this mixin is also defined programmatically by the LESS FRAMEWORK
+    // This mixin will just add the default styles and then the dynamic version will
+    // fill in the content value.
+    & when (@defaults) {
+      #ICON.defaultStyles();
+    }
+  }
+  .createClass(@name) {
+    @class: e(@name);
+    .icon--@{class} {
+      &:before { 
+        #ICON.create(@name);
+      }
+    }
+  }
+  .defaultStyles() {
+    text-rendering: geometricPrecision; // Fallsback to legibilty on gecko
+    font-family: @i-family;
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-transform: none; // Protect against all caps on parent
+    font-weight: normal; // Protect against weight changes
+    font-style: normal; // Protect against italics
+    line-height: 1;
+  }
+  // .createClassSize(
+  //   @class-name, 
+  //   @size, 
+  //   @pos, 
+  //   @v-align: @icon-valign, 
+  //   @margin: @base-small-xx
+  // ) {
+  //   & when (@pos = before) {
+  //     .icon--@{class-name} {
+  //       font-size: @size;
+  //       margin-right: @margin;
+  //       vertical-align: @v-align;
+  //     }
+  //   }
+  //   & when (@pos = after) {
+  //     .icon--@{class-name} {
+  //       &:before { content: none; } // Remove Before
+  //       &:after {
+  //         &:extend(.icon);
+  //         font-size: @size;
+  //         margin-left: @margin;
+  //         vertical-align: @v-align;
+  //       }
+  //     }
+  //   }
+  // }
+  // .createWithStyles(
+  //   @name, 
+  //   @color: inherit, 
+  //   @size: @icon-font-size-medium, 
+  //   @v-align: @icon-valign
+  // ) {
+  //   &:extend(.icon);
+  //   font-size: @size;
+  //   color: @color;
+  //   vertical-align: @v-align;
+  //   #ICON.create(@name);
+  // }
+}

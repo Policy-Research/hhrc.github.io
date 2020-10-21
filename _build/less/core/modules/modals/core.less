@@ -1,0 +1,73 @@
+/*==========================================================================
+Modals
+==========================================================================*/
+
+// Version:         1.1.0
+
+// Changelog:       
+//                  1.1.0
+//                    - includes workflow for working with headers/footers
+//                    - New centering technique
+
+// Todo:            Needs scrollbottom arrow workflow (scrollpoints)
+
+.is-modal {
+	display: none;
+	&.open {
+		background: @modal-overlay-bg-color;
+		z-index: @modal-z-index;
+		display: block;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+}
+
+.is-modal__close {
+	z-index: 1;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.is-modal__panel {
+	background-color: @modal-panel-background-color;
+	position: relative;
+	display: none;
+
+	// Vertical Margins & Centering
+	height: (100%-@modal-panel-margin-v*2);
+	transform: translateY(@modal-panel-margin-v);
+
+	& when ( ispixel(@modal-panel-max-width) ) {
+		// This is when modal goes from flexible horizontal margins, to fixed
+		@modal-margin-breakpoint: (@modal-panel-max-width + @modal-panel-margin-h*2);
+		// Horizontal Centering
+		margin-left: auto;
+		margin-right: auto;
+		@media (max-width: @modal-margin-breakpoint) {
+			margin-left: @modal-panel-margin-h;
+			margin-right: @modal-panel-margin-h;
+		}	
+	}
+	& when not ( ispixel(@modal-panel-max-width) ) {
+		margin-left: @modal-panel-margin-h;
+		margin-right: @modal-panel-margin-h;
+	}
+
+	// Horizontal & Vertical Spacing Mobile
+	@media @modal-breakpoint {
+		height: (100%-@modal-panel-margin-v--mobile*2);
+		transform: translateY(@modal-panel-margin-v--mobile);
+
+		margin-left: @modal-panel-margin-h--mobile;
+		margin-right: @modal-panel-margin-h--mobile;
+	}
+
+	&.open {
+		display: block;
+	}
+  max-width: @modal-panel-max-width;
+}

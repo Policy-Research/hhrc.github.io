@@ -1,0 +1,290 @@
+/* ================================================================
+MIXINS - LAYOUT 
+================================================================ */
+
+// Description:     Mixins to assist in positioning
+
+// Version:         1.3.1
+
+// Changelog:       1.3.1 | Changed .for-each to each() to work 
+//                           with new less
+
+// Contents:        - Clearfix
+//                  - Calculations
+//                  - Positioning
+//                  - Float / Inline Lists
+//                  - Hiding 
+                 
+// CLEARFIX
+// =============================================================================
+
+
+// [Old this included in the 
+.mix-clearfixed() {
+  &:before,
+  &:after {
+      content: "";
+      display: table;
+  }
+  &:after {
+      clear: both;
+  }
+  *zoom: 1;
+}
+
+// CALCULATIONS
+// =============================================================================
+
+
+// EM Return in right scale (when child needs to match parent with differnt em's)
+// Use @calc in your equation
+.mix-calc-em-change(@value-to-calc, @value-em) {
+  @calc: ((1 / @value-em) * @value-to-calc);
+}
+
+// POSITIONING
+// =============================================================================
+
+
+// ABSOLUTE POSITIONING (Centers)
+.mix-center-absolute(@width) {
+  width: @width;
+  position: absolute;
+  left: 50%;
+  margin-left: -(@width / 2);
+}
+.mix-center-absolute-no-width() {
+  .csstransforms & {
+    left: 50%;
+    .mix-transform('translateX', -50%);
+  }
+}
+
+// FLOAT / INLINE LISTS
+// =============================================================================
+
+
+// LIST ELEMENTS (INLINE BLOCK)
+// =====================================
+
+.mix-list-inline(
+  @pad-top: 0, 
+  @pad-right: 0, 
+  @pad-btm: 0, 
+  @pad-left: 0, 
+  @align: left, 
+  @list-type: none
+  ) when (@list-type = none) {
+  ul { text-align: @align; }
+  li { 
+    display: inline-block; 
+    padding: @pad-top @pad-right @pad-btm @pad-left;
+  }
+}
+// When using on links
+.mix-list-inline(@pad-top: 0, @pad-right: 0, @pad-btm: 0, @pad-left: 0, @align: left, @list-type: none) when (@list-type = links) {
+  ul { text-align: @align; }
+  li { 
+    display: inline-block; 
+    text-align: center;
+    padding: 0;
+    a { 
+      padding: @pad-top @pad-right @pad-btm @pad-left; 
+      display: block;
+    }
+  }
+}
+// LIST ELEMENTS (FLOAT)
+// =====================================
+
+.mix-list-float(
+  @pad-top: 0, 
+  @pad-right: 0, 
+  @pad-btm: 0, 
+  @pad-left: 0, 
+  @align: left, 
+  @list-type: none, 
+  @width: auto, 
+  @parent-display: inline-block
+  ) when (@list-type = none) {
+  text-align: @align;
+  ul { 
+    display: @parent-display;
+    .cf;
+  }
+  li { 
+    text-align: center;
+    padding: @pad-top @pad-right @pad-btm @pad-left;
+    float: left;
+    width: @width;
+  }
+}
+// When using on links
+.mix-list-float(
+  @pad-top: 0, 
+  @pad-right: 0, 
+  @pad-btm: 0, 
+  @pad-left: 0, 
+  @align: left, 
+  @list-type: none, 
+  @width: auto, 
+  @parent-display: inline-block
+  ) when (@list-type = links) {
+
+  text-align: @align; 
+  ul { 
+    display: @parent-display; 
+    .cf;
+  }
+  li {
+    float: left;
+    width: @width;
+    text-align: center;
+    a { 
+      padding: @pad-top @pad-right @pad-btm @pad-left; 
+      display: block;
+    }
+  }
+}
+
+// HIDING
+// =============================================================================
+
+.hide-simple() {
+  position: absolute;
+  left: -999em;
+}
+
+
+// Flexbox 
+// =============================================================================
+
+.mix--display-flex() {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+.mix--flex-align--middle() {
+  .mix--display-flex();
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.mix--flex-align--top() {
+  .mix--display-flex();
+  -ms-flex-align: flex-start;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  align-items: flex-start;
+}
+.mix--flex-align--bottom() {
+  .mix--display-flex();
+  -ms-flex-align: flex-end;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  align-items: flex-end;
+}
+
+// Aliases
+.mix--flex-align--center() {  .mix--flex-align--middle();   }
+.mix--flex-align--start() {   .mix--flex-align--top();      }
+.mix--flex-align--end() {     .mix--flex-align--bottom();   }
+
+
+
+// Quick Splits
+// =============================================================================
+
+.mix-split(@span: cont, @cols) when (isnumber(@span) = true) {
+  float: left;
+  width: (100% * @span) / @cols;
+}
+
+.mix-split(@span: cont, @cols) when (isnumber(@span) = false) {
+  .cf;
+}
+
+
+// Site Padding Match 
+// =============================================================================
+
+.mix-match-site-padding(@properties...) {
+
+  each(@properties, {
+    @{value}: @site-padding;
+  });
+
+  & when not (@site-padding-large = false) and not (@site-padding-large--break = false) {
+    @media @site-padding-large--break {
+      each(@properties, {
+        @{value}: @site-padding-large;
+      });
+    }
+  }
+  & when not (@site-padding-small = false) and not (@site-padding-small--break = false) {
+    @media @site-padding-small--break {
+      each(@properties, {
+        @{value}: @site-padding-small;
+      });
+    }
+  }
+}
+
+// Note the mixin below will accept the arguments for props as list
+.mix-match-site-padding-advanced(
+  @negative: false, 
+  @multiplyer: 1, 
+  @properties
+) {
+
+  @makeNegative: if(@negative, -1, 1);
+
+  each(@properties, {
+    @{value}: @site-padding * @multiplyer * @makeNegative;
+  });
+
+  & when not (@site-padding-large = false) and not (@site-padding-large--break = false) {
+    @media @site-padding-large--break {
+      each(@properties, {
+        @{value}: @site-padding-large * @multiplyer * @makeNegative;
+      });
+    }
+  }
+  & when not (@site-padding-small = false) and not (@site-padding-small--break = false) {
+    @media @site-padding-small--break {
+      each(@properties, {
+        @{value}: @site-padding-small * @multiplyer * @makeNegative;
+      });
+    }
+  }
+}
+
+// Layer Mixin
+// =============================================================================
+
+.loop-layers(@layers, @inc: @layers) when (@inc >= 0) {
+  // Create Relative
+  .layer-@{inc} {
+    position: relative;
+    z-index: @inc;
+  }
+  .layer--@{inc} {
+    position: relative;
+    z-index: -@inc; 
+  }
+  //  Create absolute
+  .layer-a-@{inc} {
+    position: absolute;
+    z-index: @inc;
+  }
+  .layer-a--@{inc} {
+    position: absolute;
+    z-index: -@inc;  
+  }
+  // Call Loop
+  .loop-layers(@layers, @inc - 1);
+}
+
+

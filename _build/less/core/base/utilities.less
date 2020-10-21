@@ -1,0 +1,79 @@
+/*
+
+===========================================================================
+Base: Utilities
+===========================================================================
+
+Version:            3.0.2
+
+//                  3.0.2 Clearfix flexbox properties
+
+*/
+
+// Note these are added to the bottom of the style sheet.
+
+.cf { 
+  &:before,
+  &:after {
+    content: "";
+    display: table;
+    // Flexbox, clear fix for pseudo elements in Safari
+    flex-basis: 0;
+    order: 1;
+  }
+  &:after { clear: both; }
+  *zoom: 1;
+}
+.hidden-visually, 
+.hide-v {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  &.focusable:active,
+  &.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+  }
+}
+.hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+}
+.unhide-text {
+  text-indent: 0;
+  white-space: normal;
+}
+
+// Hide Content but allow screenreaders to see it (ie. form element)
+.hidden-abs {
+  position: absolute;
+  left: -10000px;
+  top: -10000px;
+}
+.hidden-abs-no {
+  position: static;
+  left: auto;
+  top: auto;
+}
+.no-select {
+  user-select: none;
+  pointer-events: none;
+  cursor: pointer;
+}
+.no-scroll-y { 
+  overflow-y: hidden; 
+}
+.no-scroll-x { 
+  overflow-x: hidden; 
+}

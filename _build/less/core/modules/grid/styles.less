@@ -1,0 +1,30 @@
+/*
+================================================================================
+Module: Grid - Styles
+================================================================================
+*/
+
+// Version:         1.0.2
+
+// Changes:         1.0.1 | Removed mix-bg-clip
+//                  1.0.2 | Added min-height to columns for empty columns. 
+//                          this will allow empty elements to take up space (width)
+//                          in the layout.
+
+
+[class^="col-"], 
+[class*=" col-"] {
+  border: 0px solid rgba(0,0,0,0);
+  float: left;
+  min-height: 1px; // Incase it's an empty column
+}
+[class^="col-"], 
+[class*=" col-"]  {
+  background-clip: @grid-col-bg-clip;
+  width: 100%;
+}
+
+[class*=" -col-rules"], 
+[class*=" -row-rules"] {
+  &:extend(.equalheights all);
+}

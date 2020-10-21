@@ -1,0 +1,93 @@
+// Modal Inner (Header/Footer)
+// =============================================================================
+
+// Description:     You can create any combination of header/footer types for 
+//                  your modals by using the .component--scroll mixin. Bellow, 
+//                  we create a default example with a header and footer.
+
+//                  Create as many types as you want. See Codekit example for
+//                  markup.
+
+
+// Default: with Header/Footer
+// -------------------------------------
+
+// Note:            This example includes both, a header & a footer
+
+// Generate classes to be mixed in
+.component--scroll(
+  @class: 'is-scroll-default', 
+  @body: {},
+  @header: {},
+  @footer: {},
+  @header-height: 80px,
+  @footer-height: 60px
+);
+
+.component--scroll(
+  @class: 'is-scroll-header', 
+  @body: {},
+  @header: {},
+  @footer: {},
+  @header-height: 80px,
+  @footer-height: 0
+);
+
+// Mixin previously generated classes
+// -------------------------------------
+
+.is-modal__type {
+  .is-scroll;
+}
+
+
+// Type:            Default
+.is-modal__type--default {
+  .is-modal__header {
+    .is-scroll-default__header;
+  }
+  .is-modal__body {
+    .is-scroll-default__body;
+    .is-scroll-default__body--header-footer;
+  }
+  .is-modal__footer {
+    .is-scroll-default__footer;
+  }
+}
+
+// Type:            Header (No footer)
+
+.is-modal__type--header {
+  .is-modal__header {
+    .is-scroll-header__header;
+  }
+  .is-modal__body {
+    .is-scroll-header__body;
+    .is-scroll-header__body--header-footer;
+  }
+}
+
+
+// Type:            Your new type
+
+// .component--scroll(
+//   @class: 'is-scroll-yourtype', 
+//   @body: {},
+//   @header: {},
+//   @footer: {},
+//   @header-height: 80px,
+//   @footer-height: 60px
+// );
+
+// .is-modal__type--yourtype {
+//  .is-modal__header {
+//    .is-scroll-yourtype__header;
+//  }
+//  .is-modal__body {
+//    .is-scroll-yourtype__body;
+//    .is-scroll-yourtype__body--header-footer;
+//  }
+//  .is-modal__footer {
+//    .is-scroll-yourtype__footer;
+//  }
+// }

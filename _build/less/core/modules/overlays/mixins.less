@@ -1,0 +1,181 @@
+
+// =============================================================================
+// Mixins
+// =============================================================================  
+
+.mix-overlay(
+  @type,
+  @class-container,
+  @background-color: @overlay-background-color,
+  @color: @overlay-color,
+  @background-alpha: @overlay-background-alpha,
+  @background-alpha-offset: @overlay-background-alpha-offset,
+  @position: "btm"
+){
+
+  @class-container-escaped: e(@class-container);
+
+  // Overlay Container
+  .@{class-container-escaped} {
+    
+    display: block;
+    position: relative;
+    overflow: hidden;
+
+    // Type: Background
+    // =====================================
+    
+    // Basic background overlay
+
+    & when (@type = 'background') {
+      &.@{class-container-escaped}--background {}
+      .@{class-container-escaped}__content {
+        .mix-bg-rgba(@background-color, @background-alpha, @background-alpha-offset);
+        color: @color;
+      }
+    }
+    
+    // Type: Hover
+    // =====================================
+
+    // Overlay content will appear on hover
+
+    & when (@type = 'hover') {
+      &.@{class-container-escaped}--hover {
+        .@{class-container-escaped}__content {
+          .mix-bg-rgba(@background-color, @background-alpha, @background-alpha-offset);
+          .overlay-hide();
+          color: @color;
+        }
+        &:hover {
+          .@{class-container-escaped}__content {
+            .overlay-show();
+          }
+        }
+      }
+    }
+
+    // Type: Caption
+    // =====================================
+    
+    // Simple caption. Can be positioned to sides
+    
+    & when (@type = 'caption') {
+      &.@{class-container-escaped}--caption {
+        .@{class-container-escaped}__content {
+          .mix-bg-rgba(@background-color, @background-alpha, @background-alpha-offset);
+          color: @color;
+          & when (@position = 'top') {
+            bottom: auto;
+          }
+          & when (@position = 'bottom'), (@position = 'btm') {
+            top: auto;
+          }
+          & when (@position = 'left'), (@position = 'l') {
+            right: auto;
+          }
+          & when (@position = 'right'), (@position = 'r') {
+            left: auto;
+          } 
+        }
+      }
+    }
+
+    // Type: Link
+    // =====================================
+
+    // Overlay panel will show up on hover, the hover panel is a link
+
+    & when (@type = 'link') {
+      &.@{class-container-escaped}--link {
+        .@{class-container-escaped}__content {
+          .mix-bg-rgba(@background-color, @background-alpha, @background-alpha-offset);
+          .overlay-hide();
+          color: @color;
+        }
+        &:hover {
+          .@{class-container-escaped}__content {
+            .overlay-show();
+          }
+        }
+      }
+    }
+
+    // Type: Click
+    // =====================================
+    
+    // Overlay is our Collapsibles system
+
+    & when (@type = 'click') {
+      &.@{class-container-escaped}--click {
+        .@{class-container-escaped}__content {
+          .mix-bg-rgba(@background-color, @background-alpha, @background-alpha-offset);
+          color: @color;
+        }
+        &:hover {
+          .@{class-container-escaped}__content {
+          }
+        }
+      }
+    }
+
+    img { 
+      width: 100%; 
+      margin: 0; 
+    }
+  }
+
+  // Actual overlay/content defaults
+  .@{class-container-escaped}__content {
+    .mix-bg-rgba(@overlay-background-color, @overlay-background-alpha, @overlay-background-alpha-offset);
+    color: @color;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left:0;
+    right: 0;
+  }
+}
+
+
+// Utility Mixins (used in main mixin)
+// =====================================
+
+.overlay-hide() {
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  width: 1px;
+  .mix-animation(fade-out, 200ms ease-out 0ms 1 both, {
+    0% {
+      opacity: 1;
+      clip: auto;
+      height: auto;
+      width: auto;
+      margin: 0;
+    }
+    100% { 
+      opacity: 0;
+    }
+  });
+}
+
+.overlay-show() {
+  clip: auto;
+  height: auto;
+  width: auto;
+  margin: 0;
+  overflow: visible;
+  padding:  0;
+  position: absolute;
+  .mix-animation(fade-in, 200ms ease-in 0ms 1 both, {
+    0% {
+      opacity: 0
+    }
+    100% { 
+      opacity: 1;
+    }
+  });
+}

@@ -1,0 +1,897 @@
+// =============================================================================
+// Module: Grid - Mixins
+// =============================================================================
+
+
+// Description:     All framework styles for Grid settings
+
+// Version:         2.0.2
+
+// Change log       
+//                  1.2.0 | Updated splits to have a snapping class
+//                  1.3.0 | Updated grid stacking at different breakpoints
+//                  1.4.0 | Removed border-box option
+//                  1.5.0 | Switched defaults to attribute selector
+//                  1.5.1 | Renamed grid and split mixins
+//                  1.6.0 | Added new fixed width gutter
+//                          - Reformatted all loops to not include counter/incrementer 
+//                  1.6.2 | Adjusted the fixed width grid so that the columns are targetd by row
+//                          - This simplifies syntax of columns to span
+//                          - Fixed issue in fixed grid style sheet ordering @loop-count
+//                  2.0.0   Removed splits
+//                  2.0.1 | Two big changes
+//                          - Made breakpoint medium and large optional
+//                          - Made flexbox ready (in conjunction with core .equalheights)
+//                  2.0.2 | Changed mixin name from "modifier--grid-fixed-gut-col-rules" to "modifier--grid-fixed-gut-rules"
+//                          - Also removed unused mixin parameter
+
+
+// Contents         - Classes
+//                    - Column Grid
+//                    - Splits
+//                    - Split
+//                  - Mixin
+//                    - Column Grid (empty?)
+//                    - Common Classes
+//                  
+
+
+// Grid Mixin (Pixel based, adaptive, uses negative margin)
+// =============================================================================
+
+// Create small widths and offsets
+
+
+.loop-grid-fixed-gut(
+  @col, 
+  @gut, 
+  @brk-small: @grid-breakpoint, 
+  @gut-med: @gut, 
+  @brk-med: off, 
+  @class-med: medium, 
+  @gut-large: 15px, 
+  @brk-large: off, 
+  @class-large: large, 
+  @pref-parent: row, 
+  @inc: @col, 
+  @loop-set: 1,
+  @mod-row-align: false,
+  @mod-dividers: false,
+  @mod-row-gutters: false,
+  @mod-row-gutters--alt: false,
+  @mod-col-rules: false,
+  @mod-col-rules--width: 1px,
+  @mod-col-rules--color: @color-black-20,
+  @mod-col-rules--last-child: false,
+  @mod-row-rules: false,
+  @mod-row-rules--height: 1px,
+  @mod-row-rules--color: @color-black-20
+  ) when (@inc >= 0) {
+
+  // Varaibles and Calculatons
+  // ===================================
+
+  @one-col: 100%  / @col;  // Calculate column width
+
+  // Note:          This is when we set up the container and column padding (gutter)
+  .@{pref-parent}-@{col} {
+
+    // Loop Iteration 1 - Defualts
+    // ===================================
+
+    // Note:          This is when we set up the container and column padding (gutter)  
+    //                This is where we do things that don't need the counter (done once)
+
+    & when (@loop-set = 3) and (@inc = 0) {
+      &:extend(.cf all);
+      margin-left: -@gut;
+      margin-right: -@gut;
+      & when not (@brk-med = off) {
+        @media @brk-med {
+          margin-left: -@gut-med;
+          margin-right: -@gut-med;
+        }
+      } 
+      & when not (@brk-large = off) {
+        @media @brk-large {
+          margin-left: -@gut-large;
+          margin-right: -@gut-large;
+        }
+      }
+
+      // Set paddings for columns
+      >[class^="col-"], 
+      >[class*=" col-"] {
+        padding-left: @gut;
+        padding-right: @gut;
+        & when not (@brk-med = off) {
+          @media @brk-med {
+            padding-left: @gut-med;
+            padding-right: @gut-med;
+          }
+        }
+        & when not (@brk-large = off) {
+          @media @brk-large {
+            padding-left: @gut-large;
+            padding-right: @gut-large;
+          }
+        }
+      }
+
+      // Create offset 0 for removing it at certain points
+      & when not (@brk-med = off) {
+        >.offset-@{class-med}-@{inc} {
+          @media @brk-med {
+            margin-left: @one-col * @inc;
+          }
+        }
+      }
+      & when not (@brk-large = off) {
+        >.offset-@{class-large}-@{inc} {
+          @media @brk-large {
+            margin-left: @one-col * @inc;
+          }
+        }
+      }
+
+
+      // Vertical Alignment Classes
+      // =====================================
+
+      & when (@mod-row-align) {
+        @media @brk-small {
+          &.-row-align-middle {
+            .mix--flex-align--middle();
+          }
+          &.-row-align-bottom {
+            .mix--flex-align--bottom();
+          }
+        }
+        & when not (@brk-med = off) {
+          @media @brk-med {
+            &.-row-align-middle-@{class-med} {
+              .mix--flex-align--middle();
+            }
+            &.-row-align-bottom-@{class-med} {
+              .mix--flex-align--bottom();
+            }
+          }
+        }
+        & when not (@brk-large = off) {
+          @media @brk-large {
+            &.-row-align-middle-@{class-large} {
+              .mix--flex-align--middle();
+            }
+            &.-row-align-bottom-@{class-large} {
+              .mix--flex-align--bottom();
+            }
+          }
+        }
+      }
+
+
+      // Vertical Gutter Classes (with a unit)
+      // =====================================
+
+      // Note to others the pixels if you want row-fit with alt youhave to use pixels (as of hte time of writing this)
+
+      // Helper mixins (DRY)
+      .mix--grid-fixed--vertical-gutter--row-fit(@rf-gut) {
+        margin-top: -@rf-gut;
+        margin-bottom: -@rf-gut;
+      }
+      .mix--grid-fixed--vertical-gutter(@vg-gut) {
+        >[class*="col-"] {
+          padding-top: @vg-gut;
+          padding-bottom: @vg-gut;
+        }
+      }
+
+      & when (@mod-row-gutters) {
+        @media @screen {
+          &.-row-gutters-fit {
+            .mix--grid-fixed--vertical-gutter--row-fit(@gut-large);
+          }
+          &.-row-gutters-all {
+            .mix--grid-fixed--vertical-gutter(@gut-large);
+          }
+        }
+        & when not (@brk-large = off) {
+          .return--media--min-to-max(@brk-large);
+          @brk-calc-conv: @return--media--min-to-max;
+          @media @brk-calc-conv {
+            &.-row-gutters-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@gut-med;);
+            }
+            &.-row-gutters-@{class-large}, 
+            &.-row-gutters-all {
+              .mix--grid-fixed--vertical-gutter(@gut-med);
+            }
+          }
+        }
+        & when not (@brk-med = off) {
+          .return--media--min-to-max(@brk-med);
+          @media @return--media--min-to-max {
+            &.-row-gutters-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@gut);
+            }
+            &.-row-gutters-@{class-med}, 
+            &.-row-gutters-@{class-large}, 
+            &.-row-gutters-all {
+              .mix--grid-fixed--vertical-gutter(@gut);
+            }
+          }
+        }
+        & {
+          .return--media--min-to-max(@brk-small);
+          @media @return--media--min-to-max {
+            &.-row-gutters-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@gut);
+            }
+            &.-row-gutters, 
+            &.-row-gutters-@{class-med}, 
+            &.-row-gutters-@{class-large}, 
+            &.-row-gutters-all {
+              .mix--grid-fixed--vertical-gutter(@gut);
+            }
+          }
+        }
+      }
+
+      // Vertical Gutter Classes Alt
+      // =====================================
+
+      & when (ispixel(@mod-row-gutters--alt)) {
+
+        @media @screen {
+          &.-row-gutters-alt-fit {
+            .mix--grid-fixed--vertical-gutter--row-fit(@mod-row-gutters--alt);
+          }
+          &.-row-gutters-alt-all {
+            .mix--grid-fixed--vertical-gutter(@mod-row-gutters--alt);
+          }
+        }
+        & when not (@brk-large = off) {
+          .return--media--min-to-max(@brk-large);
+          @brk-calc-conv: @return--media--min-to-max;
+          @media @brk-calc-conv {
+            &.-row-gutters-alt-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@mod-row-gutters--alt);
+            }
+            &.-row-gutters-alt-@{class-large}, 
+            &.-row-gutters-alt-all {
+              .mix--grid-fixed--vertical-gutter(@mod-row-gutters--alt);
+            }
+          }
+        }
+        & when not (@brk-med = off) {
+          .return--media--min-to-max(@brk-med);
+          @media @return--media--min-to-max {
+            &.-row-gutters-alt-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@mod-row-gutters--alt);
+            }
+            &.-row-gutters-alt-@{class-med}, 
+            &.-row-gutters-alt-@{class-large}, 
+            &.-row-gutters-alt-all {
+              .mix--grid-fixed--vertical-gutter(@mod-row-gutters--alt);
+            }
+          }
+        }
+        & {
+          .return--media--min-to-max(@brk-small);
+          @media @return--media--min-to-max {
+            &.-row-gutters-alt-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@mod-row-gutters--alt);
+            }
+            &.-row-gutters-alt, 
+            &.-row-gutters-alt-@{class-med}, 
+            &.-row-gutters-alt-@{class-large}, 
+            &.-row-gutters-alt-all {
+              .mix--grid-fixed--vertical-gutter(@mod-row-gutters--alt);
+            }
+          }
+        }
+      }
+
+      // Vertical Gutter Classes Alt (multiplier)
+      // =====================================
+
+      & when not (ispixel(@mod-row-gutters--alt)) and (isnumber(@mod-row-gutters--alt))  {
+        @gut-large--alt: @mod-row-gutters--alt * @gut-large;
+        @gut-med--alt: @mod-row-gutters--alt * @gut-med;
+        @gut--alt: @mod-row-gutters--alt * @gut;
+        @media @screen {
+          &.-row-gutters-alt-fit {
+            .mix--grid-fixed--vertical-gutter--row-fit(@gut-large--alt);
+          }
+          &.-row-gutters-alt-all {
+            .mix--grid-fixed--vertical-gutter(@gut-large--alt);
+          }
+        }
+        & when not (@brk-large = off) {
+          .return--media--min-to-max(@brk-large);
+          @brk-calc-conv: @return--media--min-to-max;
+          @media @brk-calc-conv {
+            &.-row-gutters-alt-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@gut-med--alt);
+            }
+            &.-row-gutters-alt-@{class-large}, 
+            &.-row-gutters-alt-all {
+              .mix--grid-fixed--vertical-gutter(@gut-med--alt);
+            }
+          }
+        }
+        & when not (@brk-med = off) {
+          .return--media--min-to-max(@brk-med);
+          @media @return--media--min-to-max {
+            &.-row-gutters-alt-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@gut--alt);
+            }
+            &.-row-gutters-alt-@{class-med}, 
+            &.-row-gutters-alt-@{class-large}, 
+            &.-row-gutters-alt-all {
+              .mix--grid-fixed--vertical-gutter(@gut--alt);
+            }
+          }
+        }
+        & {
+          .return--media--min-to-max(@brk-small);
+          @media @return--media--min-to-max {
+            &.-row-gutters-alt-fit {
+              .mix--grid-fixed--vertical-gutter--row-fit(@gut--alt);
+            }
+            &.-row-gutters-alt, 
+            &.-row-gutters-alt-@{class-med}, 
+            &.-row-gutters-alt-@{class-large}, 
+            &.-row-gutters-alt-all {
+              .mix--grid-fixed--vertical-gutter(@gut--alt);
+            }
+          }
+        }
+      }
+
+      // Dividers
+      // =====================================
+
+      & when not (@mod-col-rules = false) {
+
+        // Reusable function
+        // -------------------------------------
+
+        .mix--grid-fixed--divider-h(@dh-gut) {
+          >[class*="col-"] {
+            &:before {
+              content: '';
+            }
+          }
+          &.-col-rules-in-gutter {
+            >[class*="col-"] {
+              &:before {
+                top: @dh-gut;
+                bottom: @dh-gut;
+              }
+            }
+          }
+        }
+
+        // Common CSS
+        // -------------------------------------
+        &[class*="-col-rules"] {
+          >[class*="col-"] {
+            position: relative;
+            &:before {
+              top: 0;
+              bottom: 0;
+              display: block;
+              position: absolute;
+              // content: '';
+              z-index: 2;
+              right: -(@mod-col-rules--width / 2);
+              width: @mod-col-rules--width;
+              background-color: @mod-col-rules--color;
+            }
+            & when (@mod-col-rules--last-child) {
+              &.@{equalheight--class--column-last}, 
+              &:last-child {
+                &:before {
+                  content: none;
+                }
+              }
+            }
+            & when not (@mod-col-rules--last-child) {
+              &.@{equalheight--class--column-last}:before {
+                content: none;
+              }
+            }
+          }
+          &.-col-rules-on-left {
+            >[class*="col-"] {
+              &:before {
+                right: auto;
+                left: -(@mod-col-rules--width / 2);
+              }
+              &.@{equalheight--class--column-last}:before, 
+              &:last-child:before {
+                content: '';
+              }
+              &.@{equalheight--class--column-first}:before {
+                content: none;
+              }
+            }
+          }
+        }
+
+        // Specific
+        // -------------------------------------
+
+        &.-col-rules-all {
+          .mix--grid-fixed--divider-h(@gut);
+        }
+        @media @brk-small {
+          &.-col-rules {
+            .mix--grid-fixed--divider-h(@gut);
+          }
+        }
+        & when not (@brk-med = off) {
+          @media @brk-med {
+            &.-col-rules-@{class-med},
+            &.-col-rules-all,
+            &.-col-rules {
+              .mix--grid-fixed--divider-h(@gut-med);
+            }
+          }
+        }
+        & when not (@brk-large = off) {
+          @media @brk-large {
+            &.-col-rules-@{class-large},
+            &.-col-rules-@{class-med},
+            &.-col-rules-all,
+            &.-col-rules {
+              .mix--grid-fixed--divider-h(@gut-large);
+            }
+          }
+        }
+      }
+      & when not (@mod-row-rules = false) {
+
+        // Reusable function
+        // -------------------------------------
+
+        .mix--grid-fixed--divider-v(@d-gut) {
+          >[class*="col-"] {
+            &:after {
+              content: '';
+            }
+            &.@{equalheight--class--column-first}:after {
+              left: @d-gut;
+            }
+            &.@{equalheight--class--column-last}:after {
+              right: @d-gut;
+            }
+          }
+          &.-row-rules-in-gutter {
+            >[class*="col-"] {
+              &:after {
+                left: @d-gut;
+                right: @d-gut;
+              }
+            }
+          }
+        }
+
+        // Common
+        // -------------------------------------
+
+        &[class*="-row-rules"] {
+          >[class*="col-"] {
+            position: relative;
+            &:after {
+              left: 0;
+              right: 0;
+              display: block;
+              position: absolute;
+              z-index: 2;
+              height: @mod-row-rules--height;
+              background-color: @mod-row-rules--color;
+              bottom: -(@mod-row-rules--height / 2);
+            }
+            &.@{equalheight--class--row-last}:after {
+              content: none;
+            }
+          }
+          &.-row-rules-on-top {
+            >[class*="col-"] {
+              &:after {
+                top: -(@mod-row-rules--height / 2);
+                bottom: auto;
+              }
+            }
+          }
+          &.-row-rules-show-last {
+            &.@{equalheight--class--row-last}:after {
+              content: '';
+            }
+          }
+        }
+        
+        // Specific
+        // -------------------------------------
+
+        &.-row-rules-all {
+          .mix--grid-fixed--divider-v(@gut);
+        }
+        @media @brk-small {
+          &.-row-rules {
+            .mix--grid-fixed--divider-v(@gut);
+          }
+        }
+        & when not (@brk-med = off) {
+          @media @brk-med {
+            &.-row-rules-@{class-med}, 
+            &.-row-rules, // LEft off here fixing the breakpoints
+            &.-row-rules-all { 
+              .mix--grid-fixed--divider-v(@gut-med);
+            }
+          }
+        }
+        & when not (@brk-large = off) {
+          @media @brk-large {
+            &.-row-rules-@{class-large}, 
+            &.-row-rules-@{class-med}, 
+            &.-row-rules, // LEft off here fixing the breakpoints
+            &.-row-rules-all {
+              .mix--grid-fixed--divider-v(@gut-large);
+            }
+          }
+        }
+      }
+    }
+
+
+    // Loop Iteration 1 - Small
+    // ===================================
+
+    // Create First Set of Widths
+    & when (@loop-set = 1) and not (@inc = 0) {
+      >.col-@{inc} {
+        width: 100%;
+        max-width: 100%; // For flexbox wrap
+        @media @brk-small {
+          width: @one-col * @inc;
+          max-width: @one-col * @inc; // For flexbox wrap
+        }
+      }
+      >.offset-@{inc} {
+        @media @brk-small {
+          margin-left: @one-col * @inc;
+        }
+      }
+
+    }
+
+    // Loop Iteration 2 - Medium
+    // ===================================
+
+    // Create First Set of Widths
+    & when (@loop-set = 2) and not (@inc = 0) and not (@brk-med = off) {
+
+      // Change Grid Size (at breakpoint)
+      >.col-@{class-med}-@{inc} {
+        @media @brk-med {
+          width: @one-col * @inc;
+          max-width: @one-col * @inc; // For flexbox wrap
+        }
+      }
+
+      // Change offsets (at breakpoint)
+      >.offset-@{class-med}-@{inc} {
+        @media @brk-med {
+          margin-left: @one-col * @inc;
+        }
+      }
+    }
+
+    // Loop Iteration 3 - Large (gt 0)
+    // ===================================
+
+    // Create First Set of Widths
+    & when (@loop-set = 3) and not (@inc = 0) and not (@brk-large = off) {
+      >.col-@{class-large}-@{inc}  {
+        @media @brk-large {
+          width: @one-col * @inc;
+          max-width: @one-col * @inc; // For flexbox wrap
+        }
+      } 
+      >.offset-@{class-large}-@{inc}  {
+        @media @brk-large {
+          margin-left: @one-col * @inc;
+        }
+      }
+    }
+  } // Close Parent Container
+
+
+  
+
+  // Re Loop
+  & when (@inc = 0) and (@loop-set < 4) {
+    .loop-grid-fixed-gut(
+      @col: @col, 
+      @gut: @gut, 
+      @brk-small: @brk-small, 
+      @gut-med: @gut-med, 
+      @brk-med: @brk-med, 
+      @class-med: @class-med, 
+      @gut-large: @gut-large, 
+      @brk-large: @brk-large, 
+      @class-large: @class-large, 
+      @pref-parent: @pref-parent, 
+      @mod-row-align: @mod-row-align,
+      @mod-dividers: @mod-dividers,
+      @mod-row-gutters: @mod-row-gutters,
+      @mod-row-gutters--alt: @mod-row-gutters--alt,
+      @mod-col-rules: @mod-col-rules,
+      @mod-col-rules--width: @mod-col-rules--width,
+      @mod-col-rules--color: @mod-col-rules--color,
+      @mod-col-rules--last-child: @mod-col-rules--last-child,
+      @mod-row-rules: @mod-row-rules,
+      @mod-row-rules--height: @mod-row-rules--height,
+      @mod-row-rules--color: @mod-row-rules--color,
+      @inc: @col, 
+      @loop-set: @loop-set + 1
+    );
+  }
+  & when (@inc > 0) {
+    .loop-grid-fixed-gut(
+      @col: @col, 
+      @gut: @gut, 
+      @brk-small: @brk-small, 
+      @gut-med: @gut-med, 
+      @brk-med: @brk-med, 
+      @class-med: @class-med, 
+      @gut-large: @gut-large, 
+      @brk-large: @brk-large, 
+      @class-large: @class-large, 
+      @pref-parent: @pref-parent, 
+      @mod-row-align: @mod-row-align,
+      @mod-dividers: @mod-dividers,
+      @mod-row-gutters: @mod-row-gutters,
+      @mod-row-gutters--alt: @mod-row-gutters--alt,
+      @mod-col-rules: @mod-col-rules,
+      @mod-col-rules--width: @mod-col-rules--width,
+      @mod-col-rules--color: @mod-col-rules--color,
+      @mod-col-rules--last-child: @mod-col-rules--last-child,
+      @mod-row-rules: @mod-row-rules,
+      @mod-row-rules--height: @mod-row-rules--height,
+      @mod-row-rules--color: @mod-row-rules--color,
+      @inc: @inc - 1, 
+      @loop-set: @loop-set
+    );
+  }
+}
+
+
+// =============================================================================
+// Fixed Width Grid - Modifier
+// =============================================================================
+
+.modifier--grid-fixed-gut(
+  @mod, 
+  @col, 
+  @gut, 
+  @gut-med: @gut, 
+  @brk-med: @tablet-up, 
+  @gut-large: off, 
+  @brk-large: off, 
+  @pref-parent: row
+  ) {
+  
+  // Set the modified padding for parent
+  .@{pref-parent}-@{col}.@{mod} { 
+    margin-left: -@gut;
+    margin-right: -@gut;
+    & when not (@brk-med = off) {
+      @media @brk-med {
+        margin-left: -@gut-med;
+        margin-right: -@gut-med;
+      }
+    }
+    & when not (@brk-large = off) {
+      @media @brk-large {
+        margin-left: -@gut-large;
+        margin-right: -@gut-large;
+      }
+    }
+
+    // Set the modified padding for columns
+    >[class^="col-"], >[class*=" col-"] {
+      padding-left: @gut;
+      padding-right: @gut;
+      & when not (@brk-med = off) {
+        @media @brk-med {
+          padding-left: @gut-med;
+          padding-right: @gut-med;
+        }
+      }
+      & when not (@brk-large = off) {
+        @media @brk-large {
+          padding-left: @gut-large;
+          padding-right: @gut-large;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+// =============================================================================
+// Row/Col Rule (Color/Size Modifier)
+// =============================================================================
+
+.modifier--grid-fixed-gut-rules(
+  @pref-parent: row, 
+  @col: 12,
+  @class-suffix: rule-modifier,
+  @mod-col-rules: false,
+  @mod-col-rules--width: false,
+  @mod-col-rules--color: false,
+  @mod-row-rules: false,
+  @mod-row-rules--height: false,
+  @mod-row-rules--color: false
+) {
+
+  .@{pref-parent}-@{col} {
+
+    & when not (@mod-col-rules = false) {
+
+      &.-col-rules-@{class-suffix} {
+        >[class*="col-"] {
+          &:before {
+            & when not (@mod-col-rules--width = false) {
+              right: -(@mod-col-rules--width / 2);
+              width: @mod-col-rules--width;
+            }
+            & when not (@mod-col-rules--color = false) {
+              background-color: @mod-col-rules--color;
+            }
+          }
+        }
+        & when not (@mod-col-rules--width = false) {
+          &.-col-rules-on-left {
+            >[class*="col-"] {
+              &:before {
+                right: auto;
+                left: -(@mod-col-rules--width / 2);
+              }
+            }
+          }
+        }
+      }
+    }
+    & when not (@mod-row-rules = false) {
+
+      &.-row-rules-@{class-suffix} {
+        >[class*="col-"] {
+          &:after {
+            & when not (@mod-row-rules--height = false) {
+              height: @mod-row-rules--height;
+              bottom: -(@mod-row-rules--height / 2);
+            }
+            & when not (@mod-row-rules--color = false) {
+              background-color: @mod-row-rules--color;
+            }
+          }
+        }
+        & when not (@mod-row-rules--height = false) {
+          &.-row-rules-on-top {
+            >[class*="col-"] {
+              &:after {
+                top: -(@mod-row-rules--height / 2);
+                bottom: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// Ala-carte Grid Mixin
+// =============================================================================
+
+.mix-grid-fixed(
+  @span: row, 
+  @cols: @site-grid-columns, 
+  @gut: @site-grid-gutter, 
+  @brk-small: @grid-breakpoint, 
+  @brk-med: @site-grid-brk-medium, 
+  @span-med: @span, 
+  @gut-med: @site-grid-gutter-medium, 
+  @brk-large: @site-grid-brk-large, 
+  @span-large: @span-med, 
+  @gut-large: @site-grid-gutter-large, 
+  @offset: 0, 
+  @offset-med: 0, 
+  @offset-large: 0
+  ) when (isnumber(@span) = false) {
+  .cf;
+  margin-left: -@gut;
+  margin-right: -@gut;
+  @media @brk-med {
+    margin-left: -@gut-med;
+    margin-right: -@gut-med;
+  }
+  & when not (@brk-large = off) {
+    @media @brk-large {
+      margin-left: -@gut-large;
+      margin-right: -@gut-large;
+    }
+  }
+}
+
+// Create Columns
+// =====================================
+
+.mix-grid-fixed(
+  @span: row, 
+  @cols: @site-grid-columns, 
+  @gut: @site-grid-gutter, 
+  @brk-small: @grid-breakpoint, 
+  @brk-med: @site-grid-brk-medium, 
+  @span-med: @span, 
+  @gut-med: @site-grid-gutter-medium, 
+  @brk-large: @site-grid-brk-large, 
+  @span-large: @span-med, 
+  @gut-large: @site-grid-gutter-large, 
+  @offset: 0, 
+  @offset-med: 0, 
+  @offset-large: 0
+  ) when (isnumber(@span) = true) {
+  @one-col: 100%  / @cols; 
+  
+  // Offsets
+  & when not (@offset = 0) {
+    @media @brk-small {
+      margin-left: @one-col * @offset;
+    }
+  }
+  & when not (@offset-med = 0) {
+    @media @brk-med {
+      margin-left: @one-col * @offset-med;
+    }
+  }
+  & when not (@offset-large = 0) {
+    @media @brk-large {
+      margin-left: @one-col * @offset-large;
+    }
+  }
+
+  // Widths
+  float: left;
+  width: 100%;
+  padding-left: @gut;
+  padding-right: @gut;
+
+  @media @brk-small {
+    width: @one-col * @span;
+  }
+  & when not (@brk-large = off) {
+    @media @brk-med {
+      width: @one-col * @span-med;
+      padding-left: @gut-med;
+      padding-right: @gut-med;
+    }
+  }
+  & when not (@brk-large = off) {
+    @media @brk-large {
+      width: @one-col * @span-large;
+      padding-left: @gut-large;
+      padding-right: @gut-large;
+    }
+  }
+}

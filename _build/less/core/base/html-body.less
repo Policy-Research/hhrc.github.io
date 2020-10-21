@@ -1,0 +1,63 @@
+/*
+
+===========================================================================
+Base: HTML / Body
+===========================================================================
+
+Version:            3.0.5
+
+// Changes:         3.0.1 | Font settings for HTML is now using regular
+//                          styles instead of the mixin which was causing
+//                          text sizing issues on a breakpoint
+//                  3.0.2 | Updated with typography update
+//                  3.0.4 | Added breakpoint stuff for type
+//                  3.0.5 | Fixed breakpoint stuff
+
+
+*/
+
+// The HTML element is left unstyled in the editor's CSS. 
+// Instead we switch to use the body as the root element for our framework.
+
+& when not (@wysiwyg-stylesheet = true) {
+  html {
+    font-size: @t-base;
+    line-height: unit(@type-line-height); // Removing ems
+    color: @type-color;
+    font-family: @type-family;
+    color: @type-color;
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    & when (@type-use-rem) {
+      // When using rem convert type base to percent
+      font-size: unit((@t-base / 16) * 100, %);
+      & when not (@type-breakpoint = false) {
+        @media @type-breakpoint {
+          font-size: unit((@type-break--base / 16) * 100, %);
+        }
+      }
+    }
+  }
+
+  *, 
+  *:before, 
+  *:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+  }
+}
+
+& when (@wysiwyg-stylesheet = true) {
+  body {
+    #TYPE.createSize('base');
+    font-family: @type-family;
+    color: @type-color; 
+  }
+}

@@ -1,0 +1,164 @@
+// =============================================================================
+// GRID
+// =============================================================================
+
+// Description:     Split grid loop              
+
+// Mixin
+// =============================================================================
+
+
+// Column Grid (Percentage)
+// =====================================
+
+
+// Common Classes
+// =====================================
+ 
+.loop-grid(
+  @col, 
+  @gut, 
+  @offsets: on, 
+  @prefix: ~"", 
+  @break: off, 
+  @gs-breakpoint: @grid-breakpoint, 
+  @inc: @col
+  ) when (@inc = 0) {
+
+  // Defualt
+  // -----------------------------------
+
+  .col-@{col} when (@break = off) {
+    margin-left: @gut;
+  }
+  .col-@{col}:first-child when (@break = off) {
+    margin-left: 0;
+  }
+
+  // W. Breakpoint
+  // -----------------------------------
+
+  .col-@{prefix}-@{col} when not (@break = off) {
+    @media @break { 
+      margin-left: @gut !important;
+    }
+    //&:extend(.grid-defualts); [CHECK] - Unneeded becuase defualts should be set by defualt column
+  }
+  // When first or Using the "offset-0" class
+  .guard-col-prefix-first() when not (@break = off) {
+    .col-@{prefix}-@{col}:first-child, .col-@{prefix}-@{col}.offset-@{prefix}-0:first-child {
+      @media @break {
+        margin-left: 0 !important;
+      }
+    }
+  }
+  .guard-col-prefix-first();
+
+  // Used when reordering columns
+  .col-@{prefix}-@{col}.@{prefix}-not-first when not (@break = off) {
+    @media @break {
+      margin-left: @gut !important;
+      clear: none;
+    }
+  }
+
+  // To declare the first when in breakpoints
+  .col-@{prefix}-@{col}.@{prefix}-first when not (@break = off) {
+    @media @break { 
+      margin-left: 0 !important; 
+      clear: left; // So comlumns above don't interfere
+    }
+  }
+
+
+  // W. Grid Snap Enabled
+  // -----------------------------------
+
+  // Defualt Grid
+  .col-@{col} when (@break = off) and (@grid-snap = on) {
+    @media @gs-breakpoint {
+      width: 100% !important;
+      float: none !important;
+      margin-left: 0 !important;
+    }
+  }
+
+  // Other Grids
+  .col-@{prefix}-@{col} when not (@break = off) and (@grid-snap = on) {
+    @media @gs-breakpoint {
+      width: 100% !important;
+      float: none !important;
+      margin-left: 0 !important;
+    }
+  }
+}
+
+
+// Width's & Offsets
+// =====================================
+
+.loop-grid(
+  @col, 
+  @gut, 
+  @offsets: on, 
+  @prefix: ~"", 
+  @break: off, 
+  @gs-breakpoint: @grid-breakpoint, 
+  @inc: @col
+  ) when (@inc > 0) {
+
+  @one-col: (100% - (@gut * (@col - 1))) / @col;  // Calculate column width
+
+
+  // Breakpoint
+  // -----------------------------------
+
+  // CREATE WIDTHs
+  .col-@{prefix}-@{col}.span-@{prefix}-@{inc} when not (@break = off) {
+     @media @break { width: (@one-col * @inc) + (@gut * (@inc - 1)); }
+  }
+  // CREATE OFFSETs
+  .col-@{prefix}-@{col}.offset-@{prefix}-@{inc} when not (@break = off) and (@offsets = on) {
+    // width = column length + missing gutters
+    @media @break { margin-left: ((@one-col * @inc) + (@gut * (@inc + 1))) !important; } // Width of column + gutter of current
+  }
+  .col-@{prefix}-@{col}.offset-@{prefix}-@{inc}:first-child when not (@break = off) and (@offsets = on) {
+    @media @break { margin-left: ((@one-col * @inc) + (@gut * @inc)) !important; }
+  }
+  // When grid snap is on
+  .col-@{prefix}-@{col}.offset-@{prefix}-@{inc}:first-child when not (@break = off) and (@offsets = on) and (@grid-snap = on) {
+    @media @gs-breakpoint {
+      width: 100% !important;
+      float: none !important;
+      margin-left: 0 !important;
+    }
+  }
+
+
+  // Defualt
+  // -----------------------------------
+
+   // CREATE WIDTHs
+  .col-@{col}.span-@{inc} when (@break = off) {
+     width: (@one-col * @inc) + (@gut * (@inc - 1));
+  }
+  // CREATE OFFSETs
+  .col-@{col}.offset-@{inc} when (@break = off) and (@offsets = on) {
+    margin-left: ((@one-col * @inc) + (@gut * (@inc + 1))); // Width of column + gutter of current
+  }
+  .col-@{col}.offset-@{inc}:first-child when (@break = off) and (@offsets = on) {
+    margin-left: ((@one-col * @inc) + (@gut * @inc));
+  }
+
+  // Loop
+  .loop-grid(
+    @col, 
+    @gut, 
+    @offsets, 
+    @prefix, 
+    @break, 
+    @gs-breakpoint, 
+    @inc - 1
+    );
+}
+

@@ -1,0 +1,91 @@
+// =============================================================================
+// Forms - Styles
+// =============================================================================
+
+// Version:         1.0.1       
+
+
+.hook--form() {}
+
+.hook--form-item() {} // Class that wraps input, label & description
+.hook--form-item__toggle {}
+.hook--input--fieldset() {}
+.hook--input--legend() {
+  #TYPE.create(@type-large, @type-large-lh);
+}
+.hook--label() {
+  font-weight: bold;
+}
+.hook--input--text-fields() {
+  .mix-placeholder({
+    color: @color-black-50;
+  })
+}
+.hook--input--text-field() {
+  &[type="number"] {
+    .mix-placeholder({
+      color: pink;
+    })
+  }
+}
+.hook--input--textarea {
+  .mix-placeholder({
+    color: pink;
+  });
+  padding: @base-small-x;
+}
+.hook--input--range {
+  // Config parameters are available. See core
+  .mix-input-range();
+}
+
+// Input Types: submit, button, reset
+.hook--input--buttons() {
+  .btn;
+}
+.hook--input--color() {
+  width: @form-item--size-small-x;
+}
+
+// Classes Hooks
+// =============================================================================
+
+.hook--form-wrap() {
+  background: @color-black-10;
+  padding: 2em;
+}
+.hook--description() {
+  #TYPE.create(@type-small, 1em);
+  color: @color-black-70;
+  font-style: italic;
+}
+
+
+// =============================================================================
+// Drupal 8
+// =============================================================================
+
+
+// Drupal 8 Config
+// =============================================================================
+
+// Submit Buttons
+.hook--form-submit {
+  // .btn;
+}
+
+// Drupal 8 Hooks
+// =============================================================================
+
+
+// =============================================================================
+// Drupal 7
+// =============================================================================
+
+
+// Drupal 7 Config
+// =============================================================================
+
+
+// Drupal 7 Hooks
+// =============================================================================

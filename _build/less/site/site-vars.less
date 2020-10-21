@@ -1,0 +1,123 @@
+// =============================================================================
+// Site Variables
+// =============================================================================
+
+// Description:     Specific Site variables, use the name space to keep things 
+//                  organized. Also store reusable site mixins, rulesets, etc.
+//                  This file is optional.
+
+@columnOverlap: 7rem;
+// Usage:           - Access the variables prop lookup;
+//                      #SITE[@example]
+//                  - Access mixins by dot notation
+// //                      #SITE.example()
+// // Colors
+// @color-black:                 rgb(0, 0, 0);
+// @color-black-95:              rgb(55, 54, 55);
+// @color-black-90:              rgb(65, 64, 66);
+// @color-black-80:              rgb(88, 89, 91);
+// @color-black-85:              rgb(77, 78, 79);
+// @color-black-75:              rgb(94, 96, 98);
+// @color-black-70:              rgb(109, 110, 113);
+// @color-black-60:              rgb(128, 130, 133);
+// @color-black-50:              rgb(147, 149, 152);
+// @color-black-45:              rgb(156, 159, 162);
+// @color-black-35:              rgb(176, 179, 182);
+// @color-black-30:              rgb(188, 190, 192);
+// @color-black-20:              rgb(209, 211, 212);
+// @color-black-13:              rgb(227, 227, 227);
+// @color-black-10:              rgb(230, 231, 232);
+// @color-black-7:               rgb(236, 236, 236);
+// @color-black-5:               rgb(241, 242, 242);
+// @color-black-3:               rgb(246, 246, 246);
+// @color-blue:                  rgb(0, 111, 175);
+// @color-notes:                 rgb(218, 153, 174);
+// @color-type:                  rgb(55, 54, 55);
+// @color-type--secondary:       rgb(100, 100, 100);
+// @color-cyan:                  rgb(0, 206, 239);
+// @color-gray-dark:             rgb(95, 96, 100);
+// @color-green:                 rgb(34, 74, 34);
+// @color-yellow:                rgb(237, 160, 34);
+// @color-orange-bright:         rgb(219, 99, 18);
+// @color-orange:                rgb(176, 74, 34);
+// @color-gray-light:            rgb(223, 221, 222);
+// @color-gray:                  rgb(156, 154, 155);
+// @color-brown:                 rgb(75, 26, 0);
+// @color-brown-bright:          #7f2100;
+
+// // Color Assignments
+// @background-light:            @color-gray-light;
+// @background-lighter:          #F2F1F1;
+
+// @nav-height: 110px;
+// @nav-height--mobile: 70px;
+// @nav-z-index: 10;
+// @nav-padding: 50px;
+// @nav-padding--mobile: 20px;
+
+// @front-page--galleries-offset: 170px; // Negative margin that pulls gallery links over the header
+
+// @focus-color: @color-blue;
+
+// @text-shadow: 0px 0px 5px fade(black, 50%);
+// @text-shadow--dark: 0 0 15px fade(black, 90%);
+// @letter-spacing: 0.06em;
+
+// @border-radius: 5px;
+// @border-radius--large: 12px;
+
+// @box-shadow--low: 0 1px 2px fade(@color-black, 30%);
+@box-shadow: 0 1px 3px fade(@color-black, 35%);
+// @box-shadow--width: 5px;
+// @box-shadow--raised: 0 1px 12px fade(@color-black, 45%);
+// @box-shadow--raised-width: 12px;
+// @box-shadow--above: 0 1px 20px fade(@color-black, 40%);
+
+// @box-shadow-inset: inset 0 1px 5px fade(@color-black, 40%);
+// @box-shadow-inset--deep: inset 0 1px 20px fade(@color-black, 40%);
+
+// @backdrop-blur--light: 2px;
+// @backdrop-blur: 4px;
+// @backdrop-blur--heavy: 10px;
+
+// @text-caps-letter-spacing: 0.04em;
+
+// @transition-hover--duration: 280ms;
+
+// @rule--color: @color-gray-light;
+// @rule-light--color: lighten(@color-gray-light, 5%);
+// @rule-dark--color: @color-black-20;
+
+// @rule: 1px solid @color-gray-light;
+// @rule-light: 1px solid @rule-light--color;
+// @rule-dark: 1px solid @rule-dark--color;
+
+// #SITE() {
+//   // .fontAwesome(@glyph) {
+//   //   -webkit-font-smoothing: antialiased;
+//   //   display: inline-block;
+//   //   font-style: normal;
+//   //   font-variant: normal;
+//   //   text-rendering: auto;
+//   //   line-height: 1;
+//   //   font-family: 'Font Awesome 5 Free';
+//   //   font-weight: 900;
+//   //   content: @glyph;
+//   // }
+//   // @example: green;
+  
+//   // .example() {
+//   //   color: @example;
+//   // }
+// }
+
+// // Add to links mixin
+// #ELEMENT {
+//   .links(
+//     @color: @a-color, 
+//     @hover: @a-color-hover, 
+//     @visited: @a-color-visited
+//   ) {
+//     border-bottom: 1px solid currentColor;
+//   }
+// }

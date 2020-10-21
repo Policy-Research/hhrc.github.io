@@ -1,0 +1,413 @@
+// =============================================================================
+// Module: Data Grid - Mixins
+// =============================================================================
+
+// Version:         1.0.2
+// 
+// Changes:         1.0.1 | Added "offset: 0;" as option to remove the offset
+//                          when using breakpoints
+//                  1.0.2 | Added width 100% as default for items
+
+
+// Todo:           
+// ============================================================================= 
+// - Add rules (in progress)
+// - Add vertical gutters
+// - Add item alignments
+
+
+// Benchmarks
+// =============================================================================
+// Size:     Gzip:            Description:
+// -----------------------------------------------------------------------------
+// 9kb       1kb              1 breakpoint, 1 rule style
+
+
+// Library Definition
+// =============================================================================
+
+#DG() {
+
+  .create(
+    @columns:                 @DG__columns,
+    @breakpoint:              @DG__breakpoint,
+    @gutter:                  @DG__gutter,
+    @attr:                    @DG__attr,
+    @rule-size:               @DG__rule-size,
+    @rule-color:              @DG__rule-color,
+    @optional:                false
+  ) {
+
+    
+    // Make an object for the grid
+    @grid: {
+      columns:                @columns;
+      columnWidth:            100% / @columns;
+      breakpoint:             @breakpoint;
+      gutter:                 @gutter;
+      attr:                   @attr;
+      // rule-size:              @rule-size;
+      // rule-color:             @rule-color;
+    };
+
+    #DG._getVars(@grid);
+
+    // No Breakpoint
+    // =====================================
+
+    // Defaults
+     @{_selectGrid} {
+
+      .cf;
+
+      // Ensure empty elements still take up space in layout
+      > @{_selectItem} {
+        min-height: 1px; 
+        width: 100%;
+      }
+      // This is for value of true and also covers all options below
+      &[@{_attr}*="gutters-row:"] { 
+        > @{_selectItem} {
+          padding-top:        @gutter;
+          padding-bottom:     @gutter;
+        }
+      }
+      &[@{_attr}*="gutters-row: top"] { 
+        > @{_selectItem} {
+          &.@{equalheight--class--row-last} {
+            padding-bottom: 0;
+          }
+        }
+      }
+      &[@{_attr}*="gutters-row: bottom"] { 
+        > @{_selectItem} {
+          &.@{equalheight--class--row-first} {
+            padding-top: 0;
+          }
+        }
+      }
+      &[@{_attr}*="gutters-row: fit"] { 
+        margin-top:           -@gutter;
+        margin-bottom:        -@gutter;
+      }
+      // Rules: Row
+      &[@{_attr}*="rules-row:"] {
+        > @{_selectItem} {
+          &@{_selectRuleRow} {
+            position:           absolute;
+            left:               0;
+            right:              0;
+            height:             @rule-size;
+            background:         @rule-color;
+          }
+        }
+      }
+      // Rules: Applies to both column and row
+      &[@{_attr}*="rules"] {
+        > @{_selectItem} {
+          position:             relative;
+        }
+      }
+      // Rules: Column
+      &[@{_attr}*="rules-column:"] {
+        > @{_selectItem} {
+          &@{_selectRuleCol} {
+            
+            position:           absolute;
+            top:                0;
+            bottom:             0;
+            width:              @rule-size;
+            background:         @rule-color;
+          }
+        }
+      }
+
+      // Options for the left or right
+      #DG._ruleColPosition('left', @rule-size, @equalheight--class--column-first);
+      #DG._ruleColPosition('right', @rule-size, @equalheight--class--column-last);
+
+      // Override first or last column removing the rule using matching specificity
+      &[@{_attr}*="rules-column:"][@{_attr}*="rules-column-ends: true"] {
+        > @{_selectItem} {
+          &@{_selectRuleCol} {
+            content:            '';
+          }
+        }
+      }
+      &[@{_attr}*="rules-column-align: gutter"] {
+        > @{_selectItem} {
+          &@{_selectRuleCol} {
+            top:                @gutter;
+            bottom:             @gutter;
+          }
+        }
+      }
+
+      // Options for the left or right
+      #DG._ruleRowPosition('top', @rule-size);
+      #DG._ruleRowPosition('bottom', @rule-size);
+
+      &[@{_attr}*="rules-row: between"] {
+        > @{_selectItem} {
+          &@{_selectRuleRow} {
+            bottom:             floor(@rule-size / 2) * -1;
+          }
+          // For removing the rule per row (via equal heights for now)
+          &.@{equalheight--class--row-last} {
+            &@{_selectRuleRow} {
+              content:          none;
+            }
+          }
+        }
+      }
+      &[@{_attr}*="rules-row-align: gutter"] {
+        > @{_selectItem} {
+          &@{_selectRuleRow} {
+            left:               @gutter;
+            right:              @gutter;
+          }
+        }
+      }
+      &[@{_attr}*="rules-row-persist: true"] {
+        > @{_selectItem} {
+          &@{_selectRuleRow} {
+            content:            '';
+          }
+        }
+      }
+    }
+
+    // Within Breakpoint
+    // =====================================
+
+    @media @breakpoint {
+      
+      // Select the attribute with matching column count
+      @{_selectGrid} {
+
+        // Defaults
+        display:              flex;
+        flex-flow:            row wrap;
+        align-items:          stretch;
+        margin-left:          -@gutter;
+        margin-right:         -@gutter;
+
+        // Item: Defaults
+        > @{_selectItem} {
+          float:              left; // Fallback
+          padding-left:       @gutter;
+          padding-right:      @gutter;
+        }
+        // Alignment options
+        &[@{_attr}*="align: middle"] { 
+          align-items:        center;  
+        }
+        &[@{_attr}*="align: end"] { 
+          align-items:        flex-end;
+        }
+        &[@{_attr}*="align: start"] { 
+          align-items:        flex-start; 
+        }
+        // Alignment of the children when using stretch
+        // - There is no stetch-start (that's defualt);
+        // - There is no stetch-middle (that's covered by stretch-);
+        &[@{_attr}*="align: stretch-"] { 
+          // set the child to display as a single flex item
+          > @{_selectItem} {
+            display:          flex;
+            flex-direction:   column;
+            justify-content:  center;
+          }
+        }
+        &[@{_attr}*="align: stretch-end"] { 
+          > @{_selectItem} {
+            justify-content:  flex-end;
+          }
+        }
+        // Other options
+        &[@{_attr}*="gutters: false"] { 
+          margin-left:        0;
+          margin-right:       0;
+          > @{_selectItem} {
+            padding-left:     0;
+            padding-right:    0;
+          }
+        }
+        // Activate Rules
+        &[@{_attr}*="rules-column:"] {
+          > @{_selectItem} {
+            &@{_selectRuleCol} {
+              content:        '';
+            }
+          }
+        }
+        &[@{_attr}*="rules-row:"] {
+          > @{_selectItem} {
+            &@{_selectRuleRow} {
+              content:        '';
+            }
+          }
+        }
+        // Generated props for item
+        #DG._widths(@grid);
+        #DG._offsets(@grid);
+      }
+    }
+    // Call optional mixins passed by user
+    & when not (@optional = false) {
+      @optional();
+    }
+  }
+
+  // Function for adding additional breakpoint to grid
+  // Similar to the create() function without defaults or selectors
+  // for items that need to change on breakpoints
+  // This will print:
+  // - Width Selectors
+  // - Offset Selectors
+  // - Rule position changes (if enabled in the create mixin)
+  .breakpoint(
+    @suffix:                  "large",
+    @gutter:                  @DG__gutter,
+    @breakpoint:              @DG__breakpoint
+  ) {
+
+    // #DG._getVars(@grid);
+
+    @media @breakpoint {
+
+      @{_selectGrid} {
+        margin-left:          -@gutter;
+        margin-right:         -@gutter;
+
+        > @{_selectItem} {
+          padding-left:       @gutter;
+          padding-right:      @gutter;
+        }
+
+        // Generated props
+        #DG._widths(@grid, '-@{suffix}');
+        #DG._offsets(@grid, '-@{suffix}');
+      }
+    }
+  }
+
+  // FUnction for adding rules to a grid
+  .ruleStyle(
+    @style:                  'default',
+    @size:                    @DG__rule-size,
+    @color:                   @DG__rule-color
+  ) {
+
+    @{_selectGrid} {
+
+      &[@{_attr}*="rules-column-style: @{style}"] {
+        > @{_selectItem} {
+          &@{_selectRuleCol} {
+            background-color: @color;
+            width:            @size;
+          }
+        }
+        #DG._ruleColPosition('left', @size);
+        #DG._ruleColPosition('right', @size);
+      }
+      &[@{_attr}*="rules-row-style: @{style}"] {
+        > @{_selectItem} {
+          &@{_selectRuleRow} {
+            background-color: @color;
+            height:           @size;
+          }
+        }
+        #DG._ruleRowPosition('top', @size);
+        #DG._ruleRowPosition('bottom', @size);
+        #DG._ruleRowPosition('bottom', @size, true);
+      }
+    }
+  }
+
+
+  // Private Mixins
+  // =============================================================================
+
+  ._ruleColPosition(@position, @size, @endClass: false) {
+
+    @prop: e(@position);
+
+    &[@{_attr}*="rules-column: @{position}"] {
+      > @{_selectItem} {
+        &@{_selectRuleCol} {
+          @{prop}:            floor(@size / 2) * -1;
+        }
+        // For removing the rule per row (via equal heights for now)
+        & when not (@endClass = false) {
+          &.@{endClass} {
+            &@{_selectRuleCol} {
+              content:        none;
+            }
+          }
+        }
+      }
+    }
+  }
+  ._ruleRowPosition(@position, @size, @between: false) {
+
+    @key: if((@between = true), 'between', @position);
+    @prop: e(@position);
+
+    &[@{_attr}*="rules-row: @{key}"] {
+      > @{_selectItem} {
+        &@{_selectRuleRow} {
+          content: @size;
+          @{prop}:            floor(@size / 2) * -1;
+        }
+      }
+    }
+  }
+  ._widths(@grid, @suffix: '') {
+    // Note: Use within ruleset block for parent
+    #DG._getVars(@grid);
+
+    .for(@i: 1, @n: @columns) {
+
+      @width:                 @columnWidth * @i;
+
+      > [@{_attrItem}*="width@{suffix}: @{i}"] {
+        width:                @width;
+        flex-basis:           @width;
+        max-width:            @width;
+      }
+    }
+  }  
+  ._offsets(@grid, @suffix: '') {
+
+    #DG._getVars(@grid);
+     
+    .for(@i: 1, @n: @columns) {
+      > [@{_attrItem}*="offset@{suffix}: @{i}"] {
+        margin-left:          @columnWidth * @i;
+      }
+    }
+    // For Zero (in case using breakpoints to remove)
+    > [@{_attrItem}*="offset@{suffix}: 0"] {
+      margin-left: 0;
+    }
+  }
+  ._getVars(@grid) {
+    // Used to expose ruleset to local scope and provide additional vars
+    @columns: @grid[columns];
+    @columnWidth: @grid[columnWidth];
+    @breakpoint: @grid[breakpoint];
+    @gutter: @grid[gutter];
+    // @rule-size: @grid[rule-size];
+    // @rule-color: @grid[rule-color];
+    @attr: @grid[attr];
+    @attrItem: "@{attr}-item";
+    @_attr: e(@attr);
+    @_attrItem: e('@{attr}-item');
+    @_columns: e('columns: @{columns}');
+    @_selectGrid: e('[@{attr}*="columns: @{columns}"]');
+    @_selectItem: e('[@{attr}-item]');
+    @_selectRuleCol: e(':before');
+    @_selectRuleRow: e(':after');
+  }
+}

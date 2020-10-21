@@ -1,0 +1,92 @@
+/*
+
+===========================================================================
+Module: Codekit Demo - Borders
+===========================================================================
+
+*/
+
+// Borders
+// ===================================
+
+// Params:          Width, 
+//                  Class Name // Leave class name unset for defualt (ie: b-top)
+
+
+
+// No borders
+.mix-border-class(
+  @border-width: 0px, 
+  @class: no
+);
+
+// Default
+.mix-border-class(
+  @border-width: 1px
+); 
+
+// Your Custom Classes
+.mix-border-class(
+  @border-width: 5px, 
+  @class: large
+);
+
+
+.mix-bottom-stylesheet() {
+
+  // Padding
+  // ===================================
+
+  .mix-padding-class(
+    @size: 0, 
+    @class: no
+  );
+  .mix-padding-class(
+    @size: @base-small, 
+    @class: small
+  );
+  .mix-padding-class(
+    @size: @base-medium
+  );  // Unset (ex: p-all, p-sides)
+  .mix-padding-class(
+    @size: @base-large-x, 
+    @class: large
+  );
+  .mix-padding-class(
+    @size: @flex-small, 
+    @class: flex-small-x
+  );
+  .mix-padding-class(
+    @size: @flex-small, 
+    @class: flex-small
+  );
+  .mix-padding-class(
+    @size: @flex-medium, 
+    @class: flex
+  );
+  .mix-padding-class(
+    @size: @flex-large, 
+    @class: flex-large
+  );
+
+
+  // Margins
+  // ===================================
+
+  .mix-margin-class(
+    @size: 0, 
+    @class: no
+  ); 
+  .mix-margin-class(
+    @size: @base-small, 
+    @class: small
+  );
+  .mix-margin-class(
+    @size: @base-medium
+  ); // Unset (ex: m-all, m-sides)
+  .mix-margin-class(
+    @size: @base-large-x, 
+    @class: large
+  );
+
+}

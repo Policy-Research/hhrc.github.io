@@ -1,0 +1,398 @@
+/* =============================================================================
+MIXINS - FORMS
+============================================================================= */
+
+
+// Description:     Mixins used to build the forms
+// Version:         1.2.2
+
+// Contents:        - Textfield
+//                  - Text Area
+//                  - Select Lists
+//                    - Select List (with icon)
+//                    - Select Simple
+//                  - Extras
+//                    - Button (Default)
+//                    - Button (Transparent)
+//                    - Button (Icon Only)
+//                    - Labels Match Paragraphs
+//                  - Range
+
+// Changelog        - v.1.2.1 Select list updated styles
+//                  - v.1.2.2 Added placehodler mixin for text fields
+
+
+
+// Textfield
+// =============================================================================
+
+.mix-text-input( 
+  @height,
+  @line-height: 1.3em, 
+  @bg-color: white, 
+  @font-color,
+  @font-size: @t-base, 
+  @border-width: 0, 
+  @border-color: white,
+  @border-color--focus: @form-brd-color--focus, 
+  @border-radius: 0, 
+  @indent: 6px, 
+  @width: 100%,
+  @pad-h: @form-element-padding-horizontal
+) { 
+  // .mix-text(
+  //   @size: @t-base
+  // );
+  -webkit-appearance: none; // ios and webkit
+  -moz-appearance: none;    // Mozilla
+  appearance: none;         // IE 10
+  -webkit-border-radius: @border-radius;
+  -moz-border-radius: @border-radius;
+  border-radius: @border-radius;
+  width: @width;
+  max-width: 100%; // Protect Against text area resizing
+  height: @height;
+  background: @bg-color;
+  border-width: @border-width;
+  border-style: solid;
+  border-color: @border-color;
+  font-weight: normal;
+  font-family: @type-family;
+  color: @font-color;
+  text-indent: @indent;
+  outline: 0; // Remove outline
+  text-overflow: ellipsis;
+  line-height:  @line-height;
+  padding-left: @pad-h;
+  padding-right: @pad-h;
+  
+  &:focus {
+    border-color: @border-color--focus;
+  }
+}
+
+.mix-placeholder(@rules) {
+  &::-webkit-input-placeholder { // Chrome/Opera/Safari
+    @rules();
+  }
+  &::-moz-placeholder { // Firefox 19+ 
+    @rules();
+  }
+  &:-ms-input-placeholder { // IE 10+ 
+    @rules();
+  }
+  &:-moz-placeholder { // Firefox 18- 
+    @rules();
+  }
+}
+
+
+// Select Lists
+// =============================================================================
+
+// Select List Simple
+// =====================================
+
+.mix-select-simple(
+  @height: @form-element-height,
+  @width: 100%,
+  @pad-left: @form-element-padding-horizontal, 
+  @bg-color: @form-element-bg-color,
+  @brd-color: @form-brd-color,
+  @font-size: @form-element-font-size, 
+  @font-color: @form-element-color
+) {
+  .mix-text(@font-size);
+  height: @height;
+  background-color: @bg-color;
+  border: 1px solid @brd-color;
+  color: @font-color;
+  text-indent: @pad-left;
+  min-width: @width;
+  max-width: 100%;
+  padding-left:  @pad-left;
+  padding-right:  @pad-left;
+}
+
+// Select List Fancy
+// =====================================
+
+.mix-select(
+  @height: @form-element-height, 
+  @pad-left: @form-element-padding-horizontal, 
+  @bg-color: @form-element-bg-color, 
+  @color: @form-element-color, 
+  @font-size: @t-base, 
+  @icon-name: 'caret-down', 
+  @icon-size, 
+  @icon-color: @form-element-icon-color, 
+  @brd-color: @form-brd-color, 
+  @brd-width: @form-element-brd-width,
+  @border-radius: @form-element-radius
+  ) {
+  background: @bg-color;
+  border-color: @brd-color;
+  border-width: @brd-width;
+  border-radius: @border-radius;
+  border-style: solid;
+  overflow: hidden;
+  position: relative;
+  &:after {
+    .mix-icon(@icon-name, @icon-color, @icon-size);
+    position: absolute;
+    top: 0;
+    right: 10px;
+    display: block;
+    z-index: 100;
+    vertical-align: middle;
+    line-height: @height; // Center icon
+    pointer-events:none;  // So you can click through
+  }
+  select {
+    .mix-text(@font-size);
+    // -webkit-appearance:none;
+    // -moz-appearance:none;
+    // appearance:none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    width: 103%; // BC Borders
+    min-width: 200px; // When select list is small
+    // height: @height;
+    background: @bg-color;
+    border-width: 0;
+    line-height: 1.3em;
+    font-family: @type-family;
+    color: @color;
+    // padding-left: @pad-left;
+    margin-bottom: 0;
+    &:focus {outline: 0; border: 0;}
+  }
+  // .form-item when (@toggle-drupal-forms = on) { margin-bottom: 0; }
+}
+
+
+// Input Boolean Mixin
+// =====================================
+
+// Fancy
+// -------------------------------------
+
+.mix-input-boolean--fancy (
+  @boolean-bg-type: @form-radio-checkbox-bg-type,
+  @size: @form-radio-checkbox-size, 
+  @icon-color: inherit,
+  @bg-color: @form-radio-checkbox-bg-color,
+  @brd-color: @form-brd-color,
+  @brd-radius: 0,
+  @icon-name,
+  @icon-name-bg,
+  @icon-nudge-h: 0,
+  @icon-nudge-v: 0,
+  @label-text-size: @t-base,
+  @label-text-lh: @type-line-height
+) {
+  .checked & { // Modernizr check
+    .hide-simple();
+    & + label {
+      position: relative;
+      margin-left: @form-radio-checkbox-label-spacing + @size;
+      display: inline-block;
+      font-weight: normal;
+       .mix-text(
+          @size: @form-label-size,
+          @lh: @form-label-lh
+        );
+      // When Icon backgorund is border
+      & when (@boolean-bg-type = "border") {
+        &:before {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: -@form-radio-checkbox-label-spacing - @size;
+          transform: translateY(-50%);
+          display: inline-block;
+          background-color: @bg-color;
+          border: 1px solid @brd-color;
+          padding: @size / 2; // sets the box size
+          border-radius: @brd-radius;
+        }
+      }
+      // When Icon backgorund is also an icon
+      & when (@boolean-bg-type = "icon") {
+        &:before {
+          .mix-icon(
+            @name: @icon-name-bg, 
+            @color: white,
+            @size: @size, 
+            @v-align: middle
+          );
+          color: @bg-color;
+          position: absolute;
+          top: 50% + @icon-nudge-v;
+          transform: translateY(-50%);
+          left: -@form-radio-checkbox-label-spacing - @size;
+        }
+      }
+    }
+    &:checked {
+      & + label {
+        &:after {
+          // padding: @size * 0.15;
+          .mix-icon(
+            @name: @icon-name, 
+            @color: @icon-color,
+            @size: @size * 0.8, 
+            @v-align: middle
+          );
+          position: absolute;
+          top: 50% + @icon-nudge-v;
+          transform: translateY(-50%);
+          left: -@form-radio-checkbox-label-spacing - @size + (@size * 0.10) + @icon-nudge-h;
+        }
+      }
+    }
+  }
+}
+
+
+// Plain
+// -------------------------------------
+
+.mix-input-boolean--plain () {
+  & + label {
+    .mix-text(
+      @size: @form-element-font-size;
+      @lh: @type-line-height;
+    );
+    margin-left: @form-radio-checkbox-label-spacing;
+    font-weight: normal;
+  }
+}
+
+
+// Range
+// =============================================================================
+
+// Range Helper Mixins
+// =====================================
+
+.range-track() {
+  width: @track-width;
+  height: @track-height;
+  cursor: pointer;
+  animate: 0.2s;
+}
+
+.range-track--focus() {
+  border-color: @track-border-color--focus;
+}
+
+.range-thumb() {
+  border: @thumb-border-width solid @thumb-border-color;
+  height: @thumb-height;
+  width: @thumb-width;
+  border-radius: @thumb-radius;
+  background: @thumb-color;
+  cursor: pointer;
+}
+
+.range-thumb--focus() {
+  border-color: @track-border-color--focus;
+}
+
+// Range Main Mixin
+// =====================================
+
+.mix-input-range(
+  @track-color: white,
+  @thumb-color: white,
+  @thumb-radius: 20px,
+  @thumb-height: 20px,
+  @track-height: @thumb-height/2.2,
+  @thumb-width: 20px,
+  @thumb-border-width: @form-element-brd-width,
+  @thumb-border-color: @color-black-20,
+  @track-width: 100%,
+  @track-border-width: @form-element-brd-width,
+  @track-border-color: @color-black-20,
+  @track-border-color--focus: @form-brd-color--focus,
+  @track-radius: @form-element-radius,
+  @contrast: 10%, // Change colors on focus
+  ){
+  -webkit-appearance: none;
+  margin: @thumb-height/2 0;
+  width: @track-width;
+  &:focus {
+    outline: none;
+  }
+  &::-webkit-slider-runnable-track {
+    .range-track();
+    background: @track-color;
+    border-radius: @track-radius;
+    border: @track-border-width solid @track-border-color;
+  }
+  &::-webkit-slider-thumb {
+    .range-thumb();
+    -webkit-appearance: none;
+    margin-top: ((-@track-border-width * 2 + @track-height) / 2) - (@thumb-height / 2);
+  }
+  
+  &::-moz-range-track {
+    .range-track();
+    background: @track-color;
+    border-radius: @track-radius;
+    border: @track-border-width solid @track-border-color;
+  }
+  &::-moz-range-thumb {
+    .range-thumb();
+  }
+  &::-ms-track {
+    .range-track(); 
+    background: transparent;
+    border-color: transparent;
+    border-width: @thumb-width 0;
+    color: transparent;
+  }
+  // &::-ms-fill-lower {
+  //   background: @track-color;
+  //   border: @track-border-width solid @track-border-color;
+  //   border-radius: @track-radius*2;
+  // }
+  // &::-ms-fill-upper {
+  //   background: @track-color;
+  //   border: @track-border-width solid @track-border-color;
+  //   border-radius: @track-radius*2;
+  // }
+  &::-ms-thumb {
+    .range-thumb();
+  }
+  
+  // Focus Track
+  &:focus::-webkit-slider-runnable-track {
+    .range-track--focus();
+  }
+  &:focus::-moz-range-track {
+    .range-track--focus();
+  }
+  &:focus::-ms-track {
+    .range-track--focus();
+  }
+  // &:focus::-ms-fill-lower {
+  //   .range-track--focus();
+  // }
+  // &:focus::-ms-fill-upper {
+  //   .range-track--focus();
+  // }
+  
+  // Focus Thumb
+  &:focus::-webkit-slider-thumb {
+    .range-thumb--focus();
+  }
+  &:focus::-moz-range-thumb {
+    .range-thumb--focus();
+  }
+  &:focus::-ms-thumb {
+    .range-thumb--focus();
+  }
+}

@@ -1,0 +1,60 @@
+/*==========================================================================
+ICONS
+==========================================================================*/
+
+// Version:         2.0.0
+
+// Description:     Icon Font Mixins. Variables set in config. Matched with 
+//                  icon font generator to dynamically fill in glyph value
+//                  for content property.
+
+.mix-icon(
+  @name, 
+  @color: inherit, 
+  @size: @icon-font-size-medium, 
+  @v-align: @icon-valign
+) {
+  #ICON.createWithStyles(
+    @name: @name, 
+    @color: @color, 
+    @size: @size, 
+    @v-align: @v-align
+  );
+}
+// Just content value
+.mix-icon-name(@name) {
+  #ICON.create(@name);
+}
+
+.mix-icon-size(@class-name, @size, @pos, @v-align: @icon-valign, @margin: @base-small-xx) when (@pos = before) {
+  .i-@{class-name} {
+    &:after { content: none; } // Remove After
+    &:before {
+      &:extend(.i-defaults);
+      font-size: @size;
+      margin-right: @margin;
+      vertical-align: @v-align;
+    }
+  }
+}
+
+.mix-icon-size(@class-name, @size, @pos, @v-align: @icon-valign, @margin: @base-small-xx) when (@pos = after) {
+  .i-@{class-name} {
+    &:before { content: none; } // Remove Before
+    &:after {
+      &:extend(.i-defaults);
+      font-size: @size;
+      margin-left: @margin;
+      vertical-align: @v-align;
+    }
+  }
+}
+
+.mix-icon-class(@name) {
+  @class: e(@name);
+  .i-@{class} {
+    &:before, &:after { 
+      .hook--mix-icon(@name);
+    }
+  }
+}

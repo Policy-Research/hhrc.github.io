@@ -1,0 +1,15 @@
+.split-section {
+  @media @desktop-up {
+    display: flex;
+  }
+  &__panel {
+    background-color: @background-lighter;
+    padding: @nav-padding;
+    flex: 1 0;
+    &--aside {
+      flex-basis: 33%;
+      flex-grow: 0;
+      background-color: #FAE3C1;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+// .rta {}
+.rta__tabs-list {
+  display: none;
+  @media @break-tabs {
+    display: block;
+  }
+}
+.rta__content {
+  display: none;
+  &.open {
+    display: block;
+  }
+}
+.rta__acc-toggle {
+  display: none;
+  @media @break-accordion {
+    display: block;
+  }
+  width: 100%;
+} 
+.rta__acc-toggle-all {
+  display: none;
+  @media @break-accordion {
+    display: block;
+  }
+}
+.rta__content {
+  @media @break-accordion {
+    display: none;
+    &.open {
+      display: block;
+    }
+    .no-js & {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,39 @@
+// =============================================================================
+// Tooltips - Styles
+// =============================================================================
+
+// Version:         1.0.2
+
+// Changelog:       1.0.0 | Migrated from elements.less
+                 
+
+// Tooltips
+// =============================================================================
+
+.hook--tooltip() {}
+.hook--tooltip-toggle() {
+  #TYPE.create(@type-small, @type-small-lh);
+  color: @a-color;
+  font-weight: normal;
+}
+.hook--tooltip-content() {
+  padding: @base-small-x;
+  border-radius: 4px;
+  &.fixed {
+    top: auto;
+    bottom: 100px;
+    right: @site-padding;
+    min-height: 50vh;
+    &:before {
+      #TYPE.create(@type-small, @type-small-lh);
+      left: -24px;
+      top: 40px;
+      background-color: orange;
+      color: white;
+      text-align: center;
+      width: 24px;
+      height: 30px;
+      #ICON.create('close');
+    }
+  }
+}

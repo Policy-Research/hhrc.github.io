@@ -1,0 +1,291 @@
+/* ================================================================
+MIXINS - TYPE
+================================================================ */
+
+// Version:         2.0.0
+
+// Description:     Mixins to that work to create our typographic system
+
+// Changelog:       - 1.0.2 | Added mixing text shadow that looks like a border
+//                  - 1.0.3 | Fixed mistake content property in type mixin
+//                  - 1.0.4 | Added multiplier for the type mixin margins
+
+// Contents:        - Table Type
+//                  - Text Shadow
+//                  - Rendering
+//                  - Font Size
+//                  - Line Height
+//                  - Categorized
+
+                   
+// TABLE TYPE
+// =============================================================================
+
+
+.mix-break-words() {
+  -ms-word-break: normal;
+  word-break: normal;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+.mix-wrap-words() {
+  -ms-word-break: break-all;
+  word-break: break-all;
+  word-break: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  hyphens: auto;
+}
+
+// TEXT SHADOW
+// =============================================================================
+
+
+.mix-text-shadow(@horizontal, @vertical, @blur, @color) {
+  text-shadow: unit(@horizontal, px) unit(@vertical, px) unit(@blur, px) @color;
+  filter: dropshadow(color=argb(@color), offx=@horizontal, offy=@vertical);
+}
+
+.mix-text-shadow-as-border(@color, @border-size) {
+  text-shadow: -@border-size -@border-size 0 @color, @border-size -@border-size 0 @color, -@border-size @border-size 0 @color, @border-size @border-size 0 @color;
+}
+
+// RENDERING
+// =============================================================================
+
+
+// Improves text quality, use only when needed.
+.mix-text-quality() {
+  text-rendering: optimizelegibility;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// FONT SIZE
+// =============================================================================
+
+
+.mix-rem-font-size(@font-size) {
+  font-size: @font-size;
+  font-size: unit((@font-size / @t-base), rem);
+}
+// Line Height
+// =============================================================================
+
+
+.mix-em-line-height(@font-size, @lh) when (get-unit(@lh) = em) {
+  line-height: @lh;
+}
+.mix-em-line-height(@font-size, @lh) when (get-unit(@lh) = px) {
+  line-height: unit((@lh / @font-size), em);
+}
+
+// UNCATEGORIZED
+// =============================================================================
+
+
+.mix-force-wrap() {
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+
+// Font Imports
+// =============================================================================
+
+
+// .mix-google-font-import(@name) { 
+//   @import url("@{name}"); 
+// }
+
+.mix-font-face(@name, @family, @folder: "fonts") when (@toggle-simple-paths = off) { 
+  @charset "UTF-8";
+  @font-face {
+    font-family: "@{family}";
+    src:url("@{site-theme-path}/@{folder}/@{name}.eot?v=@{i-suffix}");
+    src:url("@{site-theme-path}/@{folder}/@{name}.eot?#iefix&v=@{i-suffix}") format("embedded-opentype"),
+      url("@{site-theme-path}/@{folder}/@{name}.woff?v=@{i-suffix}") format("woff"),
+      url("@{site-theme-path}/@{folder}/@{name}.ttf?v=@{i-suffix}") format("truetype"),
+      url("@{site-theme-path}/@{folder}/@{name}.svg#@{name}&v=@{i-suffix}") format("svg");
+    font-weight: normal;
+    font-style: normal;
+  }
+}
+.mix-font-face(@name, @family, @folder: "fonts") when (@toggle-simple-paths = on) { 
+  @charset "UTF-8";
+  @font-face {
+    font-family: "@{family}";
+    src:url("../@{folder}/@{name}.eot?v=@{i-suffix}");
+    src:url("../@{folder}/@{name}.eot?#iefix&v=@{i-suffix}") format("embedded-opentype"),
+      url("../@{folder}/@{name}.woff?v=@{i-suffix}") format("woff"),
+      url("../@{folder}/@{name}.ttf?v=@{i-suffix}") format("truetype"),
+      url("../@{folder}/@{name}.svg#@{name}&v=@{i-suffix}") format("svg");
+    font-weight: normal;
+    font-style: normal; 
+  }
+} 
+
+
+
+// Main Type Mixin
+// =============================================================================
+
+// Note: We cannot use the same mixin for keywords becuase mixins
+//       are matched based on number of arguments see link below.
+//       Link - https://github.com/less/less.js/issues/1355
+
+// No Parameter (base)
+// =====================================
+
+.mix-text() {
+  .mix-text(
+    @size: @t-base, 
+    @lh: @type-line-height, 
+    @size-small: @type-break--base, /*if((@type-breakpoint-output), @type-break--base, false) */
+    @lh-small: @type-break--base-lh,
+    @margin: true
+  );
+}
+
+// All options (manual)
+.mix-text(
+  @size, 
+  @lh: false,
+  @size-small: false,
+  @lh-small: false,
+  @family: @type-family, 
+  @with-p: false,
+  @margin: false,
+  @breakpoint: @type-breakpoint
+) when not (isstring(@size)) {
+
+  font-family: @family;
+  .return-em(@size, @lh);
+  
+  & when not (@type-use-rem= on) {
+    font-size: @size;
+  }
+  & when (@type-use-rem= on) {
+    .mix-rem-font-size(@size);
+  }
+  & when not (@lh = false) {
+    line-height: @return-em;
+  }
+  & when (@margin = true) {
+    margin-bottom: @return-em * @type-margin-multiplier;
+  }
+
+  // Add a paragraph selector (used to style whole blocks)
+  p when not (@with-p = false ) and not (@lh = false) {
+
+    & when not (@type-use-rem= on) {
+      font-size: @size;
+    }
+    & when (@type-use-rem= on) {
+      .mix-rem-font-size(@size);
+    }
+    line-height: @return-em;
+    margin-bottom: @return-em * @type-margin-multiplier;
+
+  }
+
+  & when not (@size-small = false) {
+    @media @breakpoint {
+
+      .return-em(@size-small, @lh-small);
+      & when not (@type-use-rem= on) {
+        font-size: @size-small;
+      }
+      & when (@type-use-rem= on) {
+        .mix-rem-font-size(@size-small);
+      }
+      & when not (@lh-small = false) {
+        line-height: @return-em;
+      }
+      & when (@margin = true) {
+        margin-bottom: @return-em * @type-margin-multiplier;
+      }
+
+      p when not (@with-p = false ) and not (@lh-small = false) {
+        line-height: @return-em;
+        margin-bottom: @return-em * @type-margin-multiplier;
+        & when (@type-use-rem= on) {
+          .mix-rem-font-size(@size-small);
+        }
+      }
+    }
+  }
+  .hook--mix-text(); // Add hook incase someone needs it
+}
+
+
+// By Keyword
+// =====================================
+
+// Note: Commented out if statement, can't use yet gulp-less 
+//       had bug with new version of LESS (saving for later)
+
+.mix-text-size(@keyword, @margin: false) when (isstring(@keyword)) {
+  & when (@keyword = "base") or (@keyword = "medium") {
+    .mix-text(
+      @size: @t-base, 
+      @lh: @type-line-height, 
+      @size-small: @type-break--base, /*if((@type-breakpoint-output), @type-break--base, false) */
+      @lh-small: @type-break--base-lh,
+      @margin: @margin
+    );
+  }
+  & when (@keyword = "small-x") {
+    .mix-text(
+      @size: @type-small-x, 
+      @lh: @type-small-x-lh, 
+      @size-small: @type-break--small-x, /*if((@type-breakpoint-output), @type-break--small-x, false) */
+      @lh-small: @type-break--small-x-lh,
+      @margin: @margin
+    );
+  }
+  & when (@keyword = "small") {
+    .mix-text(
+      @size: @type-small, 
+      @lh: @type-small-lh, 
+      @size-small: @type-break--small, /*if((@type-breakpoint-output), @type-break--small, false) */
+      @lh-small: @type-break--small-lh,
+      @margin: @margin
+    );
+  }
+  & when (@keyword = "large") {
+    .mix-text(
+      @size: @type-large, 
+      @lh: @type-large-lh, 
+      @size-small: @type-break--large, /*if((@type-breakpoint-output), @type-break--large, false) */
+      @lh-small: @type-break--large-lh,
+      @margin: @margin
+    );
+  }
+  & when (@keyword = "large-x") {
+    .mix-text(
+      @size: @type-large-x, 
+      @lh: @type-large-x-lh, 
+      @size-small: @type-break--large-x, /*if((@type-breakpoint-output), @type-break--large-x, false) */
+      @lh-small: @type-break--large-x-lh,
+      @margin: @margin
+    );
+  }
+  & when (@keyword = "large-xx") {
+    .mix-text(
+      @size: @type-large-xx, 
+      @lh: @type-large-xx-lh, 
+      @size-small: @type-break--large-xx, /*if((@type-breakpoint-output), @type-break--large-xx, false) */
+      @lh-small: @type-break--large-xx-lh,
+      @margin: @margin
+    );
+  }
+}
+
+// Default for legacy version because it doesn't exist anymore
+.hook--mix-text() {}

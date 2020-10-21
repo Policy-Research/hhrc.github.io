@@ -1,0 +1,19 @@
+/* =============================================================================
+Framework: WYSIWYG
+================================================================================ */
+
+// Version:         1.1.1
+
+// Description:     Styles specific to use in editor areas
+
+// When we are building the editor stylesheet go ahead and mix in the styles 
+// without the wrapping class. 
+.wysiwyg {}
+
+// Moving to the bottom of the stylesheet to mimic
+// higher level of specificty from ".wysiwyg el/class".
+.mix-bottom-stylesheet() {
+  & when (@wysiwyg-stylesheet = true) {
+    .wysiwyg;
+  }
+}

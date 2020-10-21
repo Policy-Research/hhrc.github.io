@@ -1,0 +1,43 @@
+/* ================================================================
+MIXINS - RETURNS 
+================================================================ */
+
+// Description:     Mixins that return a value
+// Version:         1.0.0
+
+// Changelog:       1.0.0 
+
+// Contents:        - Em
+// 									- Rem
+
+// Em
+// =============================================================================
+
+// Incase the Item is Already EM
+.return-em(@font-size, @size-to-compare) when (isem(@size-to-compare) = true) {
+  @return-em: @size-to-compare;
+}
+// Is a Pixel Value
+.return-em(@font-size, @size-to-compare) when (ispixel(@size-to-compare) = true) {
+  @return-em: unit((@size-to-compare / @font-size), em);
+}
+
+// Rem
+// =============================================================================
+
+.return-rem(@font-size) when (ispixel(@font-size) = true) {
+  @return-rem: unit((@font-size / @t-base), rem);
+}
+
+
+
+// Note this can only be used to return the variable once per scope, for multiple see workflow below
+.return--media--min-to-max(@mediaQuery) {
+  @return--media--min-to-max: e(replace(@mediaQuery, "([^0-9.]+)", "screen and (max-width: "));
+}
+
+@pass--media-to-conv: ~"screen and (min-width: 481px)"; // This is just so we don't have any errors (default value)
+@conv-media--min-to-max: e(replace(@pass--media-to-conv, "([^0-9.]+)", "screen and (max-width: "));
+
+
+

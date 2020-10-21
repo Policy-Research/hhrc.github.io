@@ -1,0 +1,38 @@
+.mix-overlay(
+  @type: "background",
+  @class-container: 'overlay'
+);
+
+.mix-overlay(
+  @type: "background",
+  @class-container: 'overlay-custom',
+  @background-color: beige,
+  @background-alpha: 0.5,
+  @color: yellow
+);
+
+.mix-overlay(
+  @type: "hover",
+  @class-container: 'overlay',
+);
+
+.mix-overlay(
+  @type: "caption",
+  @class-container: 'overlay',
+  @position: "btm",
+  @background-color: @color-black-80,
+  @background-alpha: 0.9
+);
+
+.mix-overlay(
+  @type: "link",
+  @class-container: 'overlay',
+  @background-color: lighten(@color-blue, 5%),
+  @background-alpha: 1
+);
+
+// Type: Click (Not created Yet)
+.mix-overlay(
+  @type: "click",
+  @class-container: 'overlay',
+);

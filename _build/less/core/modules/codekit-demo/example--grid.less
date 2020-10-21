@@ -1,0 +1,71 @@
+
+
+.loop-grid-fixed-gut(
+  @pref-parent: row, 
+  @col: 6, 
+  @gut: @site-grid-gutter, 
+  @brk-small: @grid-breakpoint, 
+  @gut-med: @site-grid-gutter-medium, 
+  @brk-med: @laptop-up, 
+  @class-med: l, 
+  @gut-large: 24px, 
+  @brk-large: @desktop-up, 
+  @class-large: d,
+  @mod-row-align: true,
+  @mod-row-gutters: true,
+  @mod-row-gutters--alt: 10px,
+  @mod-col-rules: true,
+  @mod-col-rules--width: 1px,
+  @mod-col-rules--color: @color-black-20,
+  @mod-col-rules--last-child: false,
+  @mod-row-rules: true,
+  @mod-row-rules--height: 1px,
+  @mod-row-rules--color: @color-black-20
+);
+
+
+// Gutter Size Modifier
+// -------------------------------------
+
+// Used to change the gutter for grid
+
+.modifier--grid-fixed-gut(
+  @mod: -small, 
+  @col: 6, 
+  @gut: 6px, 
+  @gut-med: 6px, 
+  @brk-med: @tablet-up, 
+  @gut-large: 6px, 
+  @brk-large: @desktop-up
+);
+
+// Rule Color Modifier
+// -------------------------------------
+
+.modifier--grid-fixed-gut-rules(
+  @col: 6,
+  @class-suffix: heavy,
+  @mod-col-rules: true,
+  @mod-col-rules--width: 3px,
+  @mod-col-rules--color: black,
+  @mod-row-rules: false,
+  @mod-row-rules--height: 3px,
+  @mod-row-rules--color: black
+);
+
+
+
+// Testing mixins (can be removed not being used)
+// =============================================================================
+
+
+
+.demo-mix-split-half {
+  .mix-split(1, 2);
+}
+.demo-mix-container {
+  .mix-grid-fixed();
+}
+.demo-mix-col {
+  .mix-grid-fixed(3, 12);
+}

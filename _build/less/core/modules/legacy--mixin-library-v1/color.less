@@ -1,0 +1,82 @@
+/* ================================================================
+MIXINS - COLOR
+================================================================ */
+
+// Description:     Mixins to help speed up colors
+// Version:         1.2
+
+// Changelog:       v1.2 - ???
+
+
+// COLOR RGBA (Offset is to adjust fallback to lighter or darker)
+.mix-color-rgba(@color, @alpha, @offset-fallback: 0) {
+  color: tint(@color,  ((@alpha * 100) * @offset-fallback));            // fallback (find closest value of black)
+  color: rgba(red(@color), green(@color), blue(@color), @alpha);
+}
+.mix-bg-rgba(@background-color, @alpha, @offset-fallback: 0) {
+  background-color: tint(@background-color,  ((@alpha * 100) * @offset-fallback)); // fallback (find closest value of black)
+  background-color: rgba(red(@background-color), green(@background-color), blue(@background-color), @alpha);
+}
+
+.mix-color-set(
+  @color-bg, 
+  @color-border, 
+  @color-text, 
+  @color-icon, 
+  @color-name, 
+  @color-value, 
+  @a-fallback: no
+  ) when (@a-fallback = no) {
+  // Build Background Class
+  .bg@{color-name} when (@color-bg = T) { background-color: @color-value; }
+
+  // Build Border/Rule Class
+  .b@{color-name} when (@color-border = T) { border-color: @color-value; }
+
+  // Build Text Class
+  .t@{color-name} when (@color-text = T) { color: @color-value; }
+
+  // Build Icon Class
+  .i@{color-name} when (@color-icon = T) { 
+    &:before, &:after { color: @color-value; }
+  }
+}
+
+// Color Mixin with a Fallback
+// =============================================================================
+
+.mix-color-set(
+  @color-bg, 
+  @color-border, 
+  @color-text, 
+  @color-icon, 
+  @color-name, 
+  @color-value, 
+  @a-fallback: no
+  ) when not (@a-fallback = no) {
+  // Build Background Class
+  .bg@{color-name} when (@color-bg = T) { 
+    background-color: @a-fallback; 
+    background-color: @color-value; 
+  }
+
+  // Build Border/Rule Class
+  .b@{color-name} when (@color-border = T) { 
+    border-color: @a-fallback; 
+    border-color: @color-value; 
+  }
+
+  // Build Text Class
+  .t@{color-name} when (@color-text = T) { 
+    color: @a-fallback; 
+    color: @color-value; 
+  }
+
+  // Build Icon Class
+  .i@{color-name} when (@color-icon = T) { 
+    &:before, &:after { 
+      color: @a-fallback; 
+      color: @color-value; 
+    }
+  }
+}

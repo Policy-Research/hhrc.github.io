@@ -1,0 +1,69 @@
+// Horizontal & Vertical (shared styles)
+// =============================================================================
+
+.rta--fancy-h,
+.rta--fancy-v {
+  .rta__content {
+    @media @break-accordion {
+      @accordion--content();
+    }
+  }
+  .rta__acc-toggle {
+    @accordion--toggle();
+  } 
+}
+
+
+// Horizontal
+// =============================================================================
+
+.rta--fancy-h {
+  .rta__tabs-list {
+    @tabfancy--h--list();
+  }
+  .rta__tabs-list-item {
+    @tabfancy--h--list-item();
+  }
+  .rta__tabs-toggle {
+    @tabfancy--h--toggle();
+  }
+  .rta__content {
+    @media @break-tabs {
+      @tabfancy--h--content();
+    }
+  }
+  .rta__tabs-content-wrap {
+    @media @break-tabs {
+      @tabfancy--h--content-wrap();
+    }
+  }
+}
+
+
+// Vertical
+// =============================================================================
+
+.rta--fancy-v {
+  @media @break-tabs {
+    @tabfancy--v();
+  }
+  .rta__tabs-list {
+    @tabfancy--v--list();
+  }
+  .rta__tabs-list-item {
+    @tabfancy--v--list-item();
+  }
+  .rta__tabs-toggle {
+    @tabfancy--v--toggle();
+  }
+  .rta__tabs-content-wrap {
+    @media @break-tabs {
+      @tabfancy--v--content-wrap();
+    }
+  }
+  .rta__content {
+    @media @break-tabs {
+      @tabfancy--v--content();
+    }
+  }
+}

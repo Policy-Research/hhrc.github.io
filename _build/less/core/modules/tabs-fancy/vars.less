@@ -1,0 +1,99 @@
+//                  The styles are separated into variables below so they can be 
+//                  reused within tabs to accordions
+
+
+//  Horizontal
+// =============================================================================  
+
+@tabfancy--h--list: {
+  .cf; 
+};
+
+@tabfancy--h--list-item: {
+  display: inline-block;
+  float: left;
+  border-left: 1px solid @color-black-20;
+  &:first-child {
+    border-left: none;
+  }
+};
+@tabfancy--h--toggle: {
+  background-color: @color-black-10;
+  padding: @base-medium/2.5 @base-medium;
+  font-weight: bold;
+  &.open {
+    background-color: @color-black-20;
+  }
+};
+@tabfancy--h--content-wrap: {
+  border: 1px solid @color-black-20;
+};
+@tabfancy--h--content: {
+  padding: @base-medium;
+};
+
+
+//  Vertical
+// =============================================================================  
+
+// Notes:           Possibly, use equalheigts for matching tabs__list height and
+//                  tabs__content-wrap
+
+@tabs-vertical-tab-width:               180px; // px or %
+
+
+@tabfancy--v: {
+  border: 1px solid @color-black-20;
+  // Modernizr for Layout
+  .no-flexbox & { 
+    .cf; 
+  }
+  .flexbox & { 
+    display: flex;  
+  }
+};
+
+@tabfancy--v--list: {
+  background-color: @color-black-5;
+  width: @tabs-vertical-tab-width;
+  min-width: @tabs-vertical-tab-width;
+  max-width: @tabs-vertical-tab-width;
+  .no-flexbox & { 
+    float: left; 
+  }
+  .flexbox & { 
+    order: 2;
+    flex-grow: 1;
+  }
+  .tabs--right& {
+    .no-flexbox & { float: right; }
+    .flexbox & { order: 2; }
+  }
+};
+@tabfancy--v--list-item: {
+  border-top: 1px solid darken(@color-black-10, 7%);
+    &:first-child { border-top: none; }
+};
+@tabfancy--v--toggle: {
+  width: 100%;
+    background-color: @color-black-10;
+    padding: @base-medium/2.5 @base-medium;
+    font-weight: bold;
+     &.open {
+      background-color: @color-black-20;
+    }
+};
+@tabfancy--v--content-wrap: {
+    .no-flexbox & {overflow: hidden;}
+    .flexbox & {
+      order: 2;
+      flex-grow: 1;
+    }
+    .tabs--right& {
+      .no-flexbox & {}
+      .flexbox & { order: 1; }
+    }
+};
+@tabfancy--v--content: {
+  padding: @base-medium;
+};
