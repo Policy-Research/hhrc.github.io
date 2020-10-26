@@ -19,6 +19,9 @@ module.exports = {
   },
   less: {
     enabled,
+    options: {
+      dest: "./css/"
+    }
   },
   lessFramework: {
     enabled
@@ -33,13 +36,20 @@ module.exports = {
   //   enabled
   // },
   browserSync: {
-    enabled
+    enabled,
+    options: {
+      init: {
+        server: {
+          baseDir: "./"
+        }
+      }  
+    }
   },
   images: {
     enabled,
     options: {
       src: "./_build/images/**/*",
-      dest:"./public/images",
+      dest:"./images",
       watch: "./_build/images/**/*",
     }
     // options: {}
