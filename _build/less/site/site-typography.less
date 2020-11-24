@@ -46,6 +46,23 @@
     color: #1E384B;
   }
 }
+.h5 {
+  #TYPE.create(@size: @type-large, @size-small: @type-break--large, @lh: @type-line-height-dense);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.h6 {
+  margin-bottom: 1rem;
+}
+.headline-label {
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  display: block;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #4d4e4f;
+  #TYPE.create(@size: @type-large, @size-small: @type-break--large, @lh: @type-line-height-dense);
+}
 // .h3 { 
 //   #TYPE.create(@size: 25px, @lh: 29px);
 //   font-weight: bold;
@@ -104,6 +121,11 @@
   @media @break-primary {
     margin: 1rem 0 1rem 0;
   }
+}
+.rule {
+  border-top: 1px solid tint(black, 80%);
+  margin-top: 2rem;
+  padding-top: 2rem;
 }
 
 // Mods

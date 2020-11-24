@@ -1,0 +1,33 @@
+.webinar {
+  background-color: @color-green-muted;
+  background: linear-gradient(@color-green-muted, @color-green-muted 50%, white 50%);
+  &__content {
+    background-color: white;
+    box-shadow: @box-shadow;
+    border-radius: 10px;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-bottom: 5vw;
+  }
+  &__title {
+    display: block;
+    font-weight: normal;
+    color: @color-teal;
+    margin-bottom: 1rem;
+    &:hover {
+      color: @color-link;
+    }
+  }
+  &__description {
+    max-width: 45rem;
+    @media @break-primary-up {
+      padding-right: 5vw;
+    }
+    
+  }
+  &__aside-headline {
+    @media @break-primary-up {
+      margin-top: 3rem;
+    }
+  }
+}
