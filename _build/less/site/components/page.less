@@ -22,6 +22,10 @@
 .page__anchors {
   padding-top: 2rem;
   background: linear-gradient(@color-blue, @color-blue 30%, white 30%);
+  @media @break-primary {
+    background: @color-blue;
+    padding-top: 0;
+  }
 }
 .page__anchors-link {
   text-decoration: none;

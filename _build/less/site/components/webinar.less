@@ -1,6 +1,9 @@
 .webinar {
   background-color: @color-green-muted;
   background: linear-gradient(@color-green-muted, @color-green-muted 50%, white 50%);
+  @media @break-primary {
+    background: @color-green-muted;
+  }
   &__content {
     background-color: white;
     box-shadow: @box-shadow;
