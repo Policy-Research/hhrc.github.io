@@ -1,0 +1,44 @@
+<div class="our-work" id="our-work">
+  <div class="our-work__header section section--fit">
+    <div class="section__content type-center">
+      <h2 class="h2 h2--colored">Our Work</h2>
+      <div class="short-rule short-rule--large-gap"></div>
+    </div>
+  </div>
+  <div class="our-work__tabs-list-wrap tabs section section--fit">
+    <div class="tabs__list our-work__tabs-list section__content">
+      <button class="tabs__toggle" aria-selected="true">
+        <img class="graphic-icon" src="images/icon-webinar.svg" alt="" role="presentation">
+        Webinars
+      </button>
+      <button class="tabs__toggle" >
+        <img class="graphic-icon" src="images/icon-toolkit.svg" alt="" role="presentation">
+        Toolkits
+      </button>
+      <button class="tabs__toggle" >
+        <img class="graphic-icon" src="images/icon-newsletter.svg" alt="" role="presentation">
+        Newsletters
+      </button>
+      <button class="tabs__toggle" disabled>
+        <img class="graphic-icon" src="images/icon-article.svg" alt="" role="presentation">
+        Articles
+      </button>
+    </div>
+  </div>
+  <div class="our-work__tabs-panels-wrap section section--fit ">
+    <div class="tabs__panels section__content">
+      <div class="tabs__panel">
+        {% include "views/webinars.twig" %}
+      </div>
+      <div class="tabs__panel">
+        <!-- No Content -->
+      </div>
+      <div class="tabs__panel">
+        <!-- No Content -->
+      </div>
+      <div class="tabs__panel">
+        <!-- No Content -->
+      </div>
+    </div>
+  </div>
+</div>

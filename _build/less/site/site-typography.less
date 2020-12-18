@@ -40,11 +40,11 @@
   font-weight: bold;
   font-family: @t-family-serif;
   // margin-bottom: 0.5em;
-  
   color: inherit;
-  &--colored {
-    color: #1E384B;
-  }
+}
+.h2--colored,
+.h3--colored {
+  color: #1E384B;
 }
 .h5 {
   #TYPE.create(@size: @type-large, @size-small: @type-break--large, @lh: @type-line-height-dense);
@@ -101,7 +101,6 @@
 .type-small-x {
   #TYPE.createSize('small-x', @with-p: false);
 }
-
 .type-max-width {
   max-width: 50rem;
   margin-right: auto;
@@ -110,16 +109,18 @@
 .type-dense {
   line-height: @type-line-height-dense;
 }
-
 .short-rule {
   width: 3.5rem;
   background-color: white;
   background-color: #79BFCA;
   height: 3px;
-  margin: 1.25rem 0 1.25rem 0;
+  margin: 1.25rem 0;
   display: inline-block;
   @media @break-primary {
     margin: 1rem 0 1rem 0;
+  }
+  &--large-gap {
+    margin: 1.8rem 0;
   }
 }
 .rule {

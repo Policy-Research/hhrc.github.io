@@ -1,0 +1,26 @@
+<!doctype html>
+<html class="no-js" lang="">
+  <head>
+    <meta charset="utf-8">
+    <title>{{ site.title }}</title>
+    <meta name="description" content="{{ site.meta.description }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="favicon.ico?v=1" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  </head>
+  <body class="page">
+    {% include 'header.twig' %}
+    <main>
+      {% include 'sections/anchors.twig' %}
+      {% include 'sections/about-us.twig' %}
+      {% include 'sections/webinar.twig' %}
+      {% include 'sections/our-work.twig' %}
+      {% include 'sections/join-us.twig' %}
+      {% include 'sections/highlight.twig' %}
+    </main>
+    {% include 'footer.twig' %}
+  </body>
+</html>

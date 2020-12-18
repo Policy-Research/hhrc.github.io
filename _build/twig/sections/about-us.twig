@@ -1,0 +1,39 @@
+<div class="section" id="about-us">
+  <div class="section__content">
+    <div class="type-center">
+      <h2 class="h2 h2--colored">About Us</h2>
+      <div class="short-rule short-rule--large-gap"></div>
+    </div>
+    <div data-grid="columns: 12">
+      <div data-grid-item="width: 8;">
+        <div class="page__padded-body">
+          <p class="type-large type-dense">
+            HHRC was established in August 2020 with funding from the Substance Abuse and Mental Health Services Administration (SAMHSA). 
+          </p>
+          <p>
+            Health Services Administration (SAMHSA) to expand the availability of high-quality training in evidencebased housing and treatment models focused on adults, children, and families who are experiencing or at risk of homelessness and have a serious mental illness, serious emotional disturbance, substance use disorders, or co-occurring disorders. 
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip.
+          </p>
+        </div>
+      </div>
+      <div data-grid-item="width: 4;">
+        <h3 class="h5">HHRC Overview</h3>
+        <p>
+          Download a one sheet overview about HHRC listserv to be the first to hear about new trainings and resources!  
+        </p>
+        <p>
+          <a class="button" href="files/hhrc-overview-508.pdf" target="_blank" download>Download Overview</a>
+        </p>
+      </div>
+    </div>
+    <div class="partner-logos">
+      {% for partner in site.partners %}
+        <a href="{{ partner.link }}" target="_blank">
+          <img src="images/{{ partner.image }}" alt="{{ partner.name }}">
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>

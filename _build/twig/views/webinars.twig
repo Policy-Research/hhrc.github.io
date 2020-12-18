@@ -1,0 +1,26 @@
+<ul class="webinar-list reset-list" data-grid="columns: 12; gutters-row: true">
+  {% for webinar in webinars %}
+    <li class="webinar-list__item" data-grid-item="width: 4;">
+      <div class="card card--in-grid">
+        <div class="webinar-list__header card__header ">
+          <h3 class="webinar-list__title h3">{{ webinar.title }}</h3>
+        </div>
+        <div class="card__body">
+          <img class="webinar-list__image" src="images/icon-webinar.svg" role="presentation" alt="">
+          <p>
+            {{ webinar.description }}
+          </p>
+          <p>
+            {% if webinar.links.resources %}
+              <a href="{{ webinar.links.resources }}" target="_blank" download>Download Resources</a>
+            {% endif %}
+            {% if webinar.links.resources %}
+              <a href="{{ webinar.links.more }}" target="_blank" download>Learn More</a>
+            {% endif %}
+          </p>
+          <a class="button" href="{{ webinar.links.webinar }}" target="_blank" download>View Webinar</a>
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>

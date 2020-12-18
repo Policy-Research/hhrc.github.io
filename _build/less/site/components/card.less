@@ -1,0 +1,37 @@
+@cardPadding: 1.3rem;
+// @cardPadding: 1.3rem;
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: @box-shadow;
+  // margin-bottom: @element-margin;
+  background-color: white;
+  border-radius: 5px;
+  overflow: hidden;
+  &--in-grid {
+    height: 100%;
+  }
+}
+.card__header {
+  padding: 1.3rem 1.3rem 2.5rem 1.3rem;
+  background-color: #8EC6CF;
+  flex-grow: 0;
+}
+.card__body {
+  padding: 1.3rem;
+  padding-bottom: 2.5rem;
+  flex-grow: 1; // Push footer down
+}
+.card__footer {
+  padding: 1.3rem;
+  background-color: #F1F2F1;
+  flex-grow: 0;
+}
+.card__header,
+.card__body,
+.card__footer {
+  >*:last-child {
+    margin-bottom: 0;;
+  }
+}
