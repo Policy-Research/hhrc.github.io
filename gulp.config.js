@@ -11,6 +11,7 @@ const yaml = require('js-yaml');
 const chalk = require('chalk');
 const { join } = require('path');
 const { src, dest } = require("gulp");
+const markdown = require('markdown-it')();
 
 module.exports = {
   _mergeOptions: false,
@@ -33,6 +34,14 @@ module.exports = {
           data.webinars = yaml.load(readFileSync('./_data/webinars.yaml', 'utf8'));
         } catch (error) {
           console.error(chalk.red('Twig Data YAML Parse Error:'), error);
+        }
+        // Parse markdown fields
+        try {
+          data.webinars.forEach(w => {
+            if (w.body) w.body = markdown.render(w.body);
+          });
+        } catch (error) {
+          console.error(chalk.red('Markdown Parse Error:'), error);
         }
         return data;
       },

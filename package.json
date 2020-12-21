@@ -16,7 +16,8 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.1",
     "ally.js": "^1.4.1",
-    "aria-tablist": "^1.2.2"
+    "aria-tablist": "^1.2.2",
+    "micromodal": "^0.4.6"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -47,6 +48,7 @@
     "is-plain-object": "^5.0.0",
     "js-yaml": "^3.14.1",
     "less-plugin-lists": "^1.1.2",
+    "markdown-it": "^12.0.4",
     "sass": "^1.29.0",
     "webpack": "^5.5.1",
     "webpack-dev-middleware": "^4.0.2",

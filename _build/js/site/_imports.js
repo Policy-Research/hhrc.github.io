@@ -1,2 +1,2 @@
 
-import "./tabs.js";
+import "./webinar-modal.js";

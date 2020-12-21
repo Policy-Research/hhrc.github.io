@@ -1,18 +1,21 @@
+# Note: Body is markdown
+- title: Eviction Prevention and Housing Retention During and After COVID-1
+  description: The COVID-19 pandemic has led to economic hardship and housing instability for millions of Americans. With eviction moratoria expected to expire at the end of 2020, individuals and families are at risk of losing their housing.
+  body: | 
+    The COVID-19 pandemic has led to economic hardship and housing instability for millions of Americans. With eviction moratoria expected to expire at the end of 2020, individuals and families are at risk of losing their housing. Join SAMHSA’s new Homeless and Housing Resource Center to explore strategies for eviction prevention and housing retention. Participants will hear from U.S. Department of Veterans Affairs (VA) leadership, an experienced housing attorney, and local Continuum of Care (CoC) leadership about implementing data-informed, targeted prevention efforts that prioritize racial equity and will learn strategies that can be implemented now to prevent future housing instability when the moratoria expire.
+  links:
+    resources: "http://www.google.com"
+    more: "http://www.google.com"
+
 - title: Eviction Prevention and Housing Retention During and After COVID-1
   description: The COVID-19 pandemic has led to economic hardship and housing instability for millions of Americans. With eviction moratoria expected to expire at the end of 2020, individuals and families are at risk of losing their housing.
   links:
     resources: "http://www.google.com"
     more: "http://www.google.com"
-    webinar: "http://www.google.com"
+
 - title: Eviction Prevention and Housing Retention During and After COVID-1
   description: The COVID-19 pandemic has led to economic hardship and housing instability for millions of Americans. With eviction moratoria expected to expire at the end of 2020, individuals and families are at risk of losing their housing.
   links:
     resources: "http://www.google.com"
     more: "http://www.google.com"
-    webinar: "http://www.google.com"
-- title: Eviction Prevention and Housing Retention During and After COVID-1
-  description: The COVID-19 pandemic has led to economic hardship and housing instability for millions of Americans. With eviction moratoria expected to expire at the end of 2020, individuals and families are at risk of losing their housing.
-  links:
-    resources: "http://www.google.com"
-    more: "http://www.google.com"
-    webinar: "http://www.google.com"        
+     
