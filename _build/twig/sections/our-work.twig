@@ -6,20 +6,20 @@
     </div>
   </div>
   <div class="our-work__tabs-list-wrap tabs section section--fit">
-    <div class="tabs__list our-work__tabs-list section__content">
-      <button class="tabs__toggle" aria-selected="true">
+    <div class="tabs__list our-work__tabs-list section__content" role="tablist">
+      <button class="tabs__toggle" aria-selected="true" aria-controls="tabpanel-webinars">
         <img class="graphic-icon" src="images/icon-webinar.svg" alt="" role="presentation">
         Webinars
       </button>
-      <button class="tabs__toggle" >
+      <button class="tabs__toggle" aria-controls="tabpanel-toolkits" disabled>
         <img class="graphic-icon" src="images/icon-toolkit.svg" alt="" role="presentation">
         Toolkits
       </button>
-      <button class="tabs__toggle" >
+      <button class="tabs__toggle" aria-controls="tabpanel-newsletters" disabled>
         <img class="graphic-icon" src="images/icon-newsletter.svg" alt="" role="presentation">
         Newsletters
       </button>
-      <button class="tabs__toggle" disabled>
+      <button class="tabs__toggle" aria-controls="tabpanel-articles" disabled>
         <img class="graphic-icon" src="images/icon-article.svg" alt="" role="presentation">
         Articles
       </button>
@@ -27,16 +27,16 @@
   </div>
   <div class="our-work__tabs-panels-wrap section section--fit ">
     <div class="tabs__panels section__content">
-      <div class="tabs__panel">
+      <div class="tabs__panel" id="tabpanel-webinars" role="tabpanel">
         {% include "views/webinars.twig" %}
       </div>
-      <div class="tabs__panel">
+      <div class="tabs__panel" id="tabpanel-toolkits" role="tabpanel">
         <!-- No Content -->
       </div>
-      <div class="tabs__panel">
+      <div class="tabs__panel" id="tabpanel-newsletters" role="tabpanel">
         <!-- No Content -->
       </div>
-      <div class="tabs__panel">
+      <div class="tabs__panel" id="tabpanel-articles" role="tabpanel">
         <!-- No Content -->
       </div>
     </div>

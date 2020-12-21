@@ -42,9 +42,17 @@ module.exports = {
       ]
     }
   },
-  // webpack: {
-  //   enabled,
-  // },
+  webpack: {
+    enabled,
+    options: {
+      config: {
+        output: {
+          path: join(__dirname, "js"),
+          filename: 'scripts.js'
+        },
+      }
+    }
+  },
   autoprefixer: {
     enabled
   },
