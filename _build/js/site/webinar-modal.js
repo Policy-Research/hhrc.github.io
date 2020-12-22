@@ -1,5 +1,5 @@
 import MicroModal from 'micromodal';
-import { newElementFromHtml } from '../lib/utils.js';
+import { createElementFromHtml } from '../lib/utils.js';
 
 const modals = document.querySelectorAll('[data-site-modal]');
 const wrappers = [];
@@ -48,9 +48,7 @@ function setupModal(modal, index) {
   // Create wrapped modal (with repeatable structure), 
   // and insert the original modal content into it
   const markup = template(id, classes, data).trim();
-  console.log(markup);
-  const wrapper = newElementFromHtml(markup);
-  console.log(wrapper);
+  const wrapper = createElementFromHtml(markup);
   wrapper.querySelector('.modal__body').appendChild(modal);
   wrappers.push(wrapper);
 }

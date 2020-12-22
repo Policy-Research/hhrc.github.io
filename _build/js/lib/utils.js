@@ -240,11 +240,10 @@ export function composeElement(config) { // tag, attributes = {}, children
   return element;
 }
 /**
- * Returns HTML element created from string
+ * Returns Node List from HTML markup string
  * @param {String} markup HTML markup to create into an element
  */
-export function newElementFromHtml(markup) {
-  const temp = document.createElement('div');
-  temp.innerHTML = markup.trim();
-  return temp.firstElementChild || temp.firstChild; // Lower than IE 9
+export function createElementFromHtml(markup) {
+  const doc = new DOMParser().parseFromString(markup, 'text/html');
+  return doc.body.firstChild;
 }
