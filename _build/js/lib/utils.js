@@ -221,3 +221,30 @@ export function hasRequiredProps(required) {
     return required.every(value => object[value] !== undefined);
   }
 }
+/**
+ * Creates a new element with attributes and children
+ * @param {Object} config Configuration object
+ * @param {String} config.tag Node type (ie 'div')
+ * @param {Object} config.attributes Attributes to add to the new element
+ * @param {Array} config.children Array of children to append into the new element
+ */
+export function composeElement(config) { // tag, attributes = {}, children
+  const { tag, attributes, children } = config;
+  const element = document.createElement(tag);
+  if (attributes) {
+    Object.entries(attributes).forEach((a, v) => element.setAttribute(a, v));
+  }
+  if (children) {
+    children.forEach(child => element.appendChild(c));
+  }
+  return element;
+}
+/**
+ * Returns HTML element created from string
+ * @param {String} markup HTML markup to create into an element
+ */
+export function newElementFromHtml(markup) {
+  const temp = document.createElement('div');
+  temp.innerHTML = markup.trim();
+  return temp.firstElementChild || temp.firstChild; // Lower than IE 9
+}

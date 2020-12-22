@@ -1,5 +1,11 @@
 <ul class="webinar-list reset-list" data-grid="columns: 12; gutters-row: true">
   {% for webinar in webinars %}
+    {% set id = 'webinar-modal-' ~ loop.index %}
+    {% set data = { 
+        'title': webinar.title,
+        'label': 'Webinar'
+      } 
+    %}
     <li class="webinar-list__item" data-grid-item="width: 4;">
       <div class="card card--in-grid">
         <div class="webinar-list__header card__header ">
@@ -10,30 +16,28 @@
           <p>
             {{ webinar.description }}
           </p>
-          <p>
-            {% if webinar.links.resources %}
-              <a href="{{ webinar.links.resources }}" target="_blank" download>Download Resources</a>
+          <p class="links-plain">
+            {% if webinar.resources %}
+              <a 
+                href="files/{{ webinar.resources.filename }}" 
+                target="_blank" 
+                download="{{ webinar.resources.prettyname }}"
+              >Download Resources</a> | 
             {% endif %}
-            {% if webinar.links.resources %}
-              <a href="{{ webinar.links.more }}" target="_blank" download>Learn More</a>
-            {% endif %}
+            <button data-micromodal-trigger="{{ id }}" class="button-link">Learn More</button>
           </p>
-          {% set id = 'webinar-modal-' ~ loop.index %}
-
-          <button class="button" data-micromodal-trigger="{{ id }}">View Webinar</button>
-
-          <div class="modal webinar__modal-content" id="{{ id }}" aria-hidden="true">
-            <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-              <div class="modal__container" role="dialog" aria-modal="true" aria-labelledby="{{ id }}-title">
-                <div class="modal__header">
-                  <h2 id="{{ id }}-title">{{ webinar.title }}</h2>
-                </div>
-                <button class="modal__close" aria-label="Close modal" data-micromodal-close>&times;</button>
-                <div class="modal__body">
-                  {{ webinar.body }}
-                </div>
-              </div>
-            </div>
+          
+          <a class="button" href="{{ webinar.link }}" target="_blank">View Webinar</a>
+          <div 
+            id="{{ id }}" 
+            class="webinar__modal-content wysiwyg" 
+            data-site-modal='{{ data|json_encode() }}'
+          >
+            {{ webinar.body }}
+            {% if webinar.speakers %}
+              <h3 class="h3">Speakers</h3>
+              {{ webinar.speakers }}
+            {% endif %}
           </div>
         </div>
       </div>
