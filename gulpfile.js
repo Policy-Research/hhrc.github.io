@@ -2,7 +2,7 @@
 // Gulp 4 File
 // =============================================================================
 
-// Version:         1.0.3
+// Version:         1.0.4
 
 const importFresh = require('import-fresh');
 const { src, dest, series, watch } = require("gulp");
