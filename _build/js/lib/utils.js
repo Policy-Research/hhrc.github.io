@@ -245,5 +245,5 @@ export function composeElement(config) { // tag, attributes = {}, children
  */
 export function createElementFromHtml(markup) {
   const doc = new DOMParser().parseFromString(markup, 'text/html');
-  return doc.body.firstChild;
+  return doc.body.firstElementChild;
 }

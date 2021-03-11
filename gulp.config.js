@@ -40,6 +40,7 @@ module.exports = {
           data.webinars.forEach(w => {
             if (w.body) w.body = markdown.render(w.body);
             if (w.speakers) w.speakers = markdown.render(w.speakers);
+            if (w.footer) w.footer = markdown.render(w.footer);
           });
         } catch (error) {
           console.error(chalk.red('Markdown Parse Error:'), error);
