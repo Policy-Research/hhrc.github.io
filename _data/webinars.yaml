@@ -11,3 +11,18 @@
     filename: hhrc-webinar.zip
     prettyname: HHRC Webinar.zip
   link: https://youtu.be/uZ0K4pLVFWo
+# Note: Body is markdown
+- title: Supporting the Mental Health and Treatment Needs of Individuals Experiencing Homelessness During COVID-19
+  description: Throughout the COVID-19 pandemic there has been an increase in mental health and substance use disorders in the United States. Join SAMHSA’s Homeless and Housing Resource Center in exploring equitable and culturally appropriate interventions to engage people experiencing homelessness in treatment and deliver services in non-congregate settings.
+  body: | 
+    Throughout the COVID-19 pandemic there has been an increase in mental health and substance use disorders in the United States. Join SAMHSA’s Homeless and Housing Resource Center in exploring equitable and culturally appropriate interventions to engage people experiencing homelessness in treatment and deliver services in non-congregate settings. Participants will hear from the Colorado Coalition for the Homeless and Central City Concern about the creative methods they have used during the pandemic. Participants will also learn self-care strategies from the National Council for Behavioral Health to avoid burnout during and after the pandemic. 
+
+    *The National Council for Behavioral Health and National Health Care for the Homeless Council contributed to the development of this webinar.*
+  speakers: |
+    - Dave Iverson, MD, Director of Psychiatry, Colorado Coalition for the Homeless, Denver, Colorado
+    - Eowyn Rieke, MD, MPH, Blackburn Medical Director, in conversation with Walter Bailey, Peer Counselor at the Imani Center, Central City Concern, Portland, Oregon
+    - Laura Leone, DSW, MSSW, LMSW, Integrated Health Consultant, National Council for Behavioral Health
+  resources:
+    filename: hhrc-march-2021.zip
+    prettyname: HHRC Webinar 2021.zip
+  link: https://youtu.be/mTEqnHFsMvU
