@@ -1,4 +1,4 @@
-<ul class="webinar-list reset-list" data-grid="columns: 12; gutters-row: true">
+<ul class="resource-list reset-list" data-grid="columns: 12; gutters-row: true">
   {% for webinar in webinars %}
     {% set id = 'webinar-modal-' ~ loop.index %}
     {% set data = { 
@@ -6,13 +6,13 @@
         'label': 'Webinar'
       } 
     %}
-    <li class="webinar-list__item" data-grid-item="width: 4;">
+    <li class="resource-list__item" data-grid-item="width: 4;">
       <div class="card card--in-grid">
-        <div class="webinar-list__header card__header ">
-          <h3 class="webinar-list__title h3">{{ webinar.title }}</h3>
+        <div class="resource-list__header card__header ">
+          <h3 class="resource-list__title h3">{{ webinar.title }}</h3>
         </div>
         <div class="card__body">
-          <img class="webinar-list__image" src="images/icon-webinar.svg" role="presentation" alt="">
+          <img class="resource-list__image" src="images/icon-webinar.svg" alt="">
           <p>
             {{ webinar.description }}
           </p>

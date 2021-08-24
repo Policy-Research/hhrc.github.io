@@ -11,7 +11,7 @@
         <img class="graphic-icon" src="images/icon-webinar.svg" alt="" role="presentation">
         Webinars
       </button>
-      <button class="tabs__toggle" aria-controls="tabpanel-toolkits" disabled>
+      <button class="tabs__toggle" aria-controls="tabpanel-toolkits">
         <img class="graphic-icon" src="images/icon-toolkit.svg" alt="" role="presentation">
         Toolkits
       </button>
@@ -31,7 +31,7 @@
         {% include "views/webinars.twig" %}
       </div>
       <div class="tabs__panel" id="tabpanel-toolkits" role="tabpanel">
-        <!-- No Content -->
+        {% include "views/toolkits.twig" %}
       </div>
       <div class="tabs__panel" id="tabpanel-newsletters" role="tabpanel">
         <!-- No Content -->

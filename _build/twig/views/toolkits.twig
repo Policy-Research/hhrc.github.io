@@ -1,0 +1,20 @@
+<ul class="resource-list reset-list" data-grid="columns: 12; gutters-row: true">
+  {% for toolkit in toolkits %}
+    <li class="resource-list__item" data-grid-item="width: 4;">
+      <div class="card card--in-grid">
+        <div class="resource-list__header card__header ">
+          <h3 class="resource-list__title h3">{{ toolkit.title }}</h3>
+        </div>
+        <div class="card__body">
+          <img class="resource-list__image" src="images/icon-toolkit.svg" alt="">
+          <p>
+            {{ toolkit.description }}
+          </p>
+          <a class="button" href="files/{{ toolkit.file.name }}" download="{{ toolkit.file.prettyname }}">
+            Download Toolkit ({{ toolkit.file.type }})
+          </a>
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>

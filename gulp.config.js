@@ -32,6 +32,7 @@ module.exports = {
         try {
           data.site = yaml.load(readFileSync('./_data/site.yaml', 'utf8'));
           data.webinars = yaml.load(readFileSync('./_data/webinars.yaml', 'utf8'));
+          data.toolkits = yaml.load(readFileSync('./_data/toolkits.yaml', 'utf8'));
         } catch (error) {
           console.error(chalk.red('Twig Data YAML Parse Error:'), error);
         }
@@ -41,6 +42,9 @@ module.exports = {
             if (w.body) w.body = markdown.render(w.body);
             if (w.speakers) w.speakers = markdown.render(w.speakers);
             if (w.footer) w.footer = markdown.render(w.footer);
+          });
+          data.toolkits.forEach(t => {
+            if (t.description) t.description = markdown.render(t.description);
           });
         } catch (error) {
           console.error(chalk.red('Markdown Parse Error:'), error);
